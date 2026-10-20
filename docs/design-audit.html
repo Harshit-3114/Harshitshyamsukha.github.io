@@ -1,0 +1,285 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.audit{padding:1rem 0}
+.section{margin-bottom:2rem}
+.section-label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:.5px solid var(--color-border-tertiary)}
+.issue{display:grid;grid-template-columns:20px 1fr;gap:0 12px;padding:.75rem 0;border-bottom:.5px solid var(--color-border-tertiary);align-items:start}
+.issue:last-child{border-bottom:none}
+.sev{width:8px;height:8px;border-radius:50%;margin-top:6px}
+.sev.high{background:#E24B4A}
+.sev.med{background:#BA7517}
+.sev.low{background:#639922}
+.issue-body{}
+.issue-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.issue-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.5;margin-bottom:6px}
+.issue-fix{font-size:12px;font-family:var(--font-mono);background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);border-radius:6px;padding:6px 10px;color:var(--color-text-primary);white-space:pre-wrap;line-height:1.5}
+.legend{display:flex;gap:16px;margin-bottom:1.25rem;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)}
+.leg-dot{width:8px;height:8px;border-radius:50%}
+</style>
+<div class="audit">
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>High impact</div>
+    <div class="leg"><div class="leg-dot" style="background:#BA7517"></div>Medium impact</div>
+    <div class="leg"><div class="leg-dot" style="background:#639922"></div>Polish / nice-to-have</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Hero Section</div>
+
+    <div class="issue">
+      <div class="sev high"></div>
+      <div class="issue-body">
+        <div class="issue-title">No avatar / photo — hero feels anonymous</div>
+        <div class="issue-desc">The hero-left column has text and CTAs but no face. Recruiters spend ~6s on a portfolio. A photo or avatar dramatically increases trust and recall.</div>
+        <div class="issue-fix">Add a circular avatar above or beside the name:
+&lt;div className="hero-avatar"&gt;
+  &lt;img src="/avatar.jpg" alt="Harshit Shyamsukha" /&gt;
+&lt;/div&gt;
+CSS: width:96px; height:96px; border-radius:50%;
+border: 2px solid var(--color-accent-primary);</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev med"></div>
+      <div class="issue-body">
+        <div class="issue-title">Subtitle cycling is too fast (2.5s)</div>
+        <div class="issue-desc">At 2.5s the text swaps before readers finish it, especially on mobile. Feels jittery. Standard UX recommendation is 3.5–4s for short rotating subtitles.</div>
+        <div class="issue-fix">setInterval(() => { ... }, 3800);
+// also add a CSS fade transition on .hero-subtitle</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev med"></div>
+      <div class="issue-body">
+        <div class="issue-title">Stat pills are vague / unverified</div>
+        <div class="issue-desc">"6 projects shipped" but the projects grid shows 5. Inconsistency signals carelessness. Also "shipped" vs two marked "wip" is contradictory.</div>
+        <div class="issue-fix">Either: change to "5 projects" or add the 6th project.
+Better alternatives for the pills:
+- "LTROC 0.73 · DSFS" (concrete metric)
+- "Red Hat EX342 Certified"
+- "Hackathon participant"</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev low"></div>
+      <div class="issue-body">
+        <div class="issue-title">Terminal animation shows stale data after re-mount</div>
+        <div class="issue-desc">The terminal useEffect resets state on mount but the cancelled flag + setTerminalContent race can leave ghost content on fast navigation. Minor but visible.</div>
+        <div class="issue-fix">Move terminal lines into a ref-tracked state and
+clear it synchronously before setting the cancelled flag.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Navigation</div>
+
+    <div class="issue">
+      <div class="sev high"></div>
+      <div class="issue-body">
+        <div class="issue-title">Navbar has no active-link highlighting</div>
+        <div class="issue-desc">As the user scrolls, there's no visual indicator of which section they're in. This is standard on any portfolio and helps orientation significantly.</div>
+        <div class="issue-fix">Use IntersectionObserver on each section and
+add an "active" class to the matching nav-link:
+.nav-link.active {
+  color: var(--color-accent-primary);
+  border-bottom: 1px solid currentColor;
+}</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev med"></div>
+      <div class="issue-body">
+        <div class="issue-title">Navbar is missing mobile hamburger menu</div>
+        <div class="issue-desc">With 6 links + Resume + theme toggle, the navbar overflows on screens under ~768px. All items likely stack or overflow off-screen.</div>
+        <div class="issue-fix">Add a hamburger toggle for &lt;768px. Hide nav-links
+in a slide-down drawer. The Resume button and theme
+toggle can remain visible in the top bar.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Experience Section</div>
+
+    <div class="issue">
+      <div class="sev high"></div>
+      <div class="issue-body">
+        <div class="issue-title">Experience entries are thin — no dates, company, or role clarity</div>
+        <div class="issue-desc">"Study Australia Industry Experience Program" with date "Global Learning Program" and "Content Writing Intern" with date "Internship" — the date field is being misused as a category label. Recruiters scan for company → role → date → bullet. This inverts the hierarchy.</div>
+        <div class="issue-fix">Fix the data:
+{ title: "Content Writing Intern",
+  company: "Company Name",
+  date: "Jun 2023 – Aug 2023",
+  location: "Remote / Chennai",
+  stack: [...],
+  desc: "..." }
+Render company name as a secondary line, date as
+a proper date string.</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev med"></div>
+      <div class="issue-body">
+        <div class="issue-title">Only 2 experience items — consider adding academic/freelance work</div>
+        <div class="issue-desc">Hackathon participation, open source contributions, or project collaborations with other people count as experience and fill this section meaningfully.</div>
+        <div class="issue-fix">Add entries like:
+- Hackathon participant (Smart Resource Allocation, 2025)
+- Research contributor: DSFS / IEEE paper submission
+- Freelance / client project: Crest Automotive Solutions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Projects Section</div>
+
+    <div class="issue">
+      <div class="sev high"></div>
+      <div class="issue-body">
+        <div class="issue-title">All GitHub links point to profile root, not individual repos</div>
+        <div class="issue-desc">Every project card's "View Project" link goes to github.com/Harshitshyamsukha — not the actual repo. This is a dead-end for any recruiter who wants to see code. Major credibility issue.</div>
+        <div class="issue-fix">Update each project's github field to the real repo URL:
+github: "https://github.com/Harshitshyamsukha/ai-ethics-advisor"
+github: "https://github.com/Harshitshyamsukha/skillroute"
+etc.</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev high"></div>
+      <div class="issue-body">
+        <div class="issue-title">Modal shows "Screenshot placeholder" for every project</div>
+        <div class="issue-desc">The image field is null for all 5 projects, so every modal renders a dashed "Screenshot placeholder" box. This looks unfinished — especially for the featured DSFS and SkillRoute cards.</div>
+        <div class="issue-fix">Options (pick one per project):
+1. Add real screenshot/demo GIF: image: "/screenshots/dsfs.png"
+2. Replace the placeholder with an architecture SVG diagram
+3. Remove the image block entirely for projects without screenshots
+   (the empty dashed box is worse than nothing)</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev med"></div>
+      <div class="issue-body">
+        <div class="issue-title">Status dot has no tooltip / legend</div>
+        <div class="issue-desc">There's a green/yellow dot (status: "live" vs "wip") on cards but no legend or tooltip. Most visitors won't know what it means.</div>
+        <div class="issue-fix">Add a title attribute:
+&lt;span className={`status-dot ${proj.status}`}
+  title={proj.status === 'live' ? 'Live / Complete' : 'In Progress'}&gt;
+&lt;/span&gt;</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev med"></div>
+      <div class="issue-body">
+        <div class="issue-title">Crest Automotive (client work) is missing from the projects list</div>
+        <div class="issue-desc">You've built a full React + multi-portal site for a real client (Crest Automotive Solutions LLP). That's stronger evidence than some of the listed projects and is absent entirely.</div>
+        <div class="issue-fix">Add a 6th project entry:
+{ id: 'crest', title: "Crest Automotive Solutions",
+  category: "client", status: "live",
+  stack: ["React", "FastAPI", "Supabase", ...],
+  desc: "Premium car detailing studio web platform with
+         owner / customer / worker portals.",
+  github: "...", demo: "..." }</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">GitHub Activity & Stats Section</div>
+
+    <div class="issue">
+      <div class="sev med"></div>
+      <div class="issue-body">
+        <div class="issue-title">Two separate sections (github-feed + activity) for GitHub — consolidate</div>
+        <div class="issue-desc">There's a "GitHub Activity Feed" section (repo list) and a separate "GitHub Stats" section (commit graph + streak). These are the same topic split across two sections, bloating the page length.</div>
+        <div class="issue-fix">Merge into one section id="activity" with a 3-column
+grid: repos list | commit graph | streak card.
+Remove the duplicate section-eyebrow and section-title.</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev low"></div>
+      <div class="issue-body">
+        <div class="issue-title">github-readme-streak-stats.herokuapp.com is unreliable</div>
+        <div class="issue-desc">This third-party service has frequent downtime. If it's down, the streak card renders a broken image with no fallback.</div>
+        <div class="issue-fix">Add an onerror handler:
+&lt;img onError={(e) =&gt; e.target.style.display='none'} ... /&gt;
+Or switch to github-readme-stats.vercel.app which has
+better uptime and a wider theme set.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Contact Section</div>
+
+    <div class="issue">
+      <div class="sev low"></div>
+      <div class="issue-body">
+        <div class="issue-title">EmailJS credentials are exposed in client-side code</div>
+        <div class="issue-desc">service_lhev4mm, template_3nekq1l, and public key oimlw2aQxH_KKaX__ are visible in the bundle. Anyone can inspect and spam your inbox or burn your quota. EmailJS public keys are intentionally public, but the template/service IDs should ideally be obfuscated.</div>
+        <div class="issue-fix">This is a known EmailJS tradeoff for static sites.
+At minimum: add domain restrictions in EmailJS dashboard
+so only harshitshyamsukha.github.io can send via your key.
+(Settings → Security → Allowed Origins)</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev low"></div>
+      <div class="issue-body">
+        <div class="issue-title">No LinkedIn or GitHub link in the nav / hero CTAs</div>
+        <div class="issue-desc">Social links only appear at the very bottom of the contact section. Most visitors won't scroll that far before looking for a GitHub link. Add them to the hero's CTA row.</div>
+        <div class="issue-fix">Add icon links to hero-ctas:
+&lt;a href="https://github.com/Harshitshyamsukha"
+   className="icon-link" aria-label="GitHub"&gt;
+  {/* GitHub SVG icon */}
+&lt;/a&gt;</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">AI Chat Widget</div>
+
+    <div class="issue">
+      <div class="sev med"></div>
+      <div class="issue-body">
+        <div class="issue-title">KNOWLEDGE object has a typo — "cert" key doesn't match any regex</div>
+        <div class="issue-desc">The KNOWLEDGE object defines a key called "certifications" but the handleChatSubmit function tries to match "cert" and accesses KNOWLEDGE.cert (undefined). Asking about certifications returns the default fallback.</div>
+        <div class="issue-fix">In handleChatSubmit, change:
+reply = KNOWLEDGE.cert
+to:
+reply = KNOWLEDGE.certifications</div>
+      </div>
+    </div>
+
+    <div class="issue">
+      <div class="sev low"></div>
+      <div class="issue-body">
+        <div class="issue-title">Chat widget has no suggested questions</div>
+        <div class="issue-desc">Most visitors won't type a question cold. A row of 3 quick-prompt chips ("skills", "projects", "hire me?") dramatically increases engagement with the bot.</div>
+        <div class="issue-fix">Render chips above the input when messages.length === 1:
+{messages.length === 1 && (
+  &lt;div className="chat-chips"&gt;
+    {["skills","projects","how to hire?"].map(q =&gt; (
+      &lt;button key={q} onClick={() =&gt; setChatInput(q)}&gt;{q}&lt;/button&gt;
+    ))}
+  &lt;/div&gt;
+)}</div>
+      </div>
+    </div>
+  </div>
+</div>

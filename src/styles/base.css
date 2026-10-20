@@ -1,0 +1,430 @@
+/* ============================================================
+   BASE — paper ground, espresso ink, film grain
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* iOS/Android paint a grey-blue flash over any tapped element.
+     Killing it is the single loudest "this is a website" signal. */
+  -webkit-tap-highlight-color: transparent;
+  /* stop pull-to-refresh from hijacking the scroll */
+  overscroll-behavior-y: none;
+  height: 100%;
+}
+
+/* Controls: no double-tap zoom delay, no long-press text selection,
+   no browser tap highlight. Content text stays selectable. */
+button,
+a,
+[role="button"],
+input,
+textarea,
+select,
+label,
+.tab-btn,
+.about-card,
+.pin-card,
+.overlay-link {
+  touch-action: manipulation;
+}
+
+button,
+a[href],
+[role="button"],
+.tab-btn,
+.overlay-link,
+.about-card,
+.pin-card,
+.about-card-tag,
+.pin-tag,
+.process-nav-btn,
+.contact-tab,
+.process-tag {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.65;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern", "liga";
+  transition: background-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+}
+
+/* nothing may force a horizontal scrollbar */
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+li,
+dd,
+dt,
+span,
+a,
+button {
+  overflow-wrap: break-word;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--c-magenta);
+  color: var(--c-on-magenta);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--c-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--c-ink);
+  border: 3px solid var(--c-canvas);
+  border-radius: 999px;
+}
+
+/* ------------------------------------------------------------
+   FILM GRAIN — fixed, pointer-events-none, systemic layer only
+   ------------------------------------------------------------ */
+.grain-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.42;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)' opacity='0.32'/%3E%3C/svg%3E");
+}
+.void-theme .grain-canvas {
+  mix-blend-mode: screen;
+  opacity: 0.12;
+}
+
+/* ------------------------------------------------------------
+   CHROMA FIELD — flat blocks of colour, not soft glow
+   ------------------------------------------------------------ */
+.morph-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(229, 0, 155, 0.09) 0%, transparent 42%),
+    linear-gradient(315deg, rgba(0, 184, 204, 0.1) 0%, transparent 40%),
+    linear-gradient(45deg, rgba(134, 201, 0, 0.07) 0%, transparent 34%);
+}
+.void-theme .morph-canvas {
+  background:
+    linear-gradient(135deg, rgba(242, 239, 233, 0.05) 0%, transparent 42%),
+    linear-gradient(315deg, rgba(242, 239, 233, 0.035) 0%, transparent 40%);
+}
+
+.layout {
+  position: relative;
+  min-height: 100dvh;
+  isolation: isolate;
+  /* the theme canvas lives here, not on body — so .void-theme can swap it */
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  transition: background-color var(--dur-2) var(--ease-out);
+}
+
+/* technical hairline grid — blueprint, not decoration */
+.layout::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(22, 19, 15, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 19, 15, 0.045) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, #000 20%, transparent 76%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, #000 20%, transparent 76%);
+}
+.void-theme.layout::before {
+  background-image:
+    linear-gradient(rgba(246, 242, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 242, 255, 0.05) 1px, transparent 1px);
+}
+
+/* ------------------------------------------------------------
+   TYPE PRIMITIVES
+   ------------------------------------------------------------ */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--c-ink);
+  background: var(--c-surface);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  line-height: 1;
+  box-shadow: 2px 2px 0 0 var(--c-ink);
+}
+.eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--tone, var(--c-magenta));
+  flex-shrink: 0;
+}
+
+.display-xl {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 144;
+  font-weight: 300;
+  font-size: clamp(3.4rem, 11.5vw, 11rem);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  color: var(--c-ink);
+  text-wrap: balance;
+}
+.display-xl em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 0, "WONK" 1, "opsz" 144;
+  color: var(--c-magenta);
+}
+
+.display-lg {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 72;
+  font-weight: 300;
+  font-size: clamp(2.4rem, 5.4vw, 4.6rem);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  color: var(--c-ink);
+  text-wrap: balance;
+}
+
+.display-md {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 36;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 2.4vw, 2.15rem);
+  line-height: 1.14;
+  letter-spacing: -0.022em;
+  color: var(--c-ink);
+}
+
+.lede {
+  font-size: clamp(1rem, 1.25vw, 1.125rem);
+  line-height: 1.72;
+  color: var(--c-ink-2);
+  max-width: min(46ch, 100%);
+  text-wrap: pretty;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-ink-3);
+  line-height: 1.4;
+}
+
+/* ------------------------------------------------------------
+   DOUBLE BEZEL (Doppelrand) — nested enclosure primitives
+   Outer shell holds an inner core with a concentric radius.
+   ------------------------------------------------------------ */
+.bezel {
+  position: relative;
+  padding: 6px;
+  border-radius: var(--r-shell);
+  background: var(--c-shell);
+  border: 1px solid var(--c-line);
+  box-shadow: var(--sh-2);
+}
+.bezel-core {
+  position: relative;
+  border-radius: calc(var(--r-shell) - 6px);
+  background: var(--c-surface);
+  box-shadow: var(--sh-inset);
+  height: 100%;
+}
+
+/* ------------------------------------------------------------
+   SECTION SHELL
+   ------------------------------------------------------------ */
+.section-title {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 72;
+  font-weight: 300;
+  font-size: clamp(2.1rem, 4.6vw, 3.9rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--c-ink);
+  margin-bottom: var(--sp-10);
+  position: relative;
+  padding-left: var(--sp-5);
+}
+.section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.16em;
+  bottom: 0.16em;
+  width: 5px;
+  border-radius: 0;
+  background: var(--c-magenta);
+}
+.section-title.tone-indigo::before {
+  background: var(--c-violet);
+}
+.section-title.tone-sage::before {
+  background: var(--c-jade);
+}
+.section-title.tone-clay::before {
+  background: var(--c-coral);
+}
+.section-title.tone-wine::before {
+  background: var(--c-magenta);
+}
+.section-title.tone-teal::before {
+  background: var(--c-cyan);
+}
+.section-title.tone-slate::before {
+  background: var(--c-violet);
+}
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-8);
+  margin-bottom: var(--sp-12);
+  flex-wrap: wrap;
+}
+.section-head .section-title {
+  margin-bottom: 0;
+}
+.section-title .bar {
+  display: none;
+}
+
+/* ============================================================
+   HOVER — gated behind pointer capability.
+   Touch devices fake :hover and leave it stuck after a tap,
+   so every hover-only style must be capability-gated.
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--c-magenta);
+  }
+}
+
+/* ============================================================
+   PRESS FEEDBACK
+   The browser tap highlight is disabled, so every control needs
+   its own :active state. Native buttons respond when the finger
+   LANDS, not when it lifts � that is what :active gives us.
+   ============================================================ */
+.btn:active,
+.btn-primary:active {
+  transform: translate(1px, 1px) scale(0.98);
+  box-shadow: 1px 1px 0 0 var(--c-ink);
+}
+.btn-ghost:active {
+  transform: translate(1px, 1px) scale(0.98);
+  box-shadow: 1px 1px 0 0 var(--c-ink);
+}
+.tab-btn:active {
+  transform: scale(0.96);
+}
+.nav-burger:active {
+  transform: scale(0.92);
+}
+.egg-header-btn:active {
+  transform: scale(0.94);
+}
+.about-card:active,
+.pin-card:active {
+  transform: translate(-1px, -1px) scale(0.99);
+}
+.about-card-tag:active,
+.pin-tag:active,
+.process-tag:active {
+  transform: scale(0.94);
+}
+.process-nav-btn:active,
+.contact-tab:active {
+  transform: scale(0.96);
+}
+.modal-close:active,
+.modal-nav-btn:active {
+  transform: scale(0.9);
+}
+.modal-link-btn:active {
+  transform: translate(1px, 1px) scale(0.98);
+}
+.back-to-top:active,
+.chat-toggle:active {
+  transform: scale(0.9);
+}
+.overlay-link:active {
+  opacity: 0.6;
+}
+.file-link:active {
+  transform: translateX(2px) scale(0.99);
+}
+.chat-quick button:active {
+  transform: scale(0.94);
+}
+.contact-social a:active {
+  transform: scale(0.96);
+}

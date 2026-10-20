@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4eee3"/>
+      <stop offset="100%" stop-color="#e6dcc9"/>
+    </linearGradient>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#9a7526"/>
+      <stop offset="34%" stop-color="#a8452a"/>
+      <stop offset="66%" stop-color="#7d2a4e"/>
+      <stop offset="100%" stop-color="#3f3d8f"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="8" fill="url(#rule)"/>
+
+  <text x="80" y="112" font-family="'Courier New', monospace" font-size="19" letter-spacing="5" fill="#8b8175">HARSHIT SHYAMSUKHA</text>
+  <text x="80" y="262" font-size="96" letter-spacing="-3" fill="#221c16">Harshit</text>
+  <text x="80" y="358" font-size="96" font-style="italic" letter-spacing="-3" fill="#9a7526">Shyamsukha</text>
+
+  <rect x="80" y="404" width="120" height="4" rx="2" fill="#a8452a"/>
+
+  <text x="80" y="470" font-family="'Courier New', monospace" font-size="23" letter-spacing="2" fill="#574e44">AI / ML  ·  FULL-STACK  ·  AGENTIC SYSTEMS  ·  DEVOPS</text>
+  <text x="80" y="524" font-family="'Courier New', monospace" font-size="19" letter-spacing="1" fill="#8b8175">github.com/Harshit-3114</text>
+  <text x="80" y="558" font-family="'Courier New', monospace" font-size="19" letter-spacing="1" fill="#8b8175">SRMIST Chennai  ·  Open to SDE Internships</text>
+</svg>

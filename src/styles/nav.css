@@ -1,0 +1,394 @@
+/* ============================================================
+   FLUID ISLAND NAV — floating glass pill, detached from the top
+   ============================================================ */
+
+.nav-island {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  /* clear the notch / status bar on notched devices */
+  padding: calc(var(--sp-4) + env(safe-area-inset-top, 0px)) var(--sp-4) 0;
+  pointer-events: none;
+}
+
+.nav-pill {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  max-width: 100%;
+  min-width: 0;
+  padding: 6px 6px 6px 20px;
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--c-surface) 86%, transparent);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border: 1.5px solid var(--c-ink);
+  box-shadow: 4px 4px 0 0 var(--c-ink);
+  transition:
+    background var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out),
+    transform var(--dur-3) var(--ease-spring);
+}
+.nav-brand {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.void-theme .nav-pill {
+  background: color-mix(in srgb, var(--c-surface) 82%, transparent);
+  box-shadow: 4px 4px 0 0 var(--c-ink-3);
+}
+
+.nav-brand {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 24;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.015em;
+  color: var(--c-ink);
+  padding-right: var(--sp-4);
+  margin-right: var(--sp-1);
+  border-right: 1px solid var(--c-line);
+  white-space: nowrap;
+  transition: color var(--dur-1) var(--ease-out);
+}
+.nav-brand .nb-dim {
+  color: var(--c-ink-3);
+}
+
+/* ---------- the tab cluster ---------- */
+.tab-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: nowrap;
+  overflow: visible;
+}
+
+.tab-btn {
+  position: relative;
+  isolation: isolate;
+  padding: 8px 15px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--c-ink-2);
+  white-space: nowrap;
+  transition:
+    color var(--dur-1) var(--ease-out),
+    background var(--dur-1) var(--ease-out),
+    transform var(--dur-1) var(--ease-out);
+}
+.tab-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--c-ink);
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity var(--dur-2) var(--ease-out),
+    transform var(--dur-2) var(--ease-spring);
+  pointer-events: none;
+}
+.tab-btn.active {
+  color: var(--c-canvas);
+}
+.tab-btn.active::before {
+  opacity: 1;
+  transform: scale(1);
+  background: var(--c-ink);
+}
+.tab-btn.void-tab {
+  color: var(--c-magenta);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.tab-btn.void-tab.active {
+  color: var(--c-canvas);
+}
+.tab-btn.void-tab.active::before {
+  background: var(--c-magenta);
+}
+
+/* ---------- trailing tools ---------- */
+.nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: var(--sp-2);
+  margin-left: var(--sp-1);
+  border-left: 1px solid var(--c-line);
+}
+
+.konami-counter {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--c-ink-3);
+  padding: 5px 9px;
+  border-radius: var(--r-pill);
+  background: var(--c-surface-2);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.egg-header-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 6px 9px;
+  border-radius: var(--r-pill);
+  background: var(--c-surface-2);
+  color: var(--c-ink-2);
+  user-select: none;
+  line-height: 1;
+  transition:
+    background var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out),
+    transform var(--dur-1) var(--ease-out);
+}
+.egg-header-btn.expanded {
+  background: var(--c-brass-soft);
+  color: var(--c-brass-2);
+}
+.egg-icon {
+  font-size: 11px;
+  line-height: 1;
+}
+.egg-header-count {
+  white-space: nowrap;
+}
+
+/* ============================================================
+   HAMBURGER MORPH — 2 bars that rotate into a perfect X
+   ============================================================ */
+.nav-burger {
+  display: none;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--c-surface-2);
+  flex-shrink: 0;
+  transition: background var(--dur-1) var(--ease-out);
+}
+.burger-bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--c-ink);
+  transition:
+    transform var(--dur-3) var(--ease-spring),
+    opacity var(--dur-1) var(--ease-out);
+}
+.burger-bar:nth-child(1) {
+  transform: translate(-50%, -5px);
+}
+.burger-bar:nth-child(2) {
+  transform: translate(-50%, 3px);
+}
+.nav-burger.open .burger-bar:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.nav-burger.open .burger-bar:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* ============================================================
+   MODAL EXPANSION — full-bleed glass sheet
+   ============================================================ */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  display: flex;
+  flex-direction: column;
+  /* `margin: auto` on the child centres it when there is room and
+     falls back to the top when it overflows — `justify-content:
+     center` clips the first link off the top in that case. */
+  justify-content: flex-start;
+  /* clear the floating nav pill, which is ~56px tall plus the
+     status-bar inset */
+  padding: calc(96px + env(safe-area-inset-top, 0px)) var(--sp-6) calc(var(--sp-10) + env(safe-area-inset-bottom, 0px));
+  /* fully opaque: a menu you have to squint through is not a menu.
+     The blur is kept for the edge softness, not for see-through. */
+  background: var(--c-canvas);
+  backdrop-filter: blur(30px) saturate(1.25);
+  -webkit-backdrop-filter: blur(30px) saturate(1.25);
+  animation: overlayIn var(--dur-3) var(--ease-out) both;
+  overflow-y: auto;
+}
+.void-theme .nav-overlay {
+  background: var(--c-canvas);
+}
+
+.overlay-inner {
+  width: 100%;
+  max-width: 760px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+/* staggered mask reveal */
+.overlay-link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-5);
+  padding: var(--sp-4) 0;
+  border-bottom: 1px solid var(--c-line);
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 72;
+  font-weight: 300;
+  font-size: clamp(1.9rem, 7vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--c-ink);
+  text-align: left;
+  opacity: 0;
+  transform: translateY(48px);
+  clip-path: inset(0 0 100% 0);
+  transition:
+    opacity var(--dur-3) var(--ease-out),
+    transform var(--dur-3) var(--ease-spring),
+    clip-path var(--dur-3) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.overlay-link.in {
+  opacity: 1;
+  transform: translateY(0);
+  clip-path: inset(0 0 -20% 0);
+}
+.overlay-link .ol-idx {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--c-ink-3);
+  min-width: 26px;
+  transform: translateY(-0.6em);
+}
+.overlay-link.active {
+  color: var(--c-brass);
+}
+.overlay-link.void-tab {
+  color: var(--c-clay);
+}
+
+.overlay-foot {
+  margin-top: var(--sp-10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--dur-3) var(--ease-out),
+    transform var(--dur-3) var(--ease-spring);
+  transition-delay: 520ms;
+}
+.overlay-foot.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1080px) {
+  .nav-island {
+    justify-content: space-between;
+  }
+  .nav-pill {
+    width: 100%;
+    justify-content: space-between;
+    padding-right: 8px;
+  }
+  .tab-bar {
+    display: none;
+  }
+  .nav-burger {
+    display: block;
+  }
+  .nav-tools {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav-island {
+    padding: calc(var(--sp-3) + env(safe-area-inset-top, 0px)) var(--sp-3) 0;
+  }
+  .nav-pill {
+    padding: 5px 5px 5px 14px;
+  }
+  .nav-brand {
+    font-size: 13px;
+    padding-right: var(--sp-2);
+  }
+  .nav-brand .nb-dim {
+    display: none;
+  }
+  .konami-counter {
+    display: none;
+  }
+  .egg-header-btn {
+    padding: 6px 8px;
+  }
+}
+
+/* ============================================================
+   HOVER — gated behind pointer capability.
+   Touch devices fake :hover and leave it stuck after a tap,
+   so every hover-only style must be capability-gated.
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+
+  .nav-brand:hover {
+    color: var(--c-brass);
+  }
+
+  .tab-btn:hover {
+    color: var(--c-ink);
+  }
+
+  .tab-btn:hover::before {
+    opacity: 0.09;
+    transform: scale(1);
+  }
+
+  .egg-header-btn:hover {
+    background: var(--c-brass);
+    color: var(--c-on-brass);
+    transform: translateY(-1px);
+  }
+
+  .nav-burger:hover {
+    background: var(--c-brass-soft);
+  }
+
+  .overlay-link:hover {
+    color: var(--c-brass);
+  }
+}

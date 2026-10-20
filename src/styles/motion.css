@@ -1,0 +1,838 @@
+/* ============================================================
+   MOTION — spring physics, scroll interpolation, easter eggs
+   ============================================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes caret {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes floatSoft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes meshDrift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(2%, -1.5%, 0) scale(1.06);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes typeBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------
+   SCROLL REVEAL — heavy fade-up with blur
+   ------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(6px);
+  transition:
+    opacity var(--dur-4) var(--ease-out),
+    transform var(--dur-4) var(--ease-spring),
+    filter var(--dur-4) var(--ease-out);
+  transition-delay: calc(var(--card-index, 0) * 70ms);
+  will-change: transform, opacity;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* word-level staggered reveal */
+.word-reveal-wrap {
+  display: inline;
+}
+.wr-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur-3) var(--ease-out),
+    transform var(--dur-3) var(--ease-spring);
+}
+.wr-word.vis {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.typewriter-cursor {
+  animation: typeBlink 1s steps(2) infinite;
+  color: var(--c-brass);
+  margin-left: 2px;
+}
+
+.kinetic-text {
+  display: inline;
+}
+.kt-char {
+  display: inline-block;
+  animation: floatSoft 3.4s var(--ease-soft) infinite;
+}
+
+/* tab content crossfade */
+.tab-content-wrap {
+  animation: tabFade var(--dur-3) var(--ease-out);
+}
+@keyframes tabFade {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------
+   REDUCED MOTION
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .overlay-link {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+}
+
+/* ============================================================
+   EASTER EGGS
+   ============================================================ */
+
+/* --- konami page tilt --- */
+.konami-tilt {
+  transform-origin: center top;
+  animation: pageTilt 380ms var(--ease-spring) forwards;
+}
+@keyframes pageTilt {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(5deg);
+  }
+}
+.slide .main > * {
+  animation: fallOff 520ms var(--ease-out) forwards;
+}
+.slide .main > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.slide .main > *:nth-child(2) {
+  animation-delay: 80ms;
+}
+.slide .main > *:nth-child(3) {
+  animation-delay: 160ms;
+}
+.slide .chat-toggle-wrap,
+.slide #chat-bubble,
+.slide .back-to-top,
+.slide .modal-overlay {
+  animation: fallOff 520ms var(--ease-out) forwards;
+  animation-delay: 300ms;
+}
+.slide .grain-canvas,
+.slide .morph-canvas {
+  animation: fadeIn 300ms var(--ease-out) reverse forwards;
+  animation-delay: 200ms;
+}
+@keyframes fallOff {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(120px, 220px, 0);
+    opacity: 0;
+  }
+}
+
+.easter-404 {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-4);
+  animation: fadeIn var(--dur-2) var(--ease-out);
+}
+.e404-code {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 144;
+  font-weight: 300;
+  font-size: clamp(84px, 18vw, 170px);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  color: var(--c-brass);
+}
+.e404-msg {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 48;
+  font-weight: 300;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+.e404-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-ink-3);
+}
+
+/* --- void swallow / revive --- */
+.void-swallow-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 88;
+  background: radial-gradient(ellipse at center, #1a0030 0%, #0d0020 50%, #05010c 100%);
+  color: #d8d4cc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  animation: voidSwallowIn var(--dur-3) var(--ease-out);
+}
+.void-swallow-overlay.revive {
+  background: radial-gradient(ellipse at center, #1b0d3a 0%, #120826 40%, #07060c 100%);
+  color: #eae6de;
+  animation: voidReviveIn var(--dur-4) var(--ease-out);
+}
+@keyframes voidSwallowIn {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes voidReviveIn {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    background: #07060c;
+    color: #221c16;
+  }
+}
+.vs-code {
+  font-size: 72px;
+  line-height: 1;
+  animation: vsPulse 1.2s var(--ease-soft) infinite;
+}
+@keyframes vsPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.7;
+  }
+}
+.void-swallow-overlay.revive .vs-code {
+  animation: vsFadeOut 600ms var(--ease-out) forwards;
+}
+@keyframes vsFadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+.vs-msg {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 48;
+  font-weight: 300;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+.vs-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* --- void sweep (cracks from centre) --- */
+.void-sweep {
+  position: fixed;
+  inset: 0;
+  z-index: 85;
+  pointer-events: none;
+  overflow: hidden;
+}
+.void-sweep.active {
+  animation: voidDarken 800ms var(--ease-out) forwards;
+}
+@keyframes voidDarken {
+  0% {
+    background: transparent;
+  }
+  50% {
+    background: rgba(0, 0, 0, 0.9);
+  }
+  100% {
+    background: transparent;
+  }
+}
+.void-sweep .crack-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #9900cc, transparent);
+  transform-origin: left center;
+  opacity: 0;
+}
+.void-sweep.active .crack-line {
+  animation: crackShoot 500ms var(--ease-out) forwards;
+}
+.void-sweep.active .crack-line:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation-delay: 0ms;
+}
+.void-sweep.active .crack-line:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(45deg);
+  animation-delay: 50ms;
+}
+.void-sweep.active .crack-line:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(90deg);
+  animation-delay: 100ms;
+}
+.void-sweep.active .crack-line:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(135deg);
+  animation-delay: 50ms;
+}
+.void-sweep.active .crack-line:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(180deg);
+  animation-delay: 0ms;
+}
+.void-sweep.active .crack-line:nth-child(6) {
+  transform: translate(-50%, -50%) rotate(225deg);
+  animation-delay: 100ms;
+}
+.void-sweep.active .crack-line:nth-child(7) {
+  transform: translate(-50%, -50%) rotate(270deg);
+  animation-delay: 50ms;
+}
+.void-sweep.active .crack-line:nth-child(8) {
+  transform: translate(-50%, -50%) rotate(315deg);
+  animation-delay: 0ms;
+}
+.void-sweep.active .crack-line:nth-child(9) {
+  transform: translate(-50%, -50%) rotate(22.5deg);
+  animation-delay: 80ms;
+}
+.void-sweep.active .crack-line:nth-child(10) {
+  transform: translate(-50%, -50%) rotate(67.5deg);
+  animation-delay: 30ms;
+}
+.void-sweep.active .crack-line:nth-child(11) {
+  transform: translate(-50%, -50%) rotate(112.5deg);
+  animation-delay: 70ms;
+}
+.void-sweep.active .crack-line:nth-child(12) {
+  transform: translate(-50%, -50%) rotate(157.5deg);
+  animation-delay: 40ms;
+}
+@keyframes crackShoot {
+  0% {
+    width: 0%;
+    opacity: 1;
+  }
+  60% {
+    width: 80%;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}
+.void-sweep .crack-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #d8d4cc, transparent);
+  opacity: 0;
+}
+.void-sweep.active .crack-center {
+  animation: centerBurst 600ms var(--ease-out) forwards;
+}
+@keyframes centerBurst {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  50% {
+    width: 60%;
+    height: 60%;
+    opacity: 0.6;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+}
+
+/* --- void bleed --- */
+.void-bleed {
+  position: fixed;
+  inset: 0;
+  z-index: 84;
+  pointer-events: none;
+}
+.void-bleed.active {
+  animation: voidBleedFlash 300ms var(--ease-out);
+}
+@keyframes voidBleedFlash {
+  0% {
+    background: radial-gradient(ellipse at var(--bleed-x, 50%) var(--bleed-y, 50%), rgba(216, 212, 204, 0.22), transparent 60%);
+    opacity: 1;
+  }
+  30% {
+    background: radial-gradient(ellipse at var(--bleed-x, 50%) var(--bleed-y, 50%), rgba(216, 212, 204, 0.22), transparent 50%);
+    opacity: 1;
+  }
+  60% {
+    background: radial-gradient(ellipse at var(--bleed-x, 50%) var(--bleed-y, 50%), rgba(216, 212, 204, 0.22), transparent 60%);
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* --- static pop --- */
+.static-pop {
+  position: fixed;
+  inset: 0;
+  z-index: 83;
+  pointer-events: none;
+  opacity: 0;
+}
+.static-pop.active {
+  opacity: 1;
+  animation: staticFade 400ms var(--ease-out) forwards;
+}
+.static-inner {
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 2px, transparent 2px, transparent 4px);
+  background-size: 100% 4px;
+  animation: staticShift 80ms linear infinite;
+}
+@keyframes staticShift {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+@keyframes staticFade {
+  0% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.corruption-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 82;
+  pointer-events: none;
+}
+
+/* --- void-mode card treatment (inherits the monochrome Void tokens) --- */
+.void-mode .pin-card,
+.void-mode .about-card {
+  border-color: var(--c-ink-3) !important;
+  box-shadow: 4px 4px 0 0 var(--c-ink-3) !important;
+}
+.void-mode .pin-card-inner {
+  background: var(--c-surface) !important;
+}
+.void-mode .pin-title,
+.void-mode .about-card-title {
+  color: var(--c-ink) !important;
+}
+.void-mode .pin-desc,
+.void-mode .about-card-row {
+  color: var(--c-ink-2) !important;
+}
+.void-mode .pin-icon {
+  background: var(--c-ink-2) !important;
+  color: var(--c-canvas) !important;
+}
+.void-mode .pin-category {
+  background: var(--c-ink-2) !important;
+  color: var(--c-canvas) !important;
+}
+
+/* --- egg hints / credits / loading modals --- */
+.egg-hints-overlay,
+.credits-overlay,
+.loading-bar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: color-mix(in srgb, var(--c-canvas) 55%, rgba(20, 16, 12, 0.4));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn var(--dur-2) var(--ease-out);
+}
+.egg-hints-modal,
+.credits-modal,
+.loading-bar-modal {
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-shell);
+  box-shadow: var(--sh-3);
+  max-width: 420px;
+  width: 90%;
+  padding: var(--sp-8);
+}
+.credits-modal {
+  max-width: 500px;
+}
+.loading-bar-modal {
+  max-width: 380px;
+  text-align: center;
+}
+.egg-hints-hdr,
+.credits-modal h2,
+.loading-bar-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 36;
+  font-weight: 400;
+  font-size: 21px;
+  letter-spacing: -0.022em;
+  color: var(--c-ink);
+  margin-bottom: var(--sp-5);
+}
+.credits-modal h2,
+.loading-bar-title {
+  justify-content: flex-start;
+}
+.egg-hints-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--c-ink-3);
+  transition: color var(--dur-1) var(--ease-out);
+}
+.egg-hints-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.egg-hint-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 9px 0;
+  border-bottom: 1px solid var(--c-line);
+  font-size: 13px;
+  transition: opacity var(--dur-2) var(--ease-out);
+}
+.egg-hint-item:not(.found) {
+  opacity: 0.42;
+}
+.egg-hint-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.egg-hint-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--c-ink-2);
+}
+.egg-hints-footer {
+  text-align: center;
+  margin-top: var(--sp-5);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-ink-3);
+}
+.credits-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.credit-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 6px 11px;
+  border-radius: var(--r-pill);
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-line);
+  color: var(--c-ink-2);
+}
+.loading-bar-track {
+  height: 10px;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  margin-bottom: var(--sp-4);
+}
+.loading-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--c-brass), var(--c-clay));
+  animation: loadingFill 7.5s var(--ease-soft) forwards;
+}
+@keyframes loadingFill {
+  to {
+    width: 100%;
+  }
+}
+.loading-bar-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-ink-3);
+}
+
+/* --- idle notification --- */
+.idle-notif {
+  position: fixed;
+  bottom: var(--sp-8);
+  right: var(--sp-8);
+  z-index: 82;
+  background: var(--c-surface);
+  color: var(--c-ink);
+  border: 1px solid var(--c-brass-mid);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-5);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  cursor: pointer;
+  box-shadow: var(--sh-2);
+  animation: floatSoft 1.4s var(--ease-soft) infinite;
+  max-width: 330px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.idle-notif-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* --- duck --- */
+.duck-container {
+  position: fixed;
+  inset: 0;
+  z-index: 82;
+  pointer-events: none;
+  overflow: hidden;
+}
+.duck {
+  position: absolute;
+  bottom: 20%;
+  left: -60px;
+  font-size: 46px;
+  animation: duckSwim 4.2s var(--ease-soft) forwards;
+}
+@keyframes duckSwim {
+  to {
+    left: calc(100% + 60px);
+  }
+}
+
+/* --- void creature --- */
+.void-creature {
+  position: fixed;
+  z-index: 79;
+  pointer-events: none;
+  animation: creatureScuttle 2.5s var(--ease-out) forwards;
+}
+.void-creature-body {
+  font-size: 30px;
+  display: block;
+  transform: scaleX(calc(var(--dir, 1) * -1));
+}
+@keyframes creatureScuttle {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  85% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3) translateY(-40px);
+  }
+}
+
+/* --- rainbow mode --- */
+.rainbow-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 78;
+  pointer-events: none;
+  background: linear-gradient(90deg, #ff0000, #ff8800, #ffff00, #00ff00, #0088ff, #8800ff, #ff0000);
+  background-size: 200% 100%;
+  mix-blend-mode: overlay;
+  opacity: 0.3;
+  animation: rainbowSlide 2.4s linear infinite;
+}
+@keyframes rainbowSlide {
+  to {
+    background-position: 200% 0;
+  }
+}
+.rainbow-mode .pin-card,
+.rainbow-mode .about-card,
+.rainbow-mode .tab-btn,
+.rainbow-mode .pin-icon {
+  animation: rainbowBorder 3s linear infinite !important;
+}
+@keyframes rainbowBorder {
+  0%,
+  100% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* --- gear spin --- */
+.gear-icon {
+  transition: transform var(--dur-2) var(--ease-out);
+}
+.pin-icon .gear-icon {
+  animation: spin 9s linear infinite;
+}
+.gear-spun {
+  animation: spin 0.6s linear infinite !important;
+}
+
+/* ============================================================
+   HOVER — gated behind pointer capability.
+   Touch devices fake :hover and leave it stuck after a tap,
+   so every hover-only style must be capability-gated.
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+
+  .egg-hints-close:hover {
+    color: var(--c-ink);
+  }
+}
