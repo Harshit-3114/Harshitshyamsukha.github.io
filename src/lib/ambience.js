@@ -295,9 +295,14 @@ export const BAND_HOUR = {
  * own bands ('clear', 'cloud', 'fog', 'drizzle', 'rain', 'snow',
  * 'storm', 'wind'). The band form matters because 'wind' is not a
  * WMO condition — it is a state the site can be put into by hand.
+ *
+ * `bandId` is the time of day. It defaults to the clock, but the sun
+ * engine overrides it, so "golden hour" means what it says.
  */
-export function resolveAmbience(hour, weather) {
-  const band = timeBand(hour);
+export function resolveAmbience(hour, weather, bandId) {
+  const band = bandId
+    ? (TIME_BANDS.find((b) => b.id === bandId) || timeBand(hour))
+    : timeBand(hour);
   const w = typeof weather === 'string' ? weather : decodeWeather(weather);
   const key = `${w}:${band.id}`;
   const preset = AMBIENCES[key] || AMBIENCES[`${w}:afternoon`] || FALLBACK;

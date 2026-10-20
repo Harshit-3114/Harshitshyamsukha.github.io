@@ -10,6 +10,7 @@ import WeatherField from './components/WeatherField.jsx';
 import Constellation from './components/Constellation.jsx';
 import Console from './components/Console.jsx';
 import Spectacle from './components/Spectacle.jsx';
+import PrintCV from './components/PrintCV.jsx';
 import useRevealObserver from './hooks/useRevealObserver.js';
 import { useTilt } from './hooks/useTilt.js';
 import useAmbience, { AMBIENCE_MODES } from './hooks/useAmbience.js';
@@ -72,7 +73,7 @@ export default function App() {
   const sound = useSound();
   const ghStatus = useGitHubStatus();
 
-  const { mode: ambienceMode, setMode: setAmbienceMode, setOverride: setAmbienceOverride } = ambience;
+  const { mode: ambienceMode, setMode: setAmbienceMode, setOverride: setAmbienceOverride, setHour: setAmbienceHour } = ambience;
   const { enabled: soundEnabled, toggle: toggleSound, setEnabled: setSoundEnabled } = sound;
 
   /* ---------------- forms ---------------- */
@@ -170,6 +171,17 @@ export default function App() {
   const consoleAuto = useCallback(() => { setAmbienceOverride(null); }, [setAmbienceOverride]);
 
   const consoleSound = useCallback((on) => { setSoundEnabled(on); }, [setSoundEnabled]);
+
+  const consoleDownloadResume = useCallback(() => {
+    const a = document.createElement('a');
+    a.href = PROFILE.resume;
+    a.download = 'Harshit-Shyamsukha-Resume.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }, []);
+
+  const consoleSetHour = useCallback((h) => { setAmbienceHour(h); }, [setAmbienceHour]);
 
   /* a set piece fires across the screen */
   const consoleSpectacle = useCallback((cmd) => {
@@ -511,6 +523,22 @@ export default function App() {
     if (want !== voidThemeActive) handleTabChange('void');
   }, [voidThemeActive, handleTabChange]);
 
+  /* the shell can open a project straight from the filesystem */
+  const consoleOpenProject = useCallback((id) => {
+    const pin = ALL_PINS.find((p) => p.id === id);
+    if (!pin) return;
+    const cat = pin.category;
+    const tab = cat === 'ai' ? 'ai'
+      : cat === 'fullstack' ? 'fullstack'
+        : cat === 'client' ? 'client'
+          : cat === 'certification' || cat === 'academic' ? 'credentials'
+            : cat === 'experience' ? 'experience'
+              : cat === 'activity' ? 'activity'
+                : 'all';
+    handleTabChange(tab);
+    setTimeout(() => openProjectModal(pin, { origin: false }), 40);
+  }, [handleTabChange, openProjectModal]);
+
   /* ---------------- the command palette's index ----------------
      Every tab, every project, every credential, every action — one
      keystroke away. The list is pure data; the actions are resolved
@@ -713,6 +741,7 @@ export default function App() {
 
   return (
     <>
+      <PrintCV />
       <div className={`layout${konamiTriggered ? ' konami-' + konamiPhase : ''}${voidThemeActive ? ' void-theme' : ''}${rainbowMode ? ' rainbow-mode' : ''}${voidModePlus ? ' void-plus' : ''}`}>
         <div className="morph-canvas" />
         <div className="grain-canvas" />
@@ -791,6 +820,7 @@ export default function App() {
               crSending={crSending}
               handleCodeReviewSubmit={handleCodeReviewSubmit}
               ghStatus={ghStatus}
+              ambience={ambience}
             />
           </div>
 
@@ -811,6 +841,9 @@ export default function App() {
           onSound={consoleSound}
           onTheme={consoleTheme}
           onSpectacle={consoleSpectacle}
+          onOpenProject={consoleOpenProject}
+          onDownloadResume={consoleDownloadResume}
+          onSetHour={consoleSetHour}
           soundEnabled={sound.enabled}
           open={consoleOpen}
           onToggle={() => setConsoleOpen((v) => !v)}

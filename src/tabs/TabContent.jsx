@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Icon from '../components/Icon.jsx';
 import ProjectCard from '../components/ProjectCard.jsx';
 import Constellation from '../components/Constellation.jsx';
+import CommitLog from '../components/CommitLog.jsx';
 import { About, AboutCards } from '../components/About.jsx';
 import { WordReveal } from '../hooks/WordReveal.jsx';
 import { PROCESS_DATA, CORE_PROJECTS, PROFILE } from '../data/portfolio.js';
@@ -67,6 +68,7 @@ export default function TabContent({
   crLanguage, setCrLanguage, crDescription, setCrDescription,
   crConcerns, setCrConcerns, crError, crSending, handleCodeReviewSubmit,
   ghStatus = { indicator: 'none', label: 'operational' },
+  ambience,
 }) {
   const projects = CP || CORE_PROJECTS;
   const process = PD || PROCESS_DATA;
@@ -75,7 +77,7 @@ export default function TabContent({
     <>
       {filterTab === 'about' && (
         <>
-          <About onNavigate={onNavigate} onGitHubClick={onGitHubClick} />
+          <About onNavigate={onNavigate} onGitHubClick={onGitHubClick} ambience={ambience} />
           <AboutCards onNavigate={onNavigate} onGitHubClick={onGitHubClick} />
         </>
       )}
@@ -93,7 +95,10 @@ export default function TabContent({
             </p>
           </header>
           {filterTab === 'activity' && (
-            <Constellation username={PROFILE.githubHandle} ghStatus={ghStatus} />
+            <>
+              <Constellation username={PROFILE.githubHandle} ghStatus={ghStatus} />
+              <CommitLog />
+            </>
           )}
           <div className={`bento${filterTab === 'void' ? ' void-mode' : ''}`}>
             {shuffledPins.map((pin, i) => (

@@ -1,5 +1,7 @@
 import React from 'react';
 import Icon from './Icon.jsx';
+import Portrait from './Portrait.jsx';
+import NowStrip from './NowStrip.jsx';
 import { useReveal } from '../hooks/useReveal.js';
 import { PROFILE } from '../data/portfolio.js';
 
@@ -16,17 +18,24 @@ function SocialLink({ href, label, children, onClick }) {
   );
 }
 
-export function About({ onNavigate, onGitHubClick }) {
+export function About({ onNavigate, onGitHubClick, ambience }) {
   const [ref] = useReveal({ threshold: 0.05 });
 
   return (
     <section className="about-hero" id="top" ref={ref}>
       <div className="about-hero-left">
-        <div className="about-avatar" title="Harshit Shyamsukha">
-          <picture>
-            <source srcSet="/profile.webp" type="image/webp" />
-            <img src="/profile.png" alt="Harshit Shyamsukha" width="512" height="512" loading="eager" decoding="async" />
-          </picture>
+        <div className="about-avatar-wrap">
+          <Portrait
+            sun={ambience?.sun}
+            weatherId={ambience?.weatherId}
+            hardness={ambience?.hardness}
+          />
+          <div className="about-avatar" title="Harshit Shyamsukha">
+            <picture>
+              <source srcSet="/profile.webp" type="image/webp" />
+              <img src="/profile.png" alt="Harshit Shyamsukha" width="512" height="512" loading="eager" decoding="async" />
+            </picture>
+          </div>
         </div>
         <h1 className="about-name">
           Harshit<br />
@@ -36,6 +45,7 @@ export function About({ onNavigate, onGitHubClick }) {
           <span className="about-status-dot" aria-hidden="true" />
           Open to SDE Internships · 2027
         </p>
+        <NowStrip />
         <p className="about-role">
           Software Engineer — AI/ML &amp; Full-Stack. I build production systems across the
           stack: agentic LLM pipelines, forecasting models, and multi-service products that

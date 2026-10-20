@@ -22,14 +22,14 @@ const KEY = 'uiSoundEnabled';
 
 /* how each weather band sounds, and how loud */
 const BEDS = {
-  rain:  { gain: 0.075, tone: 1600, q: 0.7, rumble: 0.030 },
-  storm: { gain: 0.090, tone: 1400, q: 0.7, rumble: 0.042 },
-  drizzle: { gain: 0.038, tone: 2600, q: 0.5, rumble: 0.014 },
-  snow:  { gain: 0.014, tone: 900,  q: 0.4, rumble: 0.010 },
-  fog:   { gain: 0.012, tone: 420,  q: 0.4, rumble: 0.016 },
-  wind:  { gain: 0.048, tone: 700,  q: 0.6, rumble: 0.020 },
-  cloud: { gain: 0.010, tone: 380,  q: 0.4, rumble: 0.010 },
-  clear: { gain: 0,     tone: 500,  q: 0.4, rumble: 0 },
+  rain:    { gain: 0.095, tone: 1500, q: 0.7, hiss: 2600 },
+  storm:   { gain: 0.115, tone: 1300, q: 0.7, hiss: 2200 },
+  drizzle: { gain: 0.048, tone: 2600, q: 0.5, hiss: 4200 },
+  snow:    { gain: 0.018, tone: 900,  q: 0.4, hiss: 1600 },
+  fog:     { gain: 0.014, tone: 420,  q: 0.4, hiss: 700 },
+  wind:    { gain: 0.052, tone: 700,  q: 0.6, hiss: 1400 },
+  cloud:   { gain: 0.012, tone: 380,  q: 0.4, hiss: 600 },
+  clear:   { gain: 0,     tone: 500,  q: 0.4, hiss: 800 },
 };
 
 export default function useSound() {
@@ -156,7 +156,9 @@ export default function useSound() {
 
   /* ---- the weather bed ----
      A looping noise bed, filtered into whatever the sky is doing.
-     It fades in and out so switching weather never clicks. */
+     Rain is two layers: a low patter (brown noise) and a bright hiss
+     (white noise) — one alone never sounds like weather. It fades in
+     and out so switching weather never clicks. */
   const stopBed = useCallback(() => {
     const bed = bedRef.current;
     if (!bed) return;
@@ -167,7 +169,9 @@ export default function useSound() {
       bed.gain.gain.cancelScheduledValues(ctx.currentTime);
       bed.gain.gain.setValueAtTime(bed.gain.gain.value, ctx.currentTime);
       bed.gain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
-      setTimeout(() => { try { bed.src.stop(); } catch { /* already stopped */ } }, 1000);
+      setTimeout(() => {
+        try { bed.src.forEach((s) => s.stop()); } catch { /* already stopped */ }
+      }, 1000);
     } catch { /* context gone */ }
   }, []);
 
@@ -179,92 +183,157 @@ export default function useSound() {
 
     const current = bedRef.current;
     if (current && current.kind === kind) return;
+    if (current) stopBed();
 
-    if (current) {
-      stopBed();
-    }
-
-    const src = ctx.createBufferSource();
-    src.buffer = noiseBuffer(ctx, 3);
-    src.loop = true;
+    /* the patter — brown noise, band-limited */
+    const brown = ctx.createBufferSource();
+    brown.buffer = noiseBuffer(ctx, 3);
+    brown.loop = true;
 
     const band = ctx.createBiquadFilter();
     band.type = 'bandpass';
     band.frequency.value = cfg.tone;
     band.Q.value = cfg.q;
 
+    /* the hiss — white noise, high-passed */
+    const white = ctx.createBufferSource();
+    const wlen = Math.floor(ctx.sampleRate * 2);
+    const wbuf = ctx.createBuffer(1, wlen, ctx.sampleRate);
+    const wd = wbuf.getChannelData(0);
+    for (let i = 0; i < wlen; i++) wd[i] = Math.random() * 2 - 1;
+    white.buffer = wbuf;
+    white.loop = true;
+
+    const hp = ctx.createBiquadFilter();
+    hp.type = 'highpass';
+    hp.frequency.value = cfg.hiss;
+    hp.Q.value = 0.6;
+
     const low = ctx.createBiquadFilter();
     low.type = 'lowpass';
-    low.frequency.value = 380;
+    low.frequency.value = 340;
 
     const gain = ctx.createGain();
     gain.gain.setValueAtTime(0.0001, ctx.currentTime);
     gain.gain.linearRampToValueAtTime(cfg.gain, ctx.currentTime + 1.4);
 
-    src.connect(band).connect(gain).connect(ctx.destination);
-    src.connect(low).connect(gain).connect(ctx.destination);
-    src.start();
+    brown.connect(band).connect(gain);
+    brown.connect(low).connect(gain);
+    white.connect(hp).connect(gain);
+    gain.connect(ctx.destination);
+    brown.start();
+    white.start();
 
-    bedRef.current = { src, gain, kind };
+    bedRef.current = { src: [brown, white], gain, kind };
   }, [enabled, ensure, noiseBuffer, stopBed]);
 
   /* ---- thunder ----
-     `distance` 0 = overhead, 1 = far away. The delay and the brightness
-     both fall off with distance, the way they do in the world. */
+     `distance` 0 = overhead, 1 = far away. The delay and the timbre
+     both fall off with distance, the way they do in the world.
+
+     Real thunder ROLLS. That roll is not a filter sweep — it is
+     several distinct slaps arriving at different moments because the
+     sound reaches you by different paths. So it is built that way:
+     a handful of decaying envelopes over brown noise, a bright crack
+     for near strikes, and a sub-bass boom underneath. */
   const thunder = useCallback((distance = 0.4) => {
     const ctx = ensure();
     if (!ctx) return;
     const d = Math.max(0, Math.min(1, distance));
-    const delay = d * 2.6;
-    const dur = 3.2 - d * 1.4;
-    const vol = 0.16 * (1 - d * 0.68);
+    const delay = d * 3.4;                 // light first, sound later
+    const dur = 5.4 - d * 2.2;             // far thunder rolls longer
+    const level = 0.46 * (1 - d * 0.6);
     const t0 = ctx.currentTime + delay;
+    const sr = ctx.sampleRate;
 
-    /* the crack — only for close strikes */
-    if (d < 0.45) {
-      const crack = ctx.createBufferSource();
-      const len = Math.floor(ctx.sampleRate * 0.5);
-      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    /* --- the crack: only for a near strike --- */
+    if (d < 0.55) {
+      const len = Math.floor(sr * 0.42);
+      const buf = ctx.createBuffer(1, len, sr);
       const dd = buf.getChannelData(0);
-      for (let i = 0; i < len; i++) dd[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.2);
-      crack.buffer = buf;
+      for (let i = 0; i < len; i++) {
+        const k = i / len;
+        dd[i] = (Math.random() * 2 - 1) * Math.pow(1 - k, 3.2);
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
       const hp = ctx.createBiquadFilter();
       hp.type = 'highpass';
       hp.frequency.value = 380;
-      const cg = ctx.createGain();
-      cg.gain.setValueAtTime(vol * 0.9, t0);
-      cg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.45);
-      crack.connect(hp).connect(cg).connect(ctx.destination);
-      crack.start(t0);
+      const lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.frequency.value = 5600 - d * 2800;
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(level * 1.15, t0);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.4);
+      src.connect(hp).connect(lp).connect(g).connect(ctx.destination);
+      src.start(t0);
     }
 
-    /* the rumble — filtered noise with a long tail */
-    const len = Math.floor(ctx.sampleRate * dur);
-    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    /* --- the roll --- */
+    const len = Math.floor(sr * dur);
+    const buf = ctx.createBuffer(1, len, sr);
     const dd = buf.getChannelData(0);
-    let last = 0;
-    for (let i = 0; i < len; i++) {
-      const white = Math.random() * 2 - 1;
-      last = (last + 0.05 * white) / 1.05;
-      const env = Math.pow(1 - i / len, 1.6);
-      dd[i] = last * 3.2 * env;
+
+    /* several slaps arriving at different moments — this is the roll */
+    const slaps = [];
+    const n = 5 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < n; i++) {
+      slaps.push({
+        at: Math.random() * dur * 0.5,
+        amp: 0.35 + Math.random() * 0.65,
+        len: 0.35 + Math.random() * 1.7,
+      });
     }
+
+    const cutoff = 1600 - d * 1150;        // further away = duller
+    const lpA = 1 - Math.exp(-2 * Math.PI * cutoff / sr);
+    const hpA = 1 - Math.exp(-2 * Math.PI * 26 / sr);
+    let lpState = 0;
+    let hpState = 0;
+    let brown = 0;
+
+    for (let i = 0; i < len; i++) {
+      const t = i / sr;
+      let env = 0;
+      for (const s of slaps) {
+        if (t >= s.at) env += s.amp * Math.exp(-(t - s.at) / s.len);
+      }
+      env *= Math.exp(-t / (dur * 0.42));
+
+      const white = Math.random() * 2 - 1;
+      brown = (brown + 0.02 * white) / 1.02;
+      let v = brown * 3.4 * env;
+
+      lpState += lpA * (v - lpState);
+      v = lpState;
+      hpState += hpA * (v - hpState);
+      v = v - hpState;
+
+      dd[i] = v;
+    }
+
     const src = ctx.createBufferSource();
     src.buffer = buf;
-
-    const lp = ctx.createBiquadFilter();
-    lp.type = 'lowpass';
-    lp.frequency.setValueAtTime(900 - d * 500, t0);
-    lp.frequency.exponentialRampToValueAtTime(90, t0 + dur);
-
     const g = ctx.createGain();
     g.gain.setValueAtTime(0.0001, t0);
-    g.gain.linearRampToValueAtTime(vol, t0 + 0.06);
+    g.gain.linearRampToValueAtTime(level, t0 + 0.06);
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-
-    src.connect(lp).connect(g).connect(ctx.destination);
+    src.connect(g).connect(ctx.destination);
     src.start(t0);
-    src.stop(t0 + dur + 0.1);
+
+    /* --- the boom underneath --- */
+    const osc = ctx.createOscillator();
+    const og = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(62 - d * 16, t0);
+    osc.frequency.exponentialRampToValueAtTime(24, t0 + 1.2);
+    og.gain.setValueAtTime(0.0001, t0);
+    og.gain.linearRampToValueAtTime(level * 0.9, t0 + 0.1);
+    og.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.5);
+    osc.connect(og).connect(ctx.destination);
+    osc.start(t0);
+    osc.stop(t0 + 1.6);
   }, [ensure]);
 
   const toggle = useCallback(() => setEnabled((v) => !v), []);

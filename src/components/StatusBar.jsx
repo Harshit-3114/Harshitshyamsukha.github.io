@@ -31,8 +31,50 @@ function useClock() {
   return now;
 }
 
+/**
+ * LIVE TELEMETRY
+ *
+ * The status bar is an instrument strip, so it should carry real
+ * readings: the frame rate the page is actually running at, how much
+ * heap the browser is holding, and how long the first byte took.
+ * All of it is measured, none of it is decorative.
+ */
+function useTelemetry() {
+  const [t, setT] = useState({ fps: 0, heap: null, ttfb: null, nodes: 0 });
+
+  useEffect(() => {
+    let frames = 0;
+    let raf = 0;
+    let last = performance.now();
+
+    const loop = () => {
+      frames++;
+      const now = performance.now();
+      if (now - last >= 500) {
+        const nav = performance.getEntriesByType('navigation')[0];
+        setT({
+          fps: Math.round((frames * 1000) / (now - last)),
+          heap: performance.memory?.usedJSHeapSize
+            ? Math.round(performance.memory.usedJSHeapSize / 1048576)
+            : null,
+          ttfb: nav ? Math.round(nav.responseStart) : null,
+          nodes: document.getElementsByTagName('*').length,
+        });
+        frames = 0;
+        last = now;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  return t;
+}
+
 export default function StatusBar({ ambience, gh, build = '5a974cf' }) {
   const now = useClock();
+  const tel = useTelemetry();
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -87,6 +129,14 @@ export default function StatusBar({ ambience, gh, build = '5a974cf' }) {
         </span>
 
         <span className="sb-grow" />
+
+        <span className="sb-cell sb-tel" title="Live page telemetry">
+          <span className="sb-mono">{String(tel.fps).padStart(2, '0')} fps</span>
+          {tel.heap !== null && <span className="sb-mono">{tel.heap} MB</span>}
+          {tel.ttfb !== null && <span className="sb-mono">ttfb {tel.ttfb}ms</span>}
+        </span>
+
+        <span className="sb-sep" />
 
         <span className="sb-cell sb-gh" title={`GitHub is ${gh.label}`}>
           <span className={`sb-lamp ${tone}`} />

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { resolveAmbience, BAND_HOUR } from '../lib/ambience.js';
+import { sunState } from '../lib/sun.js';
 
 /**
  * AMBIENCE — the page reads the room it is in.
@@ -12,10 +13,10 @@ import { resolveAmbience, BAND_HOUR } from '../lib/ambience.js';
  *
  * There are two ways in:
  *
- *   AUTO    the live forecast and the visitor's own clock
- *   OVERRIDE a phrase typed into the console — "thor", "let it rain",
- *            "wednesday" — which pins the site to a mood until the
- *            visitor says "auto" again
+ *   AUTO     the live forecast and the visitor's own clock
+ *   OVERRIDE a phrase typed into the console — "thor", "let it
+ *            rain", "wednesday" — which pins the site to a mood until
+ *            the visitor says "auto" again
  *
  * Weather comes from Open-Meteo (no key, CORS-friendly). If the
  * network, the geolocation permission or anything else fails, the page
@@ -81,6 +82,9 @@ export default function useAmbience() {
   /* a phrase typed into the console pins the site to a mood */
   const [override, setOverrideState] = useState(null);
 
+  /* the sun can be moved by hand — `sun 17` */
+  const [hourOverride, setHourOverride] = useState(null);
+
   const [state, setState] = useState({
     ready: false,
     name: 'Hard Noon',
@@ -89,14 +93,18 @@ export default function useAmbience() {
     weatherId: 'clear',
     timeLabel: 'Afternoon',
     hardness: 1,
+    hour: 12,
     located: false,
   });
 
   const codeRef = useRef(0);
   const modeRef = useRef(mode);
   const overrideRef = useRef(override);
+  const hourRef = useRef(hourOverride);
+  const latRef = useRef(13.0827);
   modeRef.current = mode;
   overrideRef.current = override;
+  hourRef.current = hourOverride;
 
   /* paint the ambience onto <html> — one place, so every component
      reads the same light without prop-drilling */
@@ -104,21 +112,26 @@ export default function useAmbience() {
     const now = new Date();
     const m = modeRef.current;
     const ov = overrideRef.current;
+    const manualHour = hourRef.current;
 
-    let hour = now.getHours();
+    let hour = manualHour !== null ? manualHour : now.getHours() + now.getMinutes() / 60;
     let weather = code;             // a WMO code
     let name = null;
 
     if (ov) {
       weather = ov.weather;         // a band
-      hour = ov.time ? BAND_HOUR[ov.time] : now.getHours();
+      if (ov.time && manualHour === null) hour = BAND_HOUR[ov.time];
       name = ov.name || null;
-    } else if (m === 'day') { hour = 14; weather = 'clear'; }
-    else if (m === 'night') { hour = 23; weather = 'clear'; }
-    else if (m === 'overcast') { hour = 13; weather = 'cloud'; }
-    else if (m === 'off') { hour = 14; weather = 'clear'; }
+    } else if (m === 'day') { hour = manualHour ?? 14; weather = 'clear'; }
+    else if (m === 'night') { hour = manualHour ?? 23; weather = 'clear'; }
+    else if (m === 'overcast') { hour = manualHour ?? 13; weather = 'cloud'; }
+    else if (m === 'off') { hour = manualHour ?? 14; weather = 'clear'; }
 
-    const amb = resolveAmbience(hour, weather);
+    /* the sun, and the shadows it throws */
+    const sun = sunState(hour, latRef.current, now);
+
+    const amb = resolveAmbience(hour, weather, sun.band);
+
     const root = document.documentElement;
     root.style.setProperty('--amb-paper', amb.paper);
     root.style.setProperty('--amb-field-1', amb.field[0]);
@@ -127,10 +140,26 @@ export default function useAmbience() {
     root.style.setProperty('--amb-shade', amb.shade);
     root.style.setProperty('--amb-hard', String(amb.hard));
     root.style.setProperty('--amb-grain', String(amb.grain));
+
+    /* the sun's position on the page, and the shadows it throws */
+    root.style.setProperty('--sun-x', sun.x.toFixed(3));
+    root.style.setProperty('--sun-height', sun.height.toFixed(3));
+    root.style.setProperty('--sun-warmth', sun.warmth.toFixed(3));
+    root.style.setProperty('--shadow-dx', sun.shadowX.toFixed(3));
+    root.style.setProperty('--shadow-dy', sun.shadowY.toFixed(3));
+    root.style.setProperty('--shadow-len', sun.length.toFixed(3));
+
+    /* a flat sky throws almost no shadow at all */
+    const hard = amb.hard;
+    root.style.setProperty('--shadow-a1', `${(22 * hard).toFixed(1)}%`);
+    root.style.setProperty('--shadow-a2', `${(26 * hard).toFixed(1)}%`);
+    root.style.setProperty('--shadow-a3', `${(30 * hard).toFixed(1)}%`);
+
     root.dataset.ambience = amb.key;
     root.dataset.ambienceName = name || amb.name;
     root.dataset.weather = amb.weatherCode;
     root.dataset.ambienceTime = amb.timeBand.id;
+    root.dataset.sunUp = sun.isDay ? 'true' : 'false';
 
     setState({
       ready: true,
@@ -140,6 +169,8 @@ export default function useAmbience() {
       weatherId: amb.weatherCode,
       timeLabel: amb.timeBand.label,
       hardness: amb.hard,
+      hour,
+      sun,
       located,
     });
   }, []);
@@ -164,6 +195,7 @@ export default function useAmbience() {
         const pos = await getPosition();
         const lat = pos?.lat ?? 13.0827;   // Chennai
         const lon = pos?.lon ?? 80.2707;
+        latRef.current = lat;
         const w = await fetchWeather(lat, lon);
         if (cancelled) return;
         codeRef.current = w.code;
@@ -194,14 +226,16 @@ export default function useAmbience() {
     };
   }, [paint, state.temp, state.located]);
 
-  /* a mode or override change repaints immediately */
+  /* a mode, override or hour change repaints immediately */
   useEffect(() => {
     paint(codeRef.current, state.temp, state.located);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, override]);
+  }, [mode, override, hourOverride]);
 
-  /* the console pins a mood */
   const pinOverride = useCallback((next) => setOverrideState(next), []);
+  const setHour = useCallback((h) => setHourOverride(h), []);
 
-  return { ...state, mode, setMode, override, setOverride: pinOverride };
+  return {
+    ...state, mode, setMode, override, setOverride: pinOverride, setHour, hourOverride,
+  };
 }

@@ -495,7 +495,12 @@
   overflow-y: auto;
   overscroll-behavior: contain;
 }
-.rt-line { white-space: pre-wrap; word-break: break-word; }
+.rt-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  /* reserve the line so the console does not reflow while it types */
+  min-height: 1.62em;
+}
 .rt-cmd { color: var(--c-panel-ink); }
 .rt-out { color: var(--c-panel-ink-2); }
 .rt-hdr {
@@ -802,6 +807,258 @@
   .is-shaking .layout { animation: none; }
   .is-snapped .layout { filter: none; }
 }
+
+/* ------------------------------------------------------------
+   THE NOW STRIP — what I am doing right now
+   ------------------------------------------------------------ */
+.now-strip {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  max-width: 100%;
+  padding: 7px var(--sp-3);
+  border: 1px solid var(--c-line-2);
+  border-left: 2px solid var(--c-amber);
+  border-radius: var(--r-sm);
+  background: var(--c-surface);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--c-ink-2);
+  margin-bottom: var(--sp-4);
+}
+.now-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-ink-3);
+}
+.now-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-amber);
+  animation: nowPulse 2.4s var(--ease-soft) infinite;
+}
+@keyframes nowPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-amber) 50%, transparent); }
+  50% { opacity: 0.55; box-shadow: 0 0 0 5px transparent; }
+}
+.now-body {
+  flex: 1;
+  min-width: 0;
+  color: var(--c-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.now-count,
+.now-date {
+  flex: none;
+  font-size: 9.5px;
+  color: var(--c-ink-3);
+}
+.now-date { border-left: 1px solid var(--c-line-2); padding-left: var(--sp-3); }
+@media (max-width: 620px) {
+  .now-strip { flex-wrap: wrap; gap: var(--sp-2); }
+  .now-body { white-space: normal; flex-basis: 100%; order: 3; }
+}
+
+/* ------------------------------------------------------------
+   THE COMMIT HISTORY
+   ------------------------------------------------------------ */
+.commit-log {
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-ink);
+  border-radius: var(--r-core);
+  box-shadow: var(--sh-2);
+  margin-bottom: var(--sp-8);
+  overflow: hidden;
+}
+.commit-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--c-line);
+}
+.commit-icon {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-sm);
+  background: var(--c-panel);
+  color: var(--c-panel-ink);
+  flex: none;
+}
+.commit-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--c-ink);
+}
+.commit-sub {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--c-ink-3);
+  margin: 2px 0 0;
+}
+.commit-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--sp-3) 0;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.commit-row {
+  display: grid;
+  grid-template-columns: 18px 74px minmax(0, 1fr) 88px;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 5px var(--sp-5);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--c-ink-2);
+  position: relative;
+}
+.commit-row + .commit-row { border-top: 1px solid var(--c-line); }
+.commit-node {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-violet);
+  justify-self: center;
+}
+.commit-sha { color: var(--c-ink-3); font-size: 10px; }
+.commit-msg {
+  color: var(--c-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.commit-date { color: var(--c-ink-3); font-size: 10px; text-align: right; }
+@media (max-width: 620px) {
+  .commit-row { grid-template-columns: 14px 62px minmax(0, 1fr); }
+  .commit-date { display: none; }
+}
+
+/* ------------------------------------------------------------
+   THE SIGIL — a compass rose for a person
+   ------------------------------------------------------------ */
+.about-avatar-wrap {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  margin-bottom: var(--sp-2);
+}
+.sigil-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.sigil {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transition: transform var(--dur-3) var(--ease-out);
+}
+.sigil-ring {
+  fill: none;
+  stroke: var(--c-line-2);
+  stroke-width: 1;
+}
+.sigil-ring.faint { stroke: var(--c-line); stroke-dasharray: 2 4; }
+.sigil-arc {
+  fill: none;
+  stroke: var(--c-amber);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+.sigil-tick { stroke: var(--c-line-2); stroke-width: 1; }
+.sigil-tick.lit { stroke: var(--c-amber); stroke-width: 1.4; }
+.sigil-needle { stroke: var(--c-ink); stroke-width: 1.4; opacity: 0.55; }
+.sigil-sun { fill: var(--c-amber); }
+.sigil-sun.is-moon { fill: var(--c-surface-3); }
+.sigil-wave {
+  fill: none;
+  stroke: var(--c-teal);
+  stroke-width: 1.2;
+  opacity: 0.7;
+  stroke-linejoin: round;
+}
+.sigil-core { fill: var(--c-ink); }
+.sigil-veil {
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--c-ink) 30%, transparent) 0%, transparent 68%);
+  pointer-events: none;
+}
+.void-theme .sigil-arc { stroke: var(--c-violet-2); }
+.void-theme .sigil-tick.lit { stroke: var(--c-violet-2); }
+.void-theme .sigil-needle { stroke: var(--c-ink); }
+.void-theme .sigil-wave { stroke: var(--c-violet-2); }
+.void-theme .sigil-core { fill: var(--c-ink); }
+.void-theme .sigil-sun { fill: var(--c-violet-2); }
+
+/* ------------------------------------------------------------
+   THE LIGHT TABLE — the sun slider in the console
+   ------------------------------------------------------------ */
+.console-sun {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 4px 0 9px;
+  border-top: 1px solid var(--c-panel-line);
+  margin-top: var(--sp-2);
+}
+.console-sun-label { color: var(--c-amber); font-size: 11px; line-height: 1; }
+.console-sun-time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--c-panel-ink-2);
+  min-width: 40px;
+  text-align: right;
+}
+.console-sun-range {
+  flex: 1;
+  min-width: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #2b3a5c 0%, #6b5a3a 22%, #d9b25a 50%, #6b5a3a 78%, #2b3a5c 100%);
+  outline: none;
+  cursor: pointer;
+}
+.console-sun-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--c-panel-ink);
+  border: 2px solid var(--c-amber);
+  cursor: grab;
+}
+.console-sun-range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--c-panel-ink);
+  border: 2px solid var(--c-amber);
+  cursor: grab;
+}
+.console-sun-range:focus-visible { outline: 2px solid var(--c-amber); outline-offset: 3px; }
 
 /* ------------------------------------------------------------
    REDUCED MOTION — no weather field, no tilt, no drift

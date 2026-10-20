@@ -17,6 +17,15 @@
   --amb-hard: 1;
   --amb-grain: 0.26;
 
+  /* ---- WEATHER INK ----
+     The weather has to be visible on BOTH papers. A light blue rain
+     streak disappears on cream; a dark one disappears in the Void.
+     So the weather draws itself from these, which the theme flips. */
+  --weather-rgb: 74, 96, 120;
+  --weather-fog-rgb: 152, 164, 176;
+  --weather-cloud-rgb: 92, 100, 114;
+  --weather-sun-rgb: 255, 224, 160;
+
   /* ---- SURFACES (paper) ---- */
   --c-canvas: var(--amb-paper);
   --c-canvas-veil: rgba(242, 236, 224, 0.78);
@@ -153,15 +162,27 @@
   --r-pill: 999px;
 
   /* ---- DEPTH: hard, directional, chromatic — never harsh black ----
-     The shadow takes the colour of the light that cast it, and its
-     hardness follows the sky: a razor-sharp noon shadow, a nearly
-     absent one under overcast. */
-  --sh-1: calc(2px * var(--amb-hard)) calc(2px * var(--amb-hard)) 0 0
-          color-mix(in srgb, var(--amb-shade) 22%, transparent);
-  --sh-2: calc(4px * var(--amb-hard)) calc(4px * var(--amb-hard)) 0 0
-          color-mix(in srgb, var(--amb-shade) 26%, transparent);
-  --sh-3: calc(6px * var(--amb-hard)) calc(6px * var(--amb-hard)) 0 0
-          color-mix(in srgb, var(--amb-shade) 30%, transparent);
+     The shadow takes the colour of the light that cast it, its
+     hardness follows the sky, and its DIRECTION follows the sun:
+     a 7am shadow lies across the page, a noon shadow sits under it.
+     The --shadow-* values are written by the sun engine at runtime;
+     the numbers here are the fallback for a page with no clock. */
+  --shadow-dx: 0.9;
+  --shadow-dy: 0.9;
+  --shadow-len: 1;
+  --shadow-a1: 22%;
+  --shadow-a2: 26%;
+  --shadow-a3: 30%;
+
+  --sh-1: calc(var(--shadow-dx) * var(--shadow-len) * 1px)
+          calc(var(--shadow-dy) * var(--shadow-len) * 1px) 0 0
+          color-mix(in srgb, var(--amb-shade) var(--shadow-a1), transparent);
+  --sh-2: calc(var(--shadow-dx) * var(--shadow-len) * 2px)
+          calc(var(--shadow-dy) * var(--shadow-len) * 2px) 0 0
+          color-mix(in srgb, var(--amb-shade) var(--shadow-a2), transparent);
+  --sh-3: calc(var(--shadow-dx) * var(--shadow-len) * 3px)
+          calc(var(--shadow-dy) * var(--shadow-len) * 3px) 0 0
+          color-mix(in srgb, var(--amb-shade) var(--shadow-a3), transparent);
   --sh-inset: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
   /* ---- MOTION ---- */
@@ -341,4 +362,10 @@
   --c-coral-text: #ffa98e;
   --c-steel-text: #ccd4e0;
   --c-magenta-text: #f7a3dc;
+
+  /* the weather inverts with the paper */
+  --weather-rgb: 198, 220, 240;
+  --weather-fog-rgb: 198, 212, 228;
+  --weather-cloud-rgb: 172, 186, 204;
+  --weather-sun-rgb: 255, 226, 168;
 }

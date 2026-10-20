@@ -1,0 +1,136 @@
+/* ============================================================
+   PRINT — the site as a document.
+   A portfolio is a website. Recruiters print things.
+   ============================================================ */
+
+.print-cv { display: none; }
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 15mm;
+  }
+
+  html, body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  /* everything on screen steps aside */
+  .layout,
+  .morph-canvas,
+  .grain-canvas,
+  .weather-field,
+  .nav-island,
+  .status-bar,
+  .console,
+  .chat-toggle-wrap,
+  #chat-bubble,
+  .back-to-top,
+  .focus-ribbon,
+  .spectacle,
+  .void-sweep,
+  .static-pop,
+  .void-bleed,
+  .rainbow-overlay,
+  .void-plus-overlay,
+  .easter-404,
+  .egg-hints-overlay,
+  .credits-overlay,
+  .loading-bar-overlay,
+  .idle-notif,
+  .duck-container,
+  .void-creature {
+    display: none !important;
+  }
+
+  .print-cv {
+    display: block !important;
+    font-family: var(--font-sans);
+    font-size: 9.6pt;
+    line-height: 1.42;
+    color: #111;
+  }
+
+  .print-cv h1 {
+    font-family: var(--font-display);
+    font-size: 21pt;
+    letter-spacing: -0.02em;
+    margin: 0;
+    font-weight: 600;
+  }
+  .print-cv-role {
+    margin: 1mm 0 0;
+    font-size: 10.4pt;
+    color: #333;
+  }
+  .print-cv-contact {
+    margin: 1.6mm 0 0;
+    font-family: var(--font-mono);
+    font-size: 8.2pt;
+    color: #444;
+  }
+  .print-cv-head {
+    border-bottom: 1.4pt solid #111;
+    padding-bottom: 2.4mm;
+    margin-bottom: 3.4mm;
+  }
+
+  .print-cv-sec { margin-bottom: 3.6mm; break-inside: avoid; }
+  .print-cv-sec h2 {
+    font-family: var(--font-mono);
+    font-size: 8pt;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin: 0 0 1.6mm;
+    padding-bottom: 1mm;
+    border-bottom: 0.4pt solid #bbb;
+    color: #111;
+  }
+  .print-cv-sec p { margin: 0 0 1.4mm; }
+
+  .print-cv-item { margin-bottom: 2.4mm; break-inside: avoid; }
+  .print-cv-item h3 {
+    font-size: 10pt;
+    margin: 0;
+    font-weight: 600;
+  }
+  .print-cv-date {
+    font-family: var(--font-mono);
+    font-size: 8pt;
+    font-weight: 400;
+    color: #666;
+  }
+  .print-cv-sub {
+    font-family: var(--font-mono);
+    font-size: 8.2pt;
+    color: #555;
+    margin: 0.4mm 0 0.8mm;
+  }
+  .print-cv-metric {
+    font-family: var(--font-mono);
+    font-size: 8.2pt;
+    color: #111;
+    margin: 0.6mm 0 0;
+  }
+  .print-cv-item ul,
+  .print-cv-certs {
+    margin: 0.8mm 0 0;
+    padding-left: 4.4mm;
+  }
+  .print-cv-item li,
+  .print-cv-certs li { margin-bottom: 0.9mm; }
+  .print-cv-skills {
+    font-size: 8.8pt;
+    color: #222;
+    line-height: 1.5;
+  }
+  .print-cv-foot {
+    margin-top: 4mm;
+    padding-top: 2mm;
+    border-top: 0.4pt solid #bbb;
+    font-family: var(--font-mono);
+    font-size: 7.6pt;
+    color: #666;
+  }
+}
