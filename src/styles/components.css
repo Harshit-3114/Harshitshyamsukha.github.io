@@ -10,42 +10,49 @@
   --tone-soft: var(--c-amber-soft);
   --tone-mid: var(--c-amber-mid);
   --tone-ink: var(--c-on-amber);
+  --tone-on: var(--c-on-amber);
 }
 .tone-sage {
   --tone: var(--c-jade);
   --tone-soft: var(--c-jade-soft);
   --tone-mid: var(--c-jade-mid);
   --tone-ink: var(--c-on-jade);
+  --tone-on: var(--c-on-jade);
 }
 .tone-clay {
   --tone: var(--c-coral);
   --tone-soft: var(--c-coral-soft);
   --tone-mid: var(--c-coral-mid);
   --tone-ink: var(--c-on-coral);
+  --tone-on: var(--c-on-coral);
 }
 .tone-indigo {
   --tone: var(--c-violet);
   --tone-soft: var(--c-violet-soft);
   --tone-mid: var(--c-violet-mid);
   --tone-ink: var(--c-on-violet);
+  --tone-on: var(--c-on-violet);
 }
 .tone-wine {
   --tone: var(--c-magenta);
   --tone-soft: var(--c-magenta-soft);
   --tone-mid: var(--c-magenta-mid);
   --tone-ink: var(--c-on-magenta);
+  --tone-on: var(--c-on-magenta);
 }
 .tone-teal {
   --tone: var(--c-cyan);
   --tone-soft: var(--c-cyan-soft);
   --tone-mid: var(--c-cyan-mid);
   --tone-ink: var(--c-on-cyan);
+  --tone-on: var(--c-on-cyan);
 }
 .tone-slate {
-  --tone: var(--c-violet-2);
-  --tone-soft: var(--c-violet-soft);
-  --tone-mid: var(--c-violet-mid);
-  --tone-ink: var(--c-on-violet);
+  --tone: var(--c-steel);
+  --tone-soft: var(--c-steel-soft);
+  --tone-mid: var(--c-steel-mid);
+  --tone-ink: var(--c-on-steel);
+  --tone-on: var(--c-on-steel);
 }
 
 .pin-icon.tone-brass,
@@ -56,7 +63,7 @@
 .pin-icon.tone-teal,
 .pin-icon.tone-slate {
   background: var(--tone, var(--c-magenta));
-  color: #fff;
+  color: var(--tone-on, #fff);
 }
 
 .pin-category.tone-brass,
@@ -67,7 +74,7 @@
 .pin-category.tone-teal,
 .pin-category.tone-slate {
   background: var(--tone, var(--c-magenta));
-  color: var(--tone-ink, #fff);
+  color: var(--tone-on, #fff);
   border-color: transparent;
 }
 .modal-problem.tone-clay {
@@ -122,32 +129,32 @@
 .about-card.tone-slate { --tone: var(--c-slate); --tone-soft: var(--c-slate-soft); --tone-mid: var(--c-slate-mid); --tone-ink: var(--c-slate); }
 
 .about-card.tone-indigo .about-card-icon {
-  background: var(--c-indigo-soft);
-  color: var(--c-indigo);
+  background: var(--c-violet-soft);
+  color: var(--c-violet);
 }
 .about-card.tone-sage .about-card-icon {
-  background: var(--c-sage-soft);
-  color: var(--c-sage);
+  background: var(--c-jade-soft);
+  color: var(--c-jade);
 }
 .about-card.tone-clay .about-card-icon {
-  background: var(--c-clay-soft);
-  color: var(--c-clay);
+  background: var(--c-coral-soft);
+  color: var(--c-coral);
 }
 .about-card.tone-brass .about-card-icon {
-  background: var(--c-brass-soft);
-  color: var(--c-brass-2);
+  background: var(--c-amber-soft);
+  color: var(--c-amber-2);
 }
 .about-card.tone-wine .about-card-icon {
-  background: var(--c-wine-soft);
-  color: var(--c-wine);
+  background: var(--c-magenta-soft);
+  color: var(--c-magenta);
 }
 .about-card.tone-teal .about-card-icon {
-  background: var(--c-teal-soft);
-  color: var(--c-teal);
+  background: var(--c-cyan-soft);
+  color: var(--c-cyan);
 }
 .about-card.tone-slate .about-card-icon {
-  background: var(--c-slate-soft);
-  color: var(--c-slate);
+  background: var(--c-steel-soft);
+  color: var(--c-steel);
 }
 
 /* ------------------------------------------------------------
@@ -459,7 +466,7 @@
   height: 34px;
   border-radius: var(--r-sm);
   background: var(--tone, var(--c-magenta));
-  color: #fff;
+  color: var(--tone-on, #fff);
   flex-shrink: 0;
   transition:
     background var(--dur-2) var(--ease-out),
@@ -1642,7 +1649,7 @@
   .pin-card:hover .pin-icon.tone-teal,
   .pin-card:hover .pin-icon.tone-slate {
     background: var(--c-ink);
-    color: var(--tone-ink, #fff);
+    color: var(--c-canvas);
   }
 
   .about-panel-dark:hover {
@@ -1655,37 +1662,48 @@
     border-color: var(--c-lime);
   }
 
+  /* Hover: the chip fills with the discipline's accent and the glyph
+     flips to that accent's "on" colour. Both must be set together —
+     the base per-tone rule sets `color` to the same accent, so setting
+     only the background would leave stroke == background. */
   .about-card:hover .about-card-icon {
-    background: var(--tone, var(--c-brass));
-    color: #fdfbf7;
+    background: var(--tone, var(--c-amber));
+    color: var(--tone-on, #fdfbf7);
   }
 
   .about-card.tone-indigo:hover .about-card-icon {
-    background: var(--c-indigo);
+    background: var(--c-violet);
+    color: var(--c-on-violet);
   }
 
   .about-card.tone-sage:hover .about-card-icon {
-    background: var(--c-sage);
+    background: var(--c-jade);
+    color: var(--c-on-jade);
   }
 
   .about-card.tone-clay:hover .about-card-icon {
-    background: var(--c-clay);
+    background: var(--c-coral);
+    color: var(--c-on-coral);
   }
 
   .about-card.tone-brass:hover .about-card-icon {
-    background: var(--c-brass);
+    background: var(--c-amber);
+    color: var(--c-on-amber);
   }
 
   .about-card.tone-wine:hover .about-card-icon {
-    background: var(--c-wine);
+    background: var(--c-magenta);
+    color: var(--c-on-magenta);
   }
 
   .about-card.tone-teal:hover .about-card-icon {
-    background: var(--c-teal);
+    background: var(--c-cyan);
+    color: var(--c-on-cyan);
   }
 
   .about-card.tone-slate:hover .about-card-icon {
-    background: var(--c-slate);
+    background: var(--c-steel);
+    color: var(--c-on-steel);
   }
 
   .chat-quick button:hover {

@@ -47,7 +47,6 @@
   --c-teal-soft: rgba(13, 127, 146, 0.12);
   --c-teal-mid: rgba(13, 127, 146, 0.3);
   --c-on-teal: #fff;
-
   --c-jade: #0a8f5f;
   --c-jade-2: #14b37a;
   --c-jade-soft: rgba(10, 143, 95, 0.12);
@@ -98,9 +97,6 @@
   --c-wine: var(--c-violet);
   --c-wine-soft: var(--c-violet-soft);
   --c-wine-mid: var(--c-violet-mid);
-  --c-teal: var(--c-teal);
-  --c-teal-soft: var(--c-teal-soft);
-  --c-teal-mid: var(--c-teal-mid);
   --c-slate: var(--c-steel);
   --c-slate-soft: var(--c-steel-soft);
   --c-slate-mid: var(--c-steel-mid);
@@ -173,7 +169,6 @@
   --c-tertiary: var(--c-lime);
   --c-tertiary-dim: var(--c-lime-soft);
   --c-green: var(--c-jade);
-  --c-amber: var(--c-amber);
   --c-blue-link: var(--c-cyan);
 }
 
@@ -266,4 +261,17 @@
   --c-panel-ink: #f2efe9;
   --c-panel-ink-2: #b3aea4;
   --c-panel-line: rgba(242, 239, 233, 0.18);
+
+  /* on-accent colours invert for the dark canvas: a light graphite
+     fill needs DARK glyphs, not white ones. */
+  --c-on-violet: #14130f;
+  --c-on-blue: #14130f;
+  --c-on-cyan: #14130f;
+  --c-on-teal: #14130f;
+  --c-on-jade: #14130f;
+  --c-on-lime: #14130f;
+  --c-on-amber: #14130f;
+  --c-on-coral: #14130f;
+  --c-on-steel: #14130f;
+  --c-on-magenta: #14130f;
 }
