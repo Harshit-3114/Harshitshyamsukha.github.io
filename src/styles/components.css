@@ -999,7 +999,8 @@
   background: var(--c-shell);
   border: 1.5px solid var(--c-ink);
   box-shadow: 5px 5px 0 0 var(--c-ink);
-  display: block;
+  display: grid;
+  grid-template-rows: minmax(0, auto);
   overflow: hidden;
   transform: scale(0.97);
   opacity: 0;
@@ -1008,11 +1009,13 @@
 .modal-inner {
   display: grid;
   grid-template-columns: 54% minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr);
+  /* the row tracks the taller column, which is itself capped, so
+     the modal shrinks to short entries and scrolls on long ones */
+  grid-template-rows: minmax(0, auto);
+  min-height: 0;
   border-radius: calc(var(--r-shell) - 6px);
   background: var(--c-surface);
   overflow: hidden;
-  height: 100%;
   box-shadow: var(--sh-inset);
 }
 .modal-left {
@@ -1020,9 +1023,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-4);
+  /* a definite max-height is what makes overflow-y engage: with
+     only min-height:0 the track still sized to its content, so
+     long entries were clipped by the shell instead of scrolling */
+  max-height: min(748px, calc(100dvh - 108px));
   overflow-y: auto;
   min-height: 0;
   min-width: 0;
+  overscroll-behavior: contain;
   border-right: 1px solid var(--c-line);
 }
 .modal-right {
@@ -1030,10 +1038,75 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-5);
+  max-height: min(748px, calc(100dvh - 108px));
   overflow-y: auto;
   min-height: 0;
   min-width: 0;
+  overscroll-behavior: contain;
   background: var(--c-surface-2);
+}
+/* a visible scrollbar, so it reads as scrollable rather than cut off */
+.modal-left::-webkit-scrollbar,
+.modal-right::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-left::-webkit-scrollbar-thumb,
+.modal-right::-webkit-scrollbar-thumb {
+  background: var(--c-line-3);
+  border-radius: 999px;
+}
+.modal-left::-webkit-scrollbar-track,
+.modal-right::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* fade the bottom edge of a scrollable column so it reads as
+   "more below" rather than "cut off". Applied only while there
+   IS more to scroll, so the last block is never faded out. */
+.modal-left,
+.modal-right {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-line-3) transparent;
+}
+.modal-right.has-more,
+.modal-left.has-more {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 32px), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 32px), transparent 100%);
+}
+/* a scroll hint chip, pinned to the bottom of the sheet */
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  z-index: 13;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--r-pill);
+  background: var(--c-ink);
+  color: var(--c-canvas);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  pointer-events: none;
+  animation: hintFloat 2.4s var(--ease-soft) infinite;
+}
+.scroll-hint svg {
+  width: 11px;
+  height: 11px;
+  stroke-width: 1.6;
+}
+@keyframes hintFloat {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 3px);
+  }
 }
 .modal-top-row {
   display: flex;
@@ -1591,12 +1664,29 @@
 
 @media (max-width: 768px) {
   .modal-shell {
-    grid-template-columns: 1fr;
+    /* a definite height so the inner track is bounded, and the
+       inner becomes the single scroll surface */
+    height: 88dvh;
     max-height: 88dvh;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
   }
   .modal-inner {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    /* one continuous scroll for the whole sheet — two nested
+       scroll areas in a 390px column is unusable */
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .modal-left,
+  .modal-right {
+    max-height: none;
+    overflow-y: visible;
+    overscroll-behavior: auto;
   }
   .modal-left {
     border-right: none;

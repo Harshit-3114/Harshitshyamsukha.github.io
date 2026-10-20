@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Icon from './Icon.jsx';
 import VisualBlock from './VisualBlock.jsx';
 import { GitHubStats, GitHubActivityFeed } from './GitHub.jsx';
@@ -28,6 +28,8 @@ function Block({ icon, label, children }) {
 }
 
 export default function ProjectModal({ project, onClose, onNav, onOpenById, onGitHubClick }) {
+  const [showHint, setShowHint] = useState(false);
+
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
@@ -37,6 +39,27 @@ export default function ProjectModal({ project, onClose, onNav, onOpenById, onGi
       document.body.style.overflow = '';
     };
   }, [onClose]);
+
+  // show the "scroll" hint only while there is more to reach
+  useEffect(() => {
+    if (!project) return;
+    const update = () => {
+      const el = document.querySelector('.modal-right');
+      if (!el) { setShowHint(false); return; }
+      const more = el.scrollHeight - el.clientHeight - el.scrollTop > 24;
+      setShowHint(more);
+      el.classList.toggle('has-more', more);
+    };
+    update();
+    const t = setTimeout(update, 350);
+    const el = document.querySelector('.modal-right');
+    el?.addEventListener('scroll', update, { passive: true });
+    return () => {
+      clearTimeout(t);
+      el?.removeEventListener('scroll', update);
+      el?.classList.remove('has-more');
+    };
+  }, [project]);
 
   if (!project) return null;
 
@@ -228,6 +251,13 @@ export default function ProjectModal({ project, onClose, onNav, onOpenById, onGi
         <button className="modal-close" onClick={onClose} aria-label="Close">
           <Icon name="close" size={14} />
         </button>
+
+        {showHint && (
+          <span className="scroll-hint">
+            <Icon name="arrowUp" size={11} style={{ transform: 'rotate(180deg)' }} />
+            Scroll for more
+          </span>
+        )}
       </div>
 
       <button className="modal-nav-btn next" aria-label="Next project" onClick={(e) => { e.stopPropagation(); onNav(1); }}>
