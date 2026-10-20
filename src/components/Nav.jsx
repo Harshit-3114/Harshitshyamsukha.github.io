@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Icon from './Icon.jsx';
 import { TABS, PROFILE } from '../data/portfolio.js';
 
@@ -18,22 +18,44 @@ export default function Nav({
   eggTotal,
   eggExpanded,
   onEggToggle,
+  onOpenPalette,
+  soundEnabled,
+  onToggleSound,
+  focusMode,
+  onToggleFocus,
 }) {
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const closeTimer = useRef(null);
   const barRef = useRef(null);
   const overlayRef = useRef(null);
+
+  /* Apple: the exit retraces the entry path. Keep the overlay mounted
+     for the length of the exit animation instead of unmounting it
+     the instant close is requested. */
+  const requestClose = useCallback(() => {
+    if (closing) return;
+    setClosing(true);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => {
+      setOpen(false);
+      setClosing(false);
+    }, 300);
+  }, [closing]);
+
+  useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current); }, []);
 
   // close overlay on Escape
   useEffect(() => {
     if (!open) return;
-    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    const onKey = (e) => { if (e.key === 'Escape') requestClose(); };
     window.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
     return () => {
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
     };
-  }, [open]);
+  }, [open, requestClose]);
 
   // stagger the overlay links in on open
   useEffect(() => {
@@ -72,7 +94,7 @@ export default function Nav({
 
   const pick = (key) => {
     onTabChange(key);
-    setOpen(false);
+    requestClose();
   };
 
   return (
@@ -110,6 +132,34 @@ export default function Nav({
           </div>
 
           <div className="nav-tools">
+            {onOpenPalette && (
+              <button className="nav-tool-btn" onClick={onOpenPalette} title="Command palette" aria-label="Open command palette">
+                <Icon name="search" size={12} />
+                <span className="nav-tool-kbd">⌘K</span>
+              </button>
+            )}
+            {onToggleFocus && (
+              <button
+                className={`nav-tool-btn nav-tool-focus${focusMode ? ' is-on' : ''}`}
+                onClick={onToggleFocus}
+                title="Focus mode (⌘⇧F)"
+                aria-label="Toggle focus mode"
+                aria-pressed={focusMode}
+              >
+                <Icon name="focus" size={12} />
+              </button>
+            )}
+            {onToggleSound && (
+              <button
+                className={`nav-tool-btn${soundEnabled ? ' is-on' : ''}`}
+                onClick={onToggleSound}
+                title={soundEnabled ? 'Mute interface sound' : 'Enable interface sound'}
+                aria-label="Toggle interface sound"
+                aria-pressed={soundEnabled}
+              >
+                <Icon name={soundEnabled ? 'volume' : 'mute'} size={12} />
+              </button>
+            )}
             {konamiCount !== null && <span className="konami-counter">🕹 {konamiCount}</span>}
             <button
               className={`egg-header-btn${eggExpanded ? ' expanded' : ''}`}
@@ -123,7 +173,7 @@ export default function Nav({
 
           <button
             className={`nav-burger${open ? ' open' : ''}`}
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => (open ? requestClose() : setOpen(true))}
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
           >
@@ -134,7 +184,7 @@ export default function Nav({
       </div>
 
       {open && (
-        <div className="nav-overlay" ref={overlayRef} role="dialog" aria-modal="true" aria-label="Menu">
+        <div className={`nav-overlay${closing ? ' is-closing' : ''}`} ref={overlayRef} role="dialog" aria-modal="true" aria-label="Menu">
           <div className="overlay-inner">
             {TABS.map((t, i) => (
               <button

@@ -45,7 +45,8 @@
   display: grid;
   place-items: center;
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 36;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 400;
   font-size: 30px;
   letter-spacing: -0.02em;
@@ -137,7 +138,8 @@
 
 .about-name {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 144;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 300;
   font-size: clamp(3rem, 7.2vw, 6.4rem);
   line-height: 0.88;
@@ -146,7 +148,8 @@
 }
 .about-name em {
   font-style: italic;
-  font-variation-settings: "SOFT" 0, "WONK" 1, "opsz" 144;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+  font-optical-sizing: auto;
   color: var(--c-magenta);
 }
 

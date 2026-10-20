@@ -4,8 +4,21 @@
    ============================================================ */
 
 :root {
+  /* ---- AMBIENCE DEFAULTS ----
+     The live ambience engine (useAmbience) overwrites these on
+     <html> at runtime. These are the fallback: a bright, crisp
+     afternoon. They are NOT the site identity — the chromatic
+     discipline colours below never change. */
+  --amb-paper: #f6f1e6;
+  --amb-field-1: #f0e2c4;
+  --amb-field-2: #e4e9dd;
+  --amb-field-3: #f6ecda;
+  --amb-shade: #7a6440;
+  --amb-hard: 1;
+  --amb-grain: 0.26;
+
   /* ---- SURFACES (paper) ---- */
-  --c-canvas: #f2ece0;
+  --c-canvas: var(--amb-paper);
   --c-canvas-veil: rgba(242, 236, 224, 0.78);
   --c-surface: #fdfbf6;
   --c-surface-2: #e9e2d4;
@@ -139,17 +152,40 @@
   --r-lg: 0.85rem;
   --r-pill: 999px;
 
-  /* ---- DEPTH: hard, directional, chromatic — no soft glow ---- */
-  --sh-1: 2px 2px 0 0 rgba(22, 19, 15, 0.14);
-  --sh-2: 4px 4px 0 0 rgba(22, 19, 15, 0.18);
-  --sh-3: 6px 6px 0 0 rgba(22, 19, 15, 0.22);
+  /* ---- DEPTH: hard, directional, chromatic — never harsh black ----
+     The shadow takes the colour of the light that cast it, and its
+     hardness follows the sky: a razor-sharp noon shadow, a nearly
+     absent one under overcast. */
+  --sh-1: calc(2px * var(--amb-hard)) calc(2px * var(--amb-hard)) 0 0
+          color-mix(in srgb, var(--amb-shade) 22%, transparent);
+  --sh-2: calc(4px * var(--amb-hard)) calc(4px * var(--amb-hard)) 0 0
+          color-mix(in srgb, var(--amb-shade) 26%, transparent);
+  --sh-3: calc(6px * var(--amb-hard)) calc(6px * var(--amb-hard)) 0 0
+          color-mix(in srgb, var(--amb-shade) 30%, transparent);
   --sh-inset: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
   /* ---- MOTION ---- */
-  /* all three curves decelerate; none overshoots */
+  /* Spring easings encoded as linear() curves. A spring is not a
+     duration: it has a damping ratio and a response, and its settle
+     time emerges from those. linear() lets gesture-driven transforms
+     use real spring physics in pure CSS, so they stay interruptible
+     and can be re-targeted mid-flight without a jump. */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-snap: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* critically damped — the house default, no overshoot */
+  --spring-ui: linear(0.0000, 0.0126, 0.0450, 0.0910, 0.1455, 0.2048, 0.2662, 0.3275, 0.3874, 0.4448, 0.4991, 0.5499, 0.5969, 0.6401, 0.6796, 0.7154, 0.7478, 0.7770, 0.8032, 0.8266, 0.8475, 0.8661, 0.8825, 0.8971, 0.9100, 0.9213, 0.9313, 0.9401, 0.9478, 0.9545, 0.9605, 0.9656, 0.9701, 0.9741, 0.9775, 0.9805, 0.9831, 0.9854, 0.9873, 0.9891, 0.9905, 0.9918, 0.9929, 0.9939, 0.9947, 0.9955, 0.9961, 0.9966, 0.9971, 0.9975, 0.9978, 0.9981, 0.9984, 0.9986, 0.9988, 0.9990);
+  --spring-ui-dur: 560ms;
+
+  /* a little momentum — for surfaces that arrive with weight */
+  --spring-sheet: linear(0.0000, 0.0128, 0.0469, 0.0964, 0.1564, 0.2231, 0.2931, 0.3641, 0.4340, 0.5013, 0.5651, 0.6246, 0.6793, 0.7290, 0.7737, 0.8134, 0.8484, 0.8789, 0.9051, 0.9276, 0.9465, 0.9623, 0.9753, 0.9859, 0.9943);
+  --spring-sheet-dur: 512ms;
+
+  /* gesture release — carries the flick, settles with a whisper */
+  --spring-release: linear(0.0000, 0.0128, 0.0463, 0.0947, 0.1530, 0.2173, 0.2846, 0.3524, 0.4190, 0.4831, 0.5437, 0.6002, 0.6523, 0.6998, 0.7427, 0.7812, 0.8153, 0.8454, 0.8717, 0.8946, 0.9143, 0.9311, 0.9454, 0.9575, 0.9675, 0.9759, 0.9827, 0.9883, 0.9927, 0.9962, 0.9989);
+  --spring-release-dur: 720ms;
+
   --dur-1: 180ms;
   --dur-2: 380ms;
   --dur-3: 700ms;

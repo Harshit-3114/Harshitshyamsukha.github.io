@@ -4,10 +4,37 @@ import Nav from './components/Nav.jsx';
 import Icon from './components/Icon.jsx';
 import ProjectModal from './components/ProjectModal.jsx';
 import TabContent from './tabs/TabContent.jsx';
+import CommandPalette from './components/CommandPalette.jsx';
+import StatusBar from './components/StatusBar.jsx';
+import WeatherField from './components/WeatherField.jsx';
+import Constellation from './components/Constellation.jsx';
+import Console from './components/Console.jsx';
+import Spectacle from './components/Spectacle.jsx';
 import useRevealObserver from './hooks/useRevealObserver.js';
-import { ALL_PINS, KNOWLEDGE, CORE_PROJECTS, PROCESS_DATA, PROFILE } from './data/portfolio.js';
+import { useTilt } from './hooks/useTilt.js';
+import useAmbience, { AMBIENCE_MODES } from './hooks/useAmbience.js';
+import useSound from './hooks/useSound.js';
+import useGitHubStatus from './hooks/useGitHubStatus.js';
+import { ALL_PINS, KNOWLEDGE, CORE_PROJECTS, PROCESS_DATA, PROFILE, TABS } from './data/portfolio.js';
 
 const VALID_TABS = ['about', 'all', 'ai', 'fullstack', 'client', 'credentials', 'experience', 'activity', 'process', 'contact', 'void'];
+
+/* which tab a pin belongs to, and which palette group it files under */
+const TAB_FOR_CATEGORY = {
+  ai: 'ai',
+  fullstack: 'fullstack',
+  client: 'client',
+  certification: 'credentials',
+  academic: 'credentials',
+  experience: 'experience',
+  activity: 'activity',
+};
+const groupFor = (cat) => {
+  if (cat === 'certification' || cat === 'academic') return 'Credentials';
+  if (cat === 'experience') return 'Experience';
+  if (cat === 'activity') return 'Live';
+  return 'Projects';
+};
 
 /* read the initial tab from the URL hash, falling back to the saved tab */
 function initialTab() {
@@ -34,6 +61,19 @@ export default function App() {
   const [filterTab, setFilterTab] = useState(initialTab);
   const [selectedProcessProject, setSelectedProcessProject] = useState(null);
   const [shuffleKey, setShuffleKey] = useState(0);
+
+  /* ---------------- the instrument set ---------------- */
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [focusMode, setFocusMode] = useState(false);
+  const [consoleOpen, setConsoleOpen] = useState(false);
+  const [spectacle, setSpectacle] = useState(null);
+  const [modalOrigin, setModalOrigin] = useState(null);
+  const ambience = useAmbience();
+  const sound = useSound();
+  const ghStatus = useGitHubStatus();
+
+  const { mode: ambienceMode, setMode: setAmbienceMode, setOverride: setAmbienceOverride } = ambience;
+  const { enabled: soundEnabled, toggle: toggleSound, setEnabled: setSoundEnabled } = sound;
 
   /* ---------------- forms ---------------- */
   const [formName, setFormName] = useState('');
@@ -111,40 +151,73 @@ export default function App() {
     footer: { hint: "Click the footer 5 times", found: foundEggs.includes('footer') },
     gear: { hint: "Click the AI gear icon", found: foundEggs.includes('gear') },
     voidplus: { hint: "Shift+click ◆ Void for overload", found: foundEggs.includes('voidplus') },
+    rickroll: { hint: "Somebody typed a song into the console", found: foundEggs.includes('rickroll') },
   };
 
   /* ---------------- project modal (declared before effects that use it) ---------------- */
-  const openProjectModal = useCallback((pin) => {
+  const soundRef = useRef(sound);
+  useEffect(() => { soundRef.current = sound; }, [sound]);
+  const playSound = useCallback((kind) => { soundRef.current?.play?.(kind); }, []);
+
+  /* thunder, called by the weather field when a bolt lands */
+  const lightning = useCallback((distance) => { soundRef.current?.thunder?.(distance); }, []);
+
+  /* ---- what the console can do to the site ---- */
+  const consoleWeather = useCallback((cmd) => {
+    setAmbienceOverride({ weather: cmd.weather, time: cmd.time || null, name: cmd.name });
+  }, [setAmbienceOverride]);
+
+  const consoleAuto = useCallback(() => { setAmbienceOverride(null); }, [setAmbienceOverride]);
+
+  const consoleSound = useCallback((on) => { setSoundEnabled(on); }, [setSoundEnabled]);
+
+  /* a set piece fires across the screen */
+  const consoleSpectacle = useCallback((cmd) => {
+    setSpectacle({ effect: cmd.effect, key: `${cmd.effect}-${Date.now()}` });
+  }, []);
+
+  const consoleRickroll = useCallback(() => {
+    markEgg('rickroll');
+    setRainbowMode(true);
+    setTimeout(() => setRainbowMode(false), 6000);
+    playSound('scratch');
+  }, [markEgg, playSound]);
+
+  const openProjectModal = useCallback((pin, opts = {}) => {
     if (hoverTimerRef.current) { clearTimeout(hoverTimerRef.current); hoverTimerRef.current = null; }
+    /* remember where the card was, so the dossier can open out of it */
+    if (opts.origin !== false) {
+      const cell = document.querySelector(`[data-pin-id="${pin.id}"] .pin-card`);
+      if (cell) {
+        const r = cell.getBoundingClientRect();
+        setModalOrigin({ left: r.left, top: r.top, width: r.width, height: r.height, pinId: pin.id });
+      } else {
+        setModalOrigin(null);
+      }
+    }
     setSelectedProject(pin);
     setShowProjectModal(true);
     setStaticPop(true);
     staticTimerRef.current = setTimeout(() => setStaticPop(false), 400);
     document.body.style.overflow = 'hidden';
+    playSound('open');
     window.plausible?.('Pin Click', { props: { title: pin.title } });
-  }, []);
+  }, [playSound]);
 
   const closeProjectModal = useCallback(() => {
     if (hoverTimerRef.current) { clearTimeout(hoverTimerRef.current); hoverTimerRef.current = null; }
     setShowProjectModal(false);
     setSelectedProject(null);
+    setModalOrigin(null);
     document.body.style.overflow = '';
     hoverOpenedRef.current = false;
-  }, []);
+    playSound('close');
+  }, [playSound]);
 
-  const handleCardTilt = useCallback((e, el) => {
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = e.clientX - r.left, y = e.clientY - r.top;
-    el.style.setProperty('--tilt-x', `${((y - r.height / 2) / (r.height / 2)) * -6}deg`);
-    el.style.setProperty('--tilt-y', `${((x - r.width / 2) / (r.width / 2)) * 6}deg`);
-  }, []);
-
-  const resetCardTilt = useCallback((el) => {
-    if (!el) return;
-    el.style.setProperty('--tilt-x', '0deg');
-    el.style.setProperty('--tilt-y', '0deg');
-  }, []);
+  /* ---------------- 1:1 pointer tracking with spring release ----------------
+     The card is glued to the pointer while it is over it (no easing),
+     and springs back on release carrying the pointer's velocity. */
+  const tilt = useTilt({ max: 7 });
 
   const handleCardMouseEnter = useCallback((pin) => {
     if (showProjectModal) return;
@@ -156,12 +229,17 @@ export default function App() {
       clearTimeout(hoverTimerRef.current);
       hoverTimerRef.current = setTimeout(() => { hoverOpenedRef.current = true; openProjectModal(pin); }, 1000);
     }
-    handleCardTilt(e, el);
-  }, [openProjectModal, handleCardTilt]);
+    tilt.onMove(e, el);
+  }, [openProjectModal, tilt]);
 
-  const handleCardMouseLeave = useCallback(() => {
+  const handleCardMouseLeave = useCallback((el) => {
     if (hoverTimerRef.current) { clearTimeout(hoverTimerRef.current); hoverTimerRef.current = null; }
-  }, []);
+    tilt.onLeave(el);
+  }, [tilt]);
+
+  const resetCardTilt = useCallback((el) => {
+    tilt.onLeave(el);
+  }, [tilt]);
 
   /* ---------------- void theme on <html> so it cascades everywhere ---------------- */
   useEffect(() => {
@@ -225,6 +303,56 @@ export default function App() {
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, [markEgg]);
+
+  /* ---------------- ⌘K palette · ⌘⇧F focus mode ---------------- */
+  useEffect(() => {
+    const handleKey = (e) => {
+      const mod = e.metaKey || e.ctrlKey;
+      if (!mod) return;
+      if (e.key === 'k' || e.key === 'K') {
+        e.preventDefault();
+        setPaletteOpen((v) => !v);
+        playSound('tick');
+        return;
+      }
+      if (e.shiftKey && (e.key === 'f' || e.key === 'F')) {
+        e.preventDefault();
+        setFocusMode((v) => !v);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [playSound]);
+
+  /* ---------------- focus mode on <html> ---------------- */
+  useEffect(() => {
+    document.documentElement.classList.toggle('focus-mode', focusMode);
+    return () => document.documentElement.classList.remove('focus-mode');
+  }, [focusMode]);
+
+  /* ---------------- the console: ` opens it ---------------- */
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const t = e.target;
+      const typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+      if (typing) {
+        if (e.key === 'Escape') t.blur();
+        return;
+      }
+      if (e.key === '`' || e.key === '~') {
+        e.preventDefault();
+        setConsoleOpen((v) => !v);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
+
+  /* ---------------- the weather bed follows the sky ---------------- */
+  useEffect(() => {
+    soundRef.current?.setBed?.(ambience.weatherId);
+  }, [ambience.weatherId, sound.enabled]);
 
   /* ---------------- idle detection ---------------- */
   useEffect(() => {
@@ -378,17 +506,142 @@ export default function App() {
 
   const navigate = useCallback((key) => handleTabChange(key), [handleTabChange]);
 
+  const consoleTheme = useCallback((mode) => {
+    const want = mode === 'void';
+    if (want !== voidThemeActive) handleTabChange('void');
+  }, [voidThemeActive, handleTabChange]);
+
+  /* ---------------- the command palette's index ----------------
+     Every tab, every project, every credential, every action — one
+     keystroke away. The list is pure data; the actions are resolved
+     by a single dispatcher when a command is chosen. */
+  const commands = useMemo(() => {
+    const list = [];
+
+    TABS.forEach((t) => {
+      list.push({
+        id: `tab-${t.key}`,
+        group: 'Go to',
+        label: t.label,
+        icon: t.key === 'void' ? 'sparkle2' : 'compass',
+        hint: `#${t.key}`,
+        action: `tab:${t.key}`,
+      });
+    });
+
+    ALL_PINS.forEach((p) => {
+      list.push({
+        id: `pin-${p.id}`,
+        group: groupFor(p.category),
+        label: p.title,
+        icon: 'link',
+        hint: p.company || p.issuer || p.institution || p.date,
+        action: `pin:${p.id}`,
+      });
+    });
+
+    list.push(
+      { id: 'act-resume', group: 'Actions', label: 'Download résumé', icon: 'download', action: 'resume' },
+      { id: 'act-email', group: 'Actions', label: 'Copy email address', icon: 'mail', hint: PROFILE.email, action: 'email' },
+      { id: 'act-github', group: 'Actions', label: 'Open GitHub profile', icon: 'github', action: 'github' },
+      { id: 'act-linkedin', group: 'Actions', label: 'Open LinkedIn profile', icon: 'link', action: 'linkedin' },
+      { id: 'act-chat', group: 'Actions', label: 'Ask the AI assistant', icon: 'sparkle2', action: 'chat' },
+      { id: 'act-shuffle', group: 'Actions', label: 'Shuffle the grid', icon: 'grid', action: 'shuffle' },
+      {
+        id: 'act-focus', group: 'Actions', icon: 'focus', kbd: '⌘⇧F', action: 'focus',
+        label: focusMode ? 'Leave focus mode' : 'Enter focus mode',
+      },
+      {
+        id: 'act-sound', group: 'Actions', icon: soundEnabled ? 'mute' : 'volume', action: 'sound',
+        label: soundEnabled ? 'Mute interface sound' : 'Enable interface sound',
+      },
+      { id: 'act-void', group: 'Actions', label: 'Toggle the Void theme', icon: 'sparkle2', action: 'void' },
+    );
+
+    AMBIENCE_MODES.forEach((m) => {
+      list.push({
+        id: `amb-${m.id}`,
+        group: 'Ambience',
+        label: m.label,
+        icon: 'sun',
+        hint: ambienceMode === m.id ? 'active' : undefined,
+        action: `ambience:${m.id}`,
+      });
+    });
+
+    return list;
+  }, [focusMode, soundEnabled, ambienceMode]);
+
+  /* one dispatcher for every command the palette can fire */
+  const runCommand = useCallback((action) => {
+    const sep = action.indexOf(':');
+    const kind = sep === -1 ? action : action.slice(0, sep);
+    const arg = sep === -1 ? '' : action.slice(sep + 1);
+    switch (kind) {
+      case 'tab':
+        handleTabChange(arg);
+        break;
+      case 'pin': {
+        const p = ALL_PINS.find((x) => x.id === arg);
+        if (!p) break;
+        handleTabChange(TAB_FOR_CATEGORY[p.category] || 'all');
+        setTimeout(() => openProjectModal(p, { origin: false }), 40);
+        break;
+      }
+      case 'ambience':
+        setAmbienceMode(arg);
+        break;
+      case 'focus':
+        setFocusMode((v) => !v);
+        break;
+      case 'sound':
+        toggleSound();
+        break;
+      case 'shuffle':
+        setShuffleKey((k) => k + 1);
+        break;
+      case 'chat':
+        setChatOpen(true);
+        break;
+      case 'resume': {
+        const a = document.createElement('a');
+        a.href = PROFILE.resume;
+        a.download = 'Harshit-Shyamsukha-Resume.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        break;
+      }
+      case 'email':
+        navigator.clipboard?.writeText(PROFILE.email).catch(() => {});
+        break;
+      case 'github':
+        window.open(PROFILE.github, '_blank', 'noopener');
+        break;
+      case 'linkedin':
+        window.open(PROFILE.linkedin, '_blank', 'noopener');
+        break;
+      case 'void':
+        handleTabChange('void');
+        break;
+      default:
+        break;
+    }
+  }, [handleTabChange, openProjectModal, setAmbienceMode, toggleSound]);
+
   /* ---------------- project modal (see above) ---------------- */
   const projectNav = (dir) => {
     const idx = filteredPins.findIndex((p) => p.id === selectedProject?.id);
     if (idx === -1) return;
     const next = (idx + dir + filteredPins.length) % filteredPins.length;
-    openProjectModal(filteredPins[next]);
+    /* the dossier keeps the origin it opened from — it is the same
+       surface, not a new one */
+    openProjectModal(filteredPins[next], { origin: false });
   };
 
   const openProjectById = (id) => {
     const p = ALL_PINS.find((x) => x.id === id);
-    if (p) openProjectModal(p);
+    if (p) openProjectModal(p, { origin: false });
   };
 
   /* ---------------- chat ---------------- */
@@ -463,6 +716,7 @@ export default function App() {
       <div className={`layout${konamiTriggered ? ' konami-' + konamiPhase : ''}${voidThemeActive ? ' void-theme' : ''}${rainbowMode ? ' rainbow-mode' : ''}${voidModePlus ? ' void-plus' : ''}`}>
         <div className="morph-canvas" />
         <div className="grain-canvas" />
+        <WeatherField kind={ambience.weatherId || 'clear'} onLightning={lightning} />
 
         <Nav
           filterTab={filterTab}
@@ -477,6 +731,11 @@ export default function App() {
             if (n >= 5) { setShowEggHints(true); setEggClicks(0); }
             else setEggExpanded((v) => !v);
           }}
+          onOpenPalette={() => setPaletteOpen(true)}
+          soundEnabled={sound.enabled}
+          onToggleSound={() => sound.toggle()}
+          focusMode={focusMode}
+          onToggleFocus={() => setFocusMode((v) => !v)}
         />
 
         <main className="main">
@@ -531,6 +790,7 @@ export default function App() {
               crError={crError}
               crSending={crSending}
               handleCodeReviewSubmit={handleCodeReviewSubmit}
+              ghStatus={ghStatus}
             />
           </div>
 
@@ -542,6 +802,21 @@ export default function App() {
             </p>
           </footer>
         </main>
+
+        <Console
+          username={PROFILE.githubHandle}
+          ambience={ambience}
+          onWeather={consoleWeather}
+          onAuto={consoleAuto}
+          onSound={consoleSound}
+          onTheme={consoleTheme}
+          onSpectacle={consoleSpectacle}
+          soundEnabled={sound.enabled}
+          open={consoleOpen}
+          onToggle={() => setConsoleOpen((v) => !v)}
+          onRickroll={consoleRickroll}
+        />
+        <StatusBar ambience={ambience} gh={ghStatus} />
 
         {!chatOpen && (
           <div className="chat-toggle-wrap">
@@ -593,6 +868,7 @@ export default function App() {
         {showProjectModal && selectedProject && (
           <ProjectModal
             project={selectedProject}
+            origin={modalOrigin}
             onClose={closeProjectModal}
             onNav={projectNav}
             onOpenById={openProjectById}
@@ -600,6 +876,30 @@ export default function App() {
           />
         )}
       </div>
+
+      {focusMode && (
+        <div className="focus-ribbon">
+          <span>FOCUS MODE</span>
+          <span>one column, no chrome</span>
+          <button onClick={() => setFocusMode(false)}>Exit ⌘⇧F</button>
+        </div>
+      )}
+
+      {spectacle && (
+        <Spectacle
+          key={spectacle.key}
+          effect={spectacle.effect}
+          onDone={() => setSpectacle(null)}
+        />
+      )}
+
+      {paletteOpen && (
+        <CommandPalette
+          onClose={() => setPaletteOpen(false)}
+          commands={commands}
+          onRun={runCommand}
+        />
+      )}
 
       {konamiPhase === 'void-swallow' && (
         <div className="void-swallow-overlay">

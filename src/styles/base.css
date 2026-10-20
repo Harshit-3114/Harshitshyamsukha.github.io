@@ -127,6 +127,31 @@ svg {
 }
 
 /* ------------------------------------------------------------
+   TILT AXES
+   Registered so they are animatable custom properties. Without
+   @property, a custom property is an untyped token and cannot be
+   transitioned — so the spring release silently snapped instead of
+   animating. Now the spring runs on the axis itself, which also
+   makes it interruptible: re-targeting mid-flight re-targets the
+   property, not a snapshot.
+   ------------------------------------------------------------ */
+@property --tilt-x {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --tilt-y {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --tilt-lift {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* ------------------------------------------------------------
    FILM GRAIN — fixed, pointer-events-none, systemic layer only
    ------------------------------------------------------------ */
 .grain-canvas {
@@ -136,9 +161,10 @@ svg {
   height: 100%;
   z-index: 50;
   pointer-events: none;
-  opacity: 0.42;
+  opacity: var(--amb-grain);
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)' opacity='0.32'/%3E%3C/svg%3E");
+  transition: opacity var(--dur-4) var(--ease-soft);
 }
 .void-theme .grain-canvas {
   mix-blend-mode: screen;
@@ -146,7 +172,7 @@ svg {
 }
 
 /* ------------------------------------------------------------
-   CHROMA FIELD — flat blocks of colour, not soft glow
+   SKY FIELD — the ambient light behind the content
    ------------------------------------------------------------ */
 .morph-canvas {
   position: fixed;
@@ -154,14 +180,17 @@ svg {
   z-index: 0;
   pointer-events: none;
   background:
-    linear-gradient(135deg, rgba(229, 0, 155, 0.09) 0%, transparent 42%),
-    linear-gradient(315deg, rgba(0, 184, 204, 0.1) 0%, transparent 40%),
-    linear-gradient(45deg, rgba(134, 201, 0, 0.07) 0%, transparent 34%);
+    radial-gradient(48% 40% at 8% 4%, var(--amb-field-1), transparent 62%),
+    radial-gradient(44% 38% at 92% 10%, var(--amb-field-2), transparent 60%),
+    radial-gradient(52% 42% at 78% 92%, var(--amb-field-3), transparent 64%);
+  animation: meshDrift 26s var(--ease-soft) infinite alternate;
+  transition: background var(--dur-4) var(--ease-soft);
 }
 .void-theme .morph-canvas {
   background:
-    linear-gradient(135deg, rgba(242, 239, 233, 0.05) 0%, transparent 42%),
-    linear-gradient(315deg, rgba(242, 239, 233, 0.035) 0%, transparent 40%);
+    radial-gradient(48% 40% at 8% 4%, rgba(201, 162, 255, 0.14), transparent 62%),
+    radial-gradient(44% 38% at 92% 10%, rgba(0, 229, 255, 0.13), transparent 60%),
+    radial-gradient(52% 42% at 78% 92%, rgba(157, 107, 255, 0.12), transparent 64%);
 }
 
 .layout {
@@ -225,7 +254,8 @@ svg {
 
 .display-xl {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 144;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 300;
   font-size: clamp(3.4rem, 11.5vw, 11rem);
   line-height: 0.86;
@@ -235,13 +265,15 @@ svg {
 }
 .display-xl em {
   font-style: italic;
-  font-variation-settings: "SOFT" 0, "WONK" 1, "opsz" 144;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+  font-optical-sizing: auto;
   color: var(--c-magenta);
 }
 
 .display-lg {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 72;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 300;
   font-size: clamp(2.4rem, 5.4vw, 4.6rem);
   line-height: 0.96;
@@ -252,7 +284,8 @@ svg {
 
 .display-md {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 36;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 400;
   font-size: clamp(1.5rem, 2.4vw, 2.15rem);
   line-height: 1.14;
@@ -303,7 +336,8 @@ svg {
    ------------------------------------------------------------ */
 .section-title {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 72;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 300;
   font-size: clamp(2.1rem, 4.6vw, 3.9rem);
   line-height: 1;

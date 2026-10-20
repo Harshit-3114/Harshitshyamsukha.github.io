@@ -47,7 +47,8 @@
 
 .nav-brand {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 24;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 500;
   font-size: 15px;
   letter-spacing: -0.015em;
@@ -232,8 +233,12 @@
   background: var(--c-canvas);
   backdrop-filter: blur(30px) saturate(1.25);
   -webkit-backdrop-filter: blur(30px) saturate(1.25);
-  animation: overlayIn var(--dur-3) var(--ease-out) both;
+  animation: overlayIn var(--spring-sheet-dur) var(--spring-sheet) both;
   overflow-y: auto;
+}
+/* the exit retraces the entry path, in reverse */
+.nav-overlay.is-closing {
+  animation: overlayOut var(--dur-2) var(--ease-soft) both;
 }
 .void-theme .nav-overlay {
   background: var(--c-canvas);
@@ -248,7 +253,7 @@
   gap: var(--sp-2);
 }
 
-/* staggered mask reveal */
+/* staggered mask reveal — each link rises out of an invisible box */
 .overlay-link {
   display: flex;
   align-items: baseline;
@@ -256,7 +261,8 @@
   padding: var(--sp-4) 0;
   border-bottom: 1px solid var(--c-line);
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 72;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 300;
   font-size: clamp(1.9rem, 7vw, 3.4rem);
   line-height: 1.05;
@@ -268,7 +274,7 @@
   clip-path: inset(0 0 100% 0);
   transition:
     opacity var(--dur-3) var(--ease-out),
-    transform var(--dur-3) var(--ease-snap),
+    transform var(--spring-ui-dur) var(--spring-ui),
     clip-path var(--dur-3) var(--ease-out),
     color var(--dur-1) var(--ease-out);
   transition-delay: calc(var(--i, 0) * 60ms);
@@ -277,6 +283,17 @@
   opacity: 1;
   transform: translateY(0);
   clip-path: inset(0 0 -20% 0);
+}
+/* on exit the links leave the way they came in */
+.nav-overlay.is-closing .overlay-link {
+  opacity: 0;
+  transform: translateY(26px);
+  clip-path: inset(0 0 100% 0);
+  transition:
+    opacity var(--dur-2) var(--ease-soft),
+    transform var(--dur-2) var(--ease-soft),
+    clip-path var(--dur-2) var(--ease-soft);
+  transition-delay: calc(var(--i, 0) * 22ms);
 }
 .overlay-link .ol-idx {
   font-family: var(--font-mono);

@@ -162,7 +162,8 @@
 }
 .gh-stat-value {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 36;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 400;
   font-size: 20px;
   color: var(--c-ink);
@@ -217,7 +218,8 @@
 }
 .vb-mark {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 36;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 400;
   font-size: 19px;
   color: var(--c-ink);
@@ -472,7 +474,8 @@
 }
 .about-card-title {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 24;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 500;
   font-size: 16px;
   letter-spacing: -0.018em;
@@ -562,6 +565,32 @@
 /* ------------------------------------------------------------
    PIN CARD — the work card
    ------------------------------------------------------------ */
+/* .pin-cell is the stable hit area — it never transforms, so the
+   pointer cannot lose the card by the card moving. .pin-wrap carries
+   the tilt; .pin-card carries the scroll-reveal. Three separate
+   elements, three separate transforms, no clobbering. */
+.pin-cell {
+  grid-column: span 4;
+  min-width: 0;
+  height: 100%;
+  box-shadow: none;
+}
+
+.pin-wrap {
+  height: 100%;
+  min-width: 0;
+  transform:
+    perspective(var(--tilt-perspective, 1000px))
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg))
+    translate3d(var(--tilt-lift, 0px), var(--tilt-lift, 0px), 0);
+  /* No transition: the JS spring integrator owns this transform, so
+     the release can carry the pointer's velocity and be re-targeted
+     mid-flight. A CSS transition here would fight it. */
+  transition: none;
+  will-change: transform;
+}
+
 .pin-card {
   position: relative;
   height: 100%;
@@ -573,11 +602,9 @@
   box-shadow: 4px 4px 0 0 var(--c-ink);
   display: flex;
   flex-direction: column;
-  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition:
-    transform var(--dur-2) var(--ease-out),
-    box-shadow var(--dur-2) var(--ease-out);
-  will-change: transform;
+    box-shadow var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out);
 }
 .pin-card-inner {
   position: relative;
@@ -614,7 +641,8 @@
 }
 .pin-title {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 36;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 400;
   font-size: 19px;
   line-height: 1.18;
@@ -732,7 +760,8 @@
 }
 .process-title {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 48;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 300;
   font-size: clamp(1.9rem, 3.6vw, 2.9rem);
   line-height: 1.06;
@@ -905,7 +934,8 @@
 }
 .form-success p:first-child {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 48;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 300;
   font-size: 28px;
   letter-spacing: -0.025em;
@@ -978,6 +1008,9 @@
   padding: var(--sp-6) var(--sp-6) calc(var(--sp-6) + env(safe-area-inset-bottom, 0px));
   animation: fadeIn var(--dur-2) var(--ease-out);
 }
+.modal-overlay.is-closing {
+  animation: fadeOut var(--dur-2) var(--ease-soft) forwards;
+}
 .modal-shell {
   position: relative;
   width: 100%;
@@ -993,7 +1026,11 @@
   overflow: hidden;
   transform: scale(0.97);
   opacity: 0;
-  animation: modalIn var(--dur-3) var(--ease-snap) forwards;
+  animation: modalIn var(--spring-sheet-dur) var(--spring-sheet) forwards;
+}
+/* exit travels back along the same path as the entry, in reverse */
+.modal-shell.is-closing {
+  animation: modalOut var(--dur-2) var(--ease-soft) forwards;
 }
 .modal-inner {
   display: grid;
@@ -1104,7 +1141,8 @@
 }
 .modal-title {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 72;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 300;
   font-size: clamp(1.55rem, 2.6vw, 2.3rem);
   line-height: 1.06;
@@ -1197,7 +1235,8 @@
 }
 .modal-metrics-value {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 36;
+  font-variation-settings: "SOFT" 0, "WONK" 0;
+  font-optical-sizing: auto;
   font-weight: 400;
   font-size: 18px;
   color: var(--c-ink);
@@ -1859,8 +1898,9 @@
     border-color: var(--c-brass);
   }
 
-  .pin-card:hover {
-    transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translate(-3px, -3px);
+  .pin-wrap:hover {
+    /* the lift and the tilt both come from the JS-driven transform,
+       so hover only changes the shadow — no competing transform */
     box-shadow: 7px 7px 0 0 var(--tone, var(--c-magenta));
   }
 

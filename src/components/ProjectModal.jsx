@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Icon from './Icon.jsx';
 import VisualBlock from './VisualBlock.jsx';
 import { GitHubStats, GitHubActivityFeed } from './GitHub.jsx';
@@ -27,18 +27,88 @@ function Block({ icon, label, children }) {
   );
 }
 
-export default function ProjectModal({ project, onClose, onNav, onOpenById, onGitHubClick }) {
+export default function ProjectModal({ project, origin, onClose, onNav, onOpenById, onGitHubClick }) {
   const [showHint, setShowHint] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const closeTimer = useRef(null);
+  const shellRef = useRef(null);
+
+  /* The shared-element transform. `origin` is where the card was when
+     it was clicked; the shell starts there and grows into the
+     dossier, so the two surfaces are visibly the same object. */
+  const [flip, setFlip] = useState({ transform: null, animate: false });
+
+  /* Apple: the exit retraces the entry path. Keep the surface
+     mounted for the length of the exit animation instead of
+     unmounting it the instant close is requested. */
+  const requestClose = useCallback(() => {
+    if (closing) return;
+    setClosing(true);
+    document.body.style.overflow = '';
+
+    const shell = shellRef.current;
+    if (shell && origin) {
+      const r = shell.getBoundingClientRect();
+      /* re-measure the card: the page may have moved under the modal */
+      const card = origin.pinId
+        ? document.querySelector(`[data-pin-id="${origin.pinId}"] .pin-card`)
+        : null;
+      const o = card ? card.getBoundingClientRect() : origin;
+      if (r.width && o.width) {
+        const s = o.width / r.width;
+        setFlip({
+          transform: `translate(${o.left - r.left}px, ${o.top - r.top}px) scale(${s})`,
+          animate: true,
+        });
+      }
+    }
+
+    closeTimer.current = setTimeout(() => {
+      setClosing(false);
+      onClose();
+    }, flip.transform ? 460 : 320);
+  }, [closing, onClose, origin, flip.transform]);
+
+  useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current); }, []);
+
+  /* ---- open: start at the card, then release into the dossier ---- */
+  useLayoutEffect(() => {
+    if (!origin) return;
+    const shell = shellRef.current;
+    if (!shell) return;
+    const r = shell.getBoundingClientRect();
+    if (!r.width) return;
+    const s = origin.width / r.width;
+    const start = `translate(${origin.left - r.left}px, ${origin.top - r.top}px) scale(${s})`;
+
+    /* applied before the first paint, with transitions off, so the
+       shell never appears at full size and then snaps back */
+    setFlip({ transform: start, animate: false });
+
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        setFlip({ transform: 'translate(0px, 0px) scale(1)', animate: true });
+      });
+    });
+    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); };
+  }, [origin]);
+
+  const shellClass = [
+    'modal-shell',
+    closing ? 'is-closing' : '',
+    flip.transform ? (flip.animate ? 'is-flip' : 'is-flip no-anim') : '',
+  ].filter(Boolean).join(' ');
 
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const onKey = (e) => { if (e.key === 'Escape') requestClose(); };
     window.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
     return () => {
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
     };
-  }, [onClose]);
+  }, [requestClose]);
 
   // show the "scroll" hint only while there is more to reach
   useEffect(() => {
@@ -69,12 +139,12 @@ export default function ProjectModal({ project, onClose, onNav, onOpenById, onGi
   })).filter((x) => x.pin);
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className={`modal-overlay${closing ? ' is-closing' : ''}`} onClick={requestClose}>
       <button className="modal-nav-btn prev" aria-label="Previous project" onClick={(e) => { e.stopPropagation(); onNav(-1); }}>
         <Icon name="arrowUpRight" size={18} style={{ transform: 'rotate(-90deg)' }} />
       </button>
 
-      <div className="modal-shell" onClick={(e) => e.stopPropagation()}>
+      <div className={shellClass} onClick={(e) => e.stopPropagation()} ref={shellRef}>
         <div className="modal-inner">
           <div className="modal-left">
             <div className="modal-top-row">
@@ -248,7 +318,7 @@ export default function ProjectModal({ project, onClose, onNav, onOpenById, onGi
           </div>
         </div>
 
-        <button className="modal-close" onClick={onClose} aria-label="Close">
+        <button className="modal-close" onClick={requestClose} aria-label="Close">
           <Icon name="close" size={14} />
         </button>
 
