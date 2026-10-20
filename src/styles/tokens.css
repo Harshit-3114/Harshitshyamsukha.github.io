@@ -16,66 +16,84 @@
   /* ---- INK (near-black, not pure) ---- */
   --c-ink: #16130f;
   --c-ink-2: #4c453b;
-  --c-ink-3: #83796b;
+  /* the tertiary ink is used for 10-11px labels, so it has to clear
+     4.5:1 on the paper ground, not just look recessive */
+  --c-ink-3: #6e6559;
 
   /* ---- HAIRLINES ---- */
   --c-line: rgba(22, 19, 15, 0.14);
   --c-line-2: rgba(22, 19, 15, 0.26);
   --c-line-3: rgba(22, 19, 15, 0.44);
 
-  /* ---- CHROMA (saturated, used as solid blocks) ---- */
+  /* ---- CHROMA (saturated, used as solid blocks) ----
+     Each hue ships three readable roles:
+       -N      the solid fill
+       -soft   a 12-13% wash for backgrounds
+       -text   the hue darkened so small text clears 4.5:1 on its
+                own soft wash
+       -on     the foreground for text sitting ON the solid fill   */
   --c-violet: #5b3fd6;
   --c-violet-2: #7b5fe8;
   --c-violet-soft: rgba(91, 63, 214, 0.12);
   --c-violet-mid: rgba(91, 63, 214, 0.3);
   --c-on-violet: #fff;
+  --c-violet-text: #4a2ba8;
 
   --c-blue: #1f5fd6;
   --c-blue-2: #3f7ae8;
   --c-blue-soft: rgba(31, 95, 214, 0.12);
   --c-blue-mid: rgba(31, 95, 214, 0.3);
   --c-on-blue: #fff;
+  --c-blue-text: #1a4aa8;
 
   --c-cyan: #0091b8;
   --c-cyan-2: #17b3dc;
   --c-cyan-soft: rgba(0, 145, 184, 0.12);
   --c-cyan-mid: rgba(0, 145, 184, 0.3);
   --c-on-cyan: #fff;
+  --c-cyan-text: #006b85;
 
   --c-teal: #0d7f92;
   --c-teal-2: #17a3ba;
   --c-teal-soft: rgba(13, 127, 146, 0.12);
   --c-teal-mid: rgba(13, 127, 146, 0.3);
   --c-on-teal: #fff;
+  --c-teal-text: #0a5f6e;
+
   --c-jade: #0a8f5f;
   --c-jade-2: #14b37a;
   --c-jade-soft: rgba(10, 143, 95, 0.12);
   --c-jade-mid: rgba(10, 143, 95, 0.3);
   --c-on-jade: #fff;
+  --c-jade-text: #076a48;
 
   --c-lime: #6ea800;
   --c-lime-2: #8bc41a;
   --c-lime-soft: rgba(110, 168, 0, 0.13);
   --c-lime-mid: rgba(110, 168, 0, 0.3);
   --c-on-lime: #14200a;
+  --c-lime-text: #4d7300;
 
   --c-amber: #c97a00;
   --c-amber-2: #e8971a;
   --c-amber-soft: rgba(201, 122, 0, 0.13);
   --c-amber-mid: rgba(201, 122, 0, 0.3);
   --c-on-amber: #241600;
+  --c-amber-text: #7a4a00;
 
   --c-coral: #d93a1e;
   --c-coral-2: #ef5738;
   --c-coral-soft: rgba(217, 58, 30, 0.12);
   --c-coral-mid: rgba(217, 58, 30, 0.3);
   --c-on-coral: #fff;
+  --c-coral-text: #a8290f;
 
   --c-steel: #4a5568;
   --c-steel-2: #6b7789;
   --c-steel-soft: rgba(74, 85, 104, 0.12);
   --c-steel-mid: rgba(74, 85, 104, 0.3);
   --c-on-steel: #fff;
+  --c-steel-text: #3d4757;
 
   /* ---- ALIASES ---- */
   --c-brass: var(--c-amber);
@@ -128,10 +146,10 @@
   --sh-inset: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
   /* ---- MOTION ---- */
+  /* all three curves decelerate; none overshoots */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-snap: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
   --dur-1: 180ms;
   --dur-2: 380ms;
   --dur-3: 700ms;
@@ -189,7 +207,7 @@
 
   --c-ink: #f2efe9;
   --c-ink-2: #b3aea4;
-  --c-ink-3: #7d786f;
+  --c-ink-3: #948f85;
 
   --c-line: rgba(242, 239, 233, 0.12);
   --c-line-2: rgba(242, 239, 233, 0.24);
@@ -274,4 +292,17 @@
   --c-on-coral: #14130f;
   --c-on-steel: #14130f;
   --c-on-magenta: #14130f;
+
+  /* the -text roles invert too: on a dark canvas a hue must be
+     LIGHTENED to read on its own soft wash */
+  --c-violet-text: #b9a5ff;
+  --c-blue-text: #9dc2ff;
+  --c-cyan-text: #7ce0f2;
+  --c-teal-text: #79dfe8;
+  --c-jade-text: #74e5b3;
+  --c-lime-text: #cdf07a;
+  --c-amber-text: #f5c374;
+  --c-coral-text: #ffa98e;
+  --c-steel-text: #ccd4e0;
+  --c-magenta-text: #f7a3dc;
 }

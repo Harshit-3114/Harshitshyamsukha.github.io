@@ -28,11 +28,14 @@ export function About({ onNavigate, onGitHubClick }) {
             <img src="/profile.png" alt="Harshit Shyamsukha" width="512" height="512" loading="eager" decoding="async" />
           </picture>
         </div>
-        <span className="eyebrow">Open to SDE Internships · 2027</span>
         <h1 className="about-name">
           Harshit<br />
           <em>Shyamsukha</em>
         </h1>
+        <p className="about-status">
+          <span className="about-status-dot" aria-hidden="true" />
+          Open to SDE Internships · 2027
+        </p>
         <p className="about-role">
           Software Engineer — AI/ML &amp; Full-Stack. I build production systems across the
           stack: agentic LLM pipelines, forecasting models, and multi-service products that

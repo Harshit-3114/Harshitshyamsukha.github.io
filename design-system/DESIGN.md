@@ -8,7 +8,7 @@ colors:
   shell: '#e2d9c6'
   ink: '#16130f'
   ink-2: '#4c453b'
-  ink-3: '#83796b'
+  ink-3: '#6e6559'
   line: 'rgba(22, 19, 15, 0.14)'
   violet: '#5b3fd6'
   blue: '#1f5fd6'
@@ -57,7 +57,7 @@ radius:
   pill: 999px
 motion:
   ease-out: 'cubic-bezier(0.16, 1, 0.3, 1)'
-  ease-spring: 'cubic-bezier(0.32, 0.72, 0, 1)'
+  ease-snap: 'cubic-bezier(0.32, 0.72, 0, 1)'
   ease-soft: 'cubic-bezier(0.4, 0, 0.2, 1)'
   dur-1: 180ms
   dur-2: 380ms
@@ -143,12 +143,13 @@ middle ground — no 6px, no 12px.
 - **Nav:** a floating glass pill detached from the top edge, centred, with a hard offset shadow.
   Active tab is a solid ink pill; the `◆ Void` tab is clay-coloured.
 - **Cards:** double-bezel — an outer shell with a 1.5px ink border and a hard offset shadow, and
-  an inner core in surface white. A 4–5px solid accent bar sits along the top edge.
+  an inner core in surface white. A 3px solid accent rule sits along the top edge.
 - **Buttons:** fully rounded pills with a nested circular icon island on the trailing edge. The
   primary is ink with a magenta offset shadow; on hover the shadow turns cyan and the button
   shifts up-left.
 - **Chips:** solid accent fill with the matching "on" colour as text. Never outlined.
 - **Eyebrows:** mono, uppercase, 0.2em tracking, in a bordered pill with a small square accent
-  dot.
-- **Section titles:** Fraunces with a solid 5px accent bar on the leading edge — one colour per
-  section, matching that section's discipline.
+  dot. Used to label a *group* of content — never as a kicker above a heading.
+- **Section titles:** Fraunces with a 3px accent rule on the leading edge — one colour per
+  section, matching that section's discipline. The heading carries its own weight; there is no
+  eyebrow above it.

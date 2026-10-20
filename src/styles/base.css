@@ -319,27 +319,15 @@ svg {
   left: 0;
   top: 0.16em;
   bottom: 0.16em;
-  width: 5px;
+  /* the same 3px weight every accent rule in the system uses */
+  width: 3px;
   border-radius: 0;
-  background: var(--c-magenta);
+  background: var(--tone, var(--c-magenta));
 }
-.section-title.tone-indigo::before {
-  background: var(--c-violet);
-}
-.section-title.tone-sage::before {
-  background: var(--c-jade);
-}
-.section-title.tone-clay::before {
-  background: var(--c-coral);
-}
-.section-title.tone-wine::before {
-  background: var(--c-magenta);
-}
-.section-title.tone-teal::before {
-  background: var(--c-cyan);
-}
-.section-title.tone-slate::before {
-  background: var(--c-violet);
+/* in the Void theme the tones are graphite, which disappears on a
+   graphite canvas — lift the rule to the paper colour instead */
+.void-theme .section-title::before {
+  background: var(--c-ink-2);
 }
 .section-head {
   display: flex;
@@ -372,7 +360,7 @@ svg {
    PRESS FEEDBACK
    The browser tap highlight is disabled, so every control needs
    its own :active state. Native buttons respond when the finger
-   LANDS, not when it lifts � that is what :active gives us.
+   LANDS, not when it lifts — that is what :active gives us.
    ============================================================ */
 .btn:active,
 .btn-primary:active {

@@ -32,7 +32,7 @@
   transition:
     background var(--dur-2) var(--ease-out),
     box-shadow var(--dur-2) var(--ease-out),
-    transform var(--dur-3) var(--ease-spring);
+    transform var(--dur-3) var(--ease-snap);
 }
 .nav-brand {
   min-width: 0;
@@ -61,7 +61,6 @@
 .nav-brand .nb-dim {
   color: var(--c-ink-3);
 }
-
 /* ---------- the tab cluster ---------- */
 .tab-bar {
   display: flex;
@@ -99,7 +98,7 @@
   transform: scale(0.85);
   transition:
     opacity var(--dur-2) var(--ease-out),
-    transform var(--dur-2) var(--ease-spring);
+    transform var(--dur-2) var(--ease-snap);
   pointer-events: none;
 }
 .tab-btn.active {
@@ -111,7 +110,7 @@
   background: var(--c-ink);
 }
 .tab-btn.void-tab {
-  color: var(--c-magenta);
+  color: var(--c-magenta-text);
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -196,7 +195,7 @@
   border-radius: 2px;
   background: var(--c-ink);
   transition:
-    transform var(--dur-3) var(--ease-spring),
+    transform var(--dur-3) var(--ease-snap),
     opacity var(--dur-1) var(--ease-out);
 }
 .burger-bar:nth-child(1) {
@@ -269,7 +268,7 @@
   clip-path: inset(0 0 100% 0);
   transition:
     opacity var(--dur-3) var(--ease-out),
-    transform var(--dur-3) var(--ease-spring),
+    transform var(--dur-3) var(--ease-snap),
     clip-path var(--dur-3) var(--ease-out),
     color var(--dur-1) var(--ease-out);
   transition-delay: calc(var(--i, 0) * 60ms);
@@ -305,7 +304,7 @@
   transform: translateY(24px);
   transition:
     opacity var(--dur-3) var(--ease-out),
-    transform var(--dur-3) var(--ease-spring);
+    transform var(--dur-3) var(--ease-snap);
   transition-delay: 520ms;
 }
 .overlay-foot.in {

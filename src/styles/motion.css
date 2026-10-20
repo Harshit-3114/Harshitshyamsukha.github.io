@@ -85,7 +85,7 @@
   filter: blur(6px);
   transition:
     opacity var(--dur-4) var(--ease-out),
-    transform var(--dur-4) var(--ease-spring),
+    transform var(--dur-4) var(--ease-snap),
     filter var(--dur-4) var(--ease-out);
   transition-delay: calc(var(--card-index, 0) * 70ms);
   will-change: transform, opacity;
@@ -106,7 +106,7 @@
   transform: translateY(8px);
   transition:
     opacity var(--dur-3) var(--ease-out),
-    transform var(--dur-3) var(--ease-spring);
+    transform var(--dur-3) var(--ease-snap);
 }
 .wr-word.vis {
   opacity: 1;
@@ -174,7 +174,7 @@
 /* --- konami page tilt --- */
 .konami-tilt {
   transform-origin: center top;
-  animation: pageTilt 380ms var(--ease-spring) forwards;
+  animation: pageTilt 380ms var(--ease-snap) forwards;
 }
 @keyframes pageTilt {
   from {

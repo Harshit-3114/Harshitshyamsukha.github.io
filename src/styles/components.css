@@ -11,6 +11,7 @@
   --tone-mid: var(--c-amber-mid);
   --tone-ink: var(--c-on-amber);
   --tone-on: var(--c-on-amber);
+  --tone-text: var(--c-amber-text);
 }
 .tone-sage {
   --tone: var(--c-jade);
@@ -18,6 +19,7 @@
   --tone-mid: var(--c-jade-mid);
   --tone-ink: var(--c-on-jade);
   --tone-on: var(--c-on-jade);
+  --tone-text: var(--c-jade-text);
 }
 .tone-clay {
   --tone: var(--c-coral);
@@ -25,6 +27,7 @@
   --tone-mid: var(--c-coral-mid);
   --tone-ink: var(--c-on-coral);
   --tone-on: var(--c-on-coral);
+  --tone-text: var(--c-coral-text);
 }
 .tone-indigo {
   --tone: var(--c-violet);
@@ -32,6 +35,7 @@
   --tone-mid: var(--c-violet-mid);
   --tone-ink: var(--c-on-violet);
   --tone-on: var(--c-on-violet);
+  --tone-text: var(--c-violet-text);
 }
 .tone-wine {
   --tone: var(--c-magenta);
@@ -39,6 +43,7 @@
   --tone-mid: var(--c-magenta-mid);
   --tone-ink: var(--c-on-magenta);
   --tone-on: var(--c-on-magenta);
+  --tone-text: var(--c-magenta-text);
 }
 .tone-teal {
   --tone: var(--c-cyan);
@@ -46,6 +51,7 @@
   --tone-mid: var(--c-cyan-mid);
   --tone-ink: var(--c-on-cyan);
   --tone-on: var(--c-on-cyan);
+  --tone-text: var(--c-cyan-text);
 }
 .tone-slate {
   --tone: var(--c-steel);
@@ -53,6 +59,7 @@
   --tone-mid: var(--c-steel-mid);
   --tone-ink: var(--c-on-steel);
   --tone-on: var(--c-on-steel);
+  --tone-text: var(--c-steel-text);
 }
 
 .pin-icon.tone-brass,
@@ -78,10 +85,10 @@
   border-color: transparent;
 }
 .modal-problem.tone-clay {
-  border-left-color: var(--c-clay);
+  --callout: var(--c-coral);
 }
 .modal-problem.tone-clay .modal-problem-label {
-  color: var(--c-clay);
+  color: var(--c-coral);
 }
 
 /* ------------------------------------------------------------
@@ -128,33 +135,10 @@
 .about-card.tone-teal { --tone: var(--c-teal); --tone-soft: var(--c-teal-soft); --tone-mid: var(--c-teal-mid); --tone-ink: var(--c-teal); }
 .about-card.tone-slate { --tone: var(--c-slate); --tone-soft: var(--c-slate-soft); --tone-mid: var(--c-slate-mid); --tone-ink: var(--c-slate); }
 
-.about-card.tone-indigo .about-card-icon {
-  background: var(--c-violet-soft);
-  color: var(--c-violet);
-}
-.about-card.tone-sage .about-card-icon {
-  background: var(--c-jade-soft);
-  color: var(--c-jade);
-}
-.about-card.tone-clay .about-card-icon {
-  background: var(--c-coral-soft);
-  color: var(--c-coral);
-}
-.about-card.tone-brass .about-card-icon {
-  background: var(--c-amber-soft);
-  color: var(--c-amber-2);
-}
-.about-card.tone-wine .about-card-icon {
-  background: var(--c-magenta-soft);
-  color: var(--c-magenta);
-}
-.about-card.tone-teal .about-card-icon {
-  background: var(--c-cyan-soft);
-  color: var(--c-cyan);
-}
-.about-card.tone-slate .about-card-icon {
-  background: var(--c-steel-soft);
-  color: var(--c-steel);
+/* the icon chip takes its colour from the shared .tone-* class */
+.about-card .about-card-icon {
+  background: var(--tone-soft);
+  color: var(--tone-text);
 }
 
 /* ------------------------------------------------------------
@@ -367,7 +351,7 @@
   font-size: 13px;
   line-height: 1;
   transition:
-    transform var(--dur-2) var(--ease-spring),
+    transform var(--dur-2) var(--ease-snap),
     background var(--dur-2) var(--ease-out);
 }
 
@@ -442,7 +426,7 @@
   gap: var(--sp-3);
   overflow: hidden;
   transition:
-    transform var(--dur-2) var(--ease-spring),
+    transform var(--dur-2) var(--ease-snap),
     box-shadow var(--dur-2) var(--ease-out);
 }
 .about-card::before {
@@ -451,8 +435,16 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 5px;
+  /* a hairline rule, not a slab: it names the card's discipline
+     without becoming the card's loudest feature */
+  height: 3px;
   background: var(--tone, var(--c-magenta));
+}
+/* in the Void theme the tones are graphite, which disappears on a
+   graphite canvas — lift the rule to the paper colour instead */
+.void-theme .about-card::before,
+.void-theme .about-panel::before {
+  background: var(--c-ink-2);
 }
 .about-card-hdr {
   display: flex;
@@ -471,7 +463,7 @@
   transition:
     background var(--dur-2) var(--ease-out),
     color var(--dur-2) var(--ease-out),
-    transform var(--dur-2) var(--ease-spring);
+    transform var(--dur-2) var(--ease-snap);
 }
 .about-card-icon svg {
   width: 16px;
@@ -515,7 +507,10 @@
   padding: 3px 8px;
   border-radius: var(--r-sm);
   background: var(--tone-soft, var(--c-surface-2));
-  color: var(--tone-ink, var(--c-ink-2));
+  /* --tone-text is the hue darkened for reading on the soft tint.
+     --tone-ink is the colour for text ON a solid tone fill, so it
+     must not be used here. */
+  color: var(--tone-text, var(--c-ink-2));
   border: 1px solid transparent;
   transition:
     background var(--dur-1) var(--ease-out),
@@ -545,7 +540,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 3px;
   background: var(--tone, var(--c-magenta));
 }
 .about-panel-dark::before {
@@ -554,16 +549,10 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 3px;
   background: var(--c-magenta);
 }
-.about-panel.tone-indigo { --tone: var(--c-indigo); --tone-soft: var(--c-indigo-soft); --tone-mid: var(--c-indigo-mid); --tone-ink: var(--c-indigo); }
-.about-panel.tone-sage { --tone: var(--c-sage); --tone-soft: var(--c-sage-soft); --tone-mid: var(--c-sage-mid); --tone-ink: var(--c-sage); }
-.about-panel.tone-clay { --tone: var(--c-clay); --tone-soft: var(--c-clay-soft); --tone-mid: var(--c-clay-mid); --tone-ink: var(--c-clay); }
-.about-panel.tone-brass { --tone: var(--c-brass); --tone-soft: var(--c-brass-soft); --tone-mid: var(--c-brass-mid); --tone-ink: var(--c-brass-2); }
-.about-panel.tone-wine { --tone: var(--c-wine); --tone-soft: var(--c-wine-soft); --tone-mid: var(--c-wine-mid); --tone-ink: var(--c-wine); }
-.about-panel.tone-teal { --tone: var(--c-teal); --tone-soft: var(--c-teal-soft); --tone-mid: var(--c-teal-mid); --tone-ink: var(--c-teal); }
-.about-panel.tone-slate { --tone: var(--c-slate); --tone-soft: var(--c-slate-soft); --tone-mid: var(--c-slate-mid); --tone-ink: var(--c-slate); }
+/* the shared .tone-* classes own the palette; panels inherit them */
 .about-card-mono {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -617,7 +606,7 @@
   transition:
     background var(--dur-2) var(--ease-out),
     color var(--dur-2) var(--ease-out),
-    transform var(--dur-2) var(--ease-spring);
+    transform var(--dur-2) var(--ease-snap);
 }
 .pin-icon svg {
   width: 19px;
@@ -1004,7 +993,7 @@
   overflow: hidden;
   transform: scale(0.97);
   opacity: 0;
-  animation: modalIn var(--dur-3) var(--ease-spring) forwards;
+  animation: modalIn var(--dur-3) var(--ease-snap) forwards;
 }
 .modal-inner {
   display: grid;
@@ -1157,10 +1146,23 @@
   text-wrap: pretty;
 }
 .modal-problem {
-  padding: var(--sp-4) var(--sp-5);
+  position: relative;
+  padding: var(--sp-4) var(--sp-5) var(--sp-4) var(--sp-6);
   border-radius: var(--r-md);
   background: var(--c-surface-2);
-  border-left: 2px solid var(--c-brass);
+  /* a tonal marker, not a coloured left rule: the callout reads as
+     a set piece because of the fill, not because of a stripe */
+  --callout: var(--c-brass);
+}
+.modal-problem::before {
+  content: "";
+  position: absolute;
+  left: var(--sp-3);
+  top: var(--sp-5);
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--callout);
 }
 .modal-problem-label {
   font-family: var(--font-mono);
@@ -1486,7 +1488,7 @@
   position: relative;
   box-shadow: var(--sh-2);
   transition:
-    transform var(--dur-2) var(--ease-spring),
+    transform var(--dur-2) var(--ease-snap),
     background var(--dur-2) var(--ease-out),
     color var(--dur-2) var(--ease-out);
 }
@@ -1512,7 +1514,7 @@
   pointer-events: none;
   transition:
     opacity var(--dur-2) var(--ease-out),
-    transform var(--dur-3) var(--ease-spring);
+    transform var(--dur-3) var(--ease-snap);
   display: flex;
   flex-direction: column;
 }
@@ -1543,7 +1545,7 @@
 .chat-hdr button {
   background: transparent;
   border: none;
-  color: var(--c-ink-3);
+  color: var(--c-ink-2);
   cursor: pointer;
   font-size: 12px;
   transition: color var(--dur-1) var(--ease-out);
@@ -1657,7 +1659,7 @@
   cursor: pointer;
   box-shadow: var(--sh-1);
   transition:
-    transform var(--dur-2) var(--ease-spring),
+    transform var(--dur-2) var(--ease-snap),
     background var(--dur-1) var(--ease-out),
     color var(--dur-1) var(--ease-out);
 }

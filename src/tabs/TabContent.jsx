@@ -30,17 +30,6 @@ const GRID_TONE = {
   void: 'wine',
 };
 
-const GRID_LABEL = {
-  all: 'Selected Work',
-  ai: 'AI / Research',
-  fullstack: 'Full-Stack',
-  client: 'Client Work',
-  credentials: 'Credentials',
-  experience: 'Experience',
-  activity: 'GitHub Activity',
-  void: 'The Void',
-};
-
 const GRID_TITLE = {
   all: 'Everything I have built.',
   ai: 'Research & intelligent systems.',
@@ -93,10 +82,7 @@ export default function TabContent({
         <>
           <header className="grid-head reveal">
             <div>
-              <span className={`eyebrow tone-${GRID_TONE[filterTab] || 'brass'}`}>
-                {GRID_LABEL[filterTab] || 'Work'}
-              </span>
-              <h1 className="section-title" style={{ marginBottom: 0 }}>
+              <h1 className={`section-title tone-${GRID_TONE[filterTab] || 'brass'}`} style={{ marginBottom: 0 }}>
                 {GRID_TITLE[filterTab] || 'All work'}
               </h1>
             </div>
@@ -125,8 +111,9 @@ export default function TabContent({
 
       {filterTab === 'process' && (
         <section className="process-section">
-          <span className="eyebrow reveal tone-indigo">Thinking Process</span>
-          <h1 className="section-title reveal tone-indigo">How the work actually went.</h1>
+          <h1 className="section-title reveal tone-indigo">
+            How the work actually went.
+          </h1>
           <p className="lede reveal" style={{ marginBottom: 'var(--sp-8)' }}>
             Not the pitch — the decisions, the dead ends, and the bugs that cost a weekend.
           </p>
@@ -190,7 +177,6 @@ export default function TabContent({
 
       {filterTab === 'contact' && (
         <section id="contact" className="contact-section">
-          <span className="eyebrow reveal tone-clay">Contact</span>
           <h1 className="section-title reveal tone-clay"><Typewriter text="Let's build something." /></h1>
           <p className="lede reveal" style={{ marginBottom: 'var(--sp-8)' }}>
             Open to SDE internships and full-time roles from 2027. The fastest way to reach me is email —
