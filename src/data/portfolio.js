@@ -19,7 +19,7 @@ export const PROFILE = {
 export const KNOWLEDGE = {
   skill: "I work across the full stack: languages like Python, JavaScript/TypeScript, C++, Java, SQL, Bash; frameworks like React, FastAPI, Node.js, PyTorch, Pandas; infrastructure tools like Docker, Kubernetes, Red Hat OpenShift, Podman, GitHub Actions; databases including MongoDB, MySQL, Supabase, MinIO; and an AI/ML stack spanning LLMs (Llama 3, Phi-3 Mini, Gemini, Groq, NVIDIA NIM), agentic pipelines with LangGraph, FAISS, Sentence Transformers, Ollama, LoRA/QLoRA fine-tuning, and GDELT/ACLED pipelines.",
   experience: "My experience includes a content writing internship and participation in the Study Australia Industry Experience Program, where I honed cross-functional collaboration skills. I also worked as a Web Developer Intern at CanIT Solutions on Canit Pulse, a multi-tenant social media analytics SaaS built with FastAPI, Supabase, React/TypeScript and Render — where I shipped production features, eliminated an OOM crash on Render's free tier, closed a session-security gap and shipped role-based permissions.",
-  project: "I've built projects like an AI Ethics Advisor with Llama 3, DeepFake Detection microservices, InsightX Analytics, a Dynamic Societal Friction Simulator for conflict forecasting, SkillRoute for talent routing, and Crest Automotive for a real client. More recently I've shipped GitHub Innovator — a fully autonomous six-stage LangGraph agent that discovers, rewrites, tests and publishes forks with no human in the loop — the Edee Apply platform (FastAPI, PostgreSQL, Razorpay) for college applications, and the SOS Packaging marketing site for an ISO 9001 industrial manufacturer.",
+  project: "I've built 23 projects, from GitHub Innovator — a fully autonomous six-stage LangGraph agent that discovers, rewrites, tests and publishes forks with no human in the loop — through the Edee Apply platform (FastAPI, PostgreSQL, Razorpay) for college applications, the SOS Packaging and Prakash Plastics catalogues, and the Dun Digital agency site. The AI side runs on Llama 3, FAISS and Sentence Transformers: ARGUS fuses face recognition with keystroke dynamics for passwordless login, Nexus matches a free-text problem to the nearest of 10,000 expert profiles, and Scalar Meta is an OpenEnv benchmark for support-ticket triage. This portfolio is itself the transformer — press Shift+T and it restyles from a real MiniLM encoder running entirely in your browser.",
   certifications: "I am a Red Hat Certified Specialist in Linux Diagnostics & Troubleshooting, and a Red Hat OpenShift Development I (DO188) Certified Specialist. I'm also certified in DSA in C, DBMS, and Operating Systems.",
   hire: "I'm actively looking for SDE Internships! You can reach me at harshitshyamsukha@gmail.com, or on LinkedIn at linkedin.com/in/harshit-shyamsukha-512254258.",
   education: "I'm currently pursuing my B.Tech in Computer Science at SRM Institute of Science & Technology, Chennai (Batch of Aug 2023 - May 2027).",
@@ -41,13 +41,13 @@ export const PROJECTS_DETAILED = [
   {
     id: 'skillroute', title: "SkillRoute", date: "Ongoing",
     stack: ["FAISS", "Sentence Transformers", "React 19", "MapLibre GL JS", "FastAPI"], badge: null,
-    desc: "Intelligent talent routing system that matches candidates to opportunities using vector similarity search and geospatial dispatch visualization.",
+    desc: "Intelligent talent routing system that matches candidates to opportunities using vector similarity search and geospatial dispatch visualization. The source is not public yet — the IEEE-format paper is available below.",
     problem: "Talent matching platforms use keyword filtering that misses nuanced skill adjacencies. Organizations need semantic understanding of candidate profiles plus geographic dispatch optimization.",
     architecture: ["Candidate profiles embedded via sentence-transformers into a FAISS vector index", "Synergy Score computed from cosine similarity + weighted experience factors", "MapLibre GL JS renders dispatch map showing candidate-to-opportunity routing", "FastAPI backend handles indexing, querying, and scoring orchestration", "ROI calculator projects cost-of-delay, cost-to-hire and break-even windows", "SECURITY.md documents a full audit that closed 12 vulnerabilities"],
     decisions: ["FAISS enables sub-50ms similarity search across thousands of candidate profiles", "MapLibre GL JS avoids paid map SDKs while delivering full-featured geospatial viz", "Synergy Score combines semantic match, location proximity, and availability windows", "Evolved from a Streamlit prototype into a production React 19 + FastAPI application"],
     metrics: "Full security audit closed 12 vulnerabilities, including a live API key in the repo, wildcard CORS, and missing auth/rate limiting",
-    github: "https://github.com/Harshit-3114/skillroute", demo: null, image: null, category: "ai", status: "wip",
-    files: [{ name: "skill_router.py", path: "skillroute/core/skill_router.py", url: "https://github.com/Harshit-3114/skillroute", type: "py" },{ name: "App.jsx", path: "skillroute/frontend/src/App.jsx", url: "https://github.com/Harshit-3114/skillroute", type: "jsx" },{ name: "README.md", path: "skillroute/README.md", url: "https://github.com/Harshit-3114/skillroute", type: "md" }]
+    github: null, demo: null, image: null, category: "ai", status: "wip",
+    files: [{ name: "SkillRoute_IEEE.pdf", path: "papers/skillroute_ieee.pdf", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/papers/skillroute_ieee.pdf", type: "pdf" }]
   },
   {
     id: 'ai-ethics', title: "AI Ethics Advisor", date: "Jan 2026 – Ongoing",
@@ -144,18 +144,285 @@ export const PROJECTS_DETAILED = [
     problem: "A local premium auto detailing business needed a multi-portal web presence with booking, job tracking, and customer management — built from scratch.",
     architecture: ["React frontend with separate routing for owner / customer / worker roles", "FastAPI backend handling appointments, worker assignment, and job status", "Supabase for auth, database, and real-time job status updates", "Deployed on GitHub Pages (frontend) with a cloud backend"],
     decisions: ["Supabase chosen for real-time subscriptions without a custom WebSocket server", "Role-based routing via React context — single codebase, three portal views", "TailwindCSS for rapid consistent UI across all three portals"],
-    metrics: null, github: "https://github.com/Harshit-3114/crest-automotive", demo: null, image: null, category: "client", status: "live",
-    files: [{ name: "App.jsx", path: "crest/frontend/src/App.jsx", url: "https://github.com/Harshit-3114/crest-automotive", type: "jsx" },{ name: "api.py", path: "crest/backend/api.py", url: "https://github.com/Harshit-3114/crest-automotive", type: "py" },{ name: "supabase_schema.sql", path: "crest/db/supabase_schema.sql", url: "https://github.com/Harshit-3114/crest-automotive", type: "sql" }]
+    metrics: null, github: "https://github.com/concealedaaryan/carboutiqueauto", demo: null, image: null, category: "client", status: "live",
+    files: [{ name: "carboutiqueauto", path: "astro site", url: "https://github.com/concealedaaryan/carboutiqueauto", type: "md" },{ name: "Car-service-updates", path: "detailing updates app", url: "https://github.com/concealedaaryan/Car-service-updates", type: "md" }]
   },
   {
     id: 'cosmic-calendar', title: "Cosmic Calendar", date: "2025 (Hackathon)",
     stack: ["React", "Vite", "Tailwind CSS", "NASA APOD API", "HuggingFace Spaces"], badge: "Hackathon",
-    desc: "Interactive space exploration web app built for AstralWeb Innovate Hackathon 2025 — NASA APOD daily imagery, space quiz, AI astronomy chatbot, bookmarks, and countdown timers.",
+    desc: "Interactive space exploration web app built for AstralWeb Innovate Hackathon 2025 — NASA APOD daily imagery, space quiz, AI astronomy chatbot, bookmarks, and countdown timers. Built over the hackathon weekend; the source was never released publicly.",
     problem: "Building a polished, demoworthy full-stack space app in a single hackathon weekend required ruthless feature prioritization.",
     architecture: ["React + Vite frontend consuming NASA APOD API for daily astronomy pictures", "HuggingFace Spaces Gradio chatbot (FLAN-T5 Large) for AI astronomy Q&A", "localStorage for bookmarking, theme persistence, and API caching", "Light/dark theme toggle with system preference detection"],
     decisions: ["FLAN-T5 Large over cloud LLMs for zero-cost inference on HuggingFace free tier", "localStorage API caching with TTL to stay under NASA's 1000 req/day limit", "Prioritized 4 core features over 8 planned ones to ship on time"],
-    metrics: null, github: "https://github.com/Harshit-3114/cosmic-calendar", demo: null, image: null, category: "fullstack", status: "live",
+    metrics: null, github: null, demo: null, image: null, category: "fullstack", status: "live",
     files: []
+  },
+  {
+    id: 'argus', title: "ARGUS — Multimodal Biometric Login", date: "Oct 2026",
+    stack: ["Flask", "FaceNet512 / DeepFace", "Keystroke Dynamics", "OpenCV", "Python"], badge: "New",
+    desc: "A login gate that authenticates with two biometric modalities instead of a password — face recognition scored by cosine similarity against enrolled embeddings, keystroke dynamics scored by a per-user scaled-Manhattan filter — fused with weighted score-level fusion.",
+    problem: "Passwords are phishable, reused and leak. One modality is not enough either: a photograph of you cannot reproduce your typing rhythm, and an impostor who knows the passphrase cannot reproduce your face or your rhythm.",
+    architecture: [
+      "Face branch: webcam frames are embedded with FaceNet512 via DeepFace and matched by maximum cosine similarity against enrolled templates",
+      "Keystroke branch: browser keydown/keyup timestamps are normalised per user and scored with a scaled-Manhattan filter, sim = 1/(1+d)",
+      "Both scores are normalised to [0,1] and combined with weighted score-level fusion, w_face = 0.6 and w_keystroke = 0.4",
+      "The fused score is compared against a decision threshold to admit or reject the login",
+      "Evaluation harness reports FAR, FRR, EER and AUC per modality and for the fused system, rendering ROC curves and score distributions automatically",
+      "PIN-gated admin console for enrolment, threshold tuning and the biometric evaluation results"
+    ],
+    decisions: [
+      "Score-level fusion over feature-level, so each modality can be tuned and inspected independently",
+      "A 0.6/0.4 weight split reflecting face as the stronger physiological signal against a noisier behavioural one",
+      "Per-user keystroke templates rather than a global model, because typing rhythm is personal",
+      "Cosine similarity for faces so a match survives differences in lighting and pose"
+    ],
+    metrics: "FAR, FRR, EER and AUC evaluated per modality and for the fused system",
+    github: "https://github.com/Harshit-3114/ARGUS", demo: null, image: null, category: "ai", status: "live",
+    files: [{ name: "app.py", path: "app.py", url: "https://github.com/Harshit-3114/ARGUS", type: "py" },{ name: "face_engine.py", path: "face_engine.py", url: "https://github.com/Harshit-3114/ARGUS", type: "py" },{ name: "evaluation.py", path: "evaluation.py", url: "https://github.com/Harshit-3114/ARGUS", type: "py" },{ name: "README.md", path: "README.md", url: "https://github.com/Harshit-3114/ARGUS", type: "md" }]
+  },
+  {
+    id: 'heatwave-predictor', title: "HeatWave AI — India Heat Wave Predictor", date: "Nov 2026",
+    stack: ["Flask", "Python", "Pandas", "Jinja2"], badge: "New",
+    desc: "A forecasting app for 22 major Indian cities that reports predicted temperature, severity class, confidence, humidity estimate and safety advice — from a transparent statistical model rather than an opaque one.",
+    problem: "Heat wave warnings need to be explainable and fast enough to run offline in a district office. A trained network with no visible weights is hard to trust and harder to tune when the threshold policy changes.",
+    architecture: [
+      "Seasonal base curve per city, adjusted by a 12-month offset curve that peaks in May and troughs in December",
+      "Day-of-year sinusoidal trend with a secondary cosine term, capturing the annual temperature wave",
+      "Latitude factor and an urban heat island approximation scaled by city size",
+      "Gaussian jitter (σ = 1.5 °C) representing day-to-day variation",
+      "IMD-style zone thresholds — plains ≥ 40 °C, coastal ≥ 37 °C, hilly ≥ 30 °C — with severity set by departure from each city's summer high",
+      "Confidence is derived from the distance between the prediction and the city's typical summer high, bounded to 40–95%",
+      "Seven-day forecasts and a national hotspot ranking over all cities, with one Flask dependency and no build step"
+    ],
+    decisions: [
+      "A statistical seasonal model over a trained network, so every prediction traces back to an inspectable formula",
+      "Zone-aware thresholds matching IMD practice rather than one global cut-off",
+      "Confidence derived from departure from the seasonal norm, which is the honest signal for this kind of model",
+      "One dependency and no build step, so the app runs fully offline"
+    ],
+    metrics: "22 cities, 3 difficulty-free zones, 7-day forecasts and a live hotspot ranking",
+    github: "https://github.com/Harshit-3114/heatwave-predictor", demo: null, image: null, category: "ai", status: "live",
+    files: [{ name: "predictor.py", path: "model/predictor.py", url: "https://github.com/Harshit-3114/heatwave-predictor", type: "py" },{ name: "cities.py", path: "data/cities.py", url: "https://github.com/Harshit-3114/heatwave-predictor", type: "py" },{ name: "app.py", path: "app.py", url: "https://github.com/Harshit-3114/heatwave-predictor", type: "py" },{ name: "README.md", path: "README.md", url: "https://github.com/Harshit-3114/heatwave-predictor", type: "md" }]
+  },
+  {
+    id: 'scalar-meta', title: "Scalar Meta — Customer Support Ticket Triage", date: "Nov 2026",
+    stack: ["OpenEnv", "Gym-style API", "OpenAI", "pytest"], badge: "New",
+    desc: "An OpenEnv-compatible benchmark environment for routing customer support tickets to the correct department, with three difficulty tiers and a fractional reward so partial credit is visible in the signal.",
+    problem: "Evaluating a support-routing agent needs a reproducible environment with a known answer key. A live support queue is neither reproducible nor safe to experiment against.",
+    architecture: [
+      "Gym-style environment implementing reset(), state(), step(action) and grader()",
+      "Three task tiers — easy (1 ticket), medium (3 tickets), hard (5 tickets) — spanning repair, billing, sales and tech",
+      "Fractional reward of 1/len(tickets) per correct routing, so partial credit is observable mid-task",
+      "Deterministic ticket ordering, which makes runs directly comparable across models",
+      "The hard tier deliberately pairs two differently-phrased billing tickets and a tech ticket that a keyword heuristic misroutes to repair",
+      "OpenAI-compatible --api-base, so any hosted provider or a local Ollama / vLLM server works without code changes",
+      "25 unit tests covering task validation, reward arithmetic, sequencing, the done-flag lifecycle and the grader"
+    ],
+    decisions: [
+      "Fractional rather than binary reward, because a 5-ticket task should not read as all-or-nothing",
+      "Fixed ticket order per task, so two models can be compared on the same sequence",
+      "Gym-style interface to match what OpenEnv environments implement",
+      "A swappable API base rather than a hardcoded provider, so the benchmark runs against local models"
+    ],
+    metrics: "25 passing unit tests; three tiers scoring from 0.0 to 1.0",
+    github: "https://github.com/Harshit-3114/scalar-meta", demo: null, image: null, category: "ai", status: "live",
+    files: [{ name: "env.py", path: "env.py", url: "https://github.com/Harshit-3114/scalar-meta", type: "py" },{ name: "inference.py", path: "inference.py", url: "https://github.com/Harshit-3114/scalar-meta", type: "py" },{ name: "test_env.py", path: "tests/test_env.py", url: "https://github.com/Harshit-3114/scalar-meta", type: "py" },{ name: "README.md", path: "README.md", url: "https://github.com/Harshit-3114/scalar-meta", type: "md" }]
+  },
+  {
+    id: 'nexus-matcher', title: "Nexus — Deep Semantic Matchmaker", date: "Nov 2026",
+    stack: ["FAISS", "Sentence Transformers", "Gemini 2.5 Flash", "Streamlit", "Plotly"], badge: "New",
+    desc: "A semantic expert-matching system over 10,000 synthetic global profiles — a transformer encoder embeds a problem description, FAISS finds the nearest experts, and Gemini writes the match dossier and the outreach email.",
+    problem: "Keyword matching misses skill adjacencies: a request for 'someone who has seen a mainframe before' shares no words with the expert who has actually maintained one.",
+    architecture: [
+      "Gemini 2.5 Flash distils the visitor's free-text problem into a concrete skill statement",
+      "all-MiniLM-L6-v2 embeds that statement into a 384-dimensional vector",
+      "A flat L2 FAISS index over 10,000 pre-embedded expert profiles returns the nearest matches in milliseconds",
+      "Match percentage is derived from embedding distance and rendered as a Plotly gauge",
+      "Gemini then produces a four-point dossier — why matched, profile, pros, friction",
+      "A one-click personalised outreach email is drafted from the same dossier",
+      "build_index.py regenerates the index and metadata cache from the source CSV, so the binaries never have to be committed"
+    ],
+    decisions: [
+      "A flat L2 index rather than an approximate index, because 10,000 vectors is small enough that exact search is both fast and free of recall loss",
+      "all-MiniLM-L6-v2 at 384 dimensions, which is small enough to run on CPU and good enough for short profile text",
+      "The index and metadata are generated artefacts rebuilt from CSV, not committed binaries",
+      "Distance mapped to a percentage with a 60–99.9% floor, because a cosine score alone does not communicate to a non-technical reader"
+    ],
+    metrics: "10,000 expert profiles indexed at 384 dimensions, with millisecond L2 search",
+    github: "https://github.com/Harshit-3114/nexus-matcher", demo: null, image: null, category: "ai", status: "live",
+    files: [{ name: "app.py", path: "app.py", url: "https://github.com/Harshit-3114/nexus-matcher", type: "py" },{ name: "build_index.py", path: "build_index.py", url: "https://github.com/Harshit-3114/nexus-matcher", type: "py" },{ name: "README.md", path: "README.md", url: "https://github.com/Harshit-3114/nexus-matcher", type: "md" }]
+  },
+  {
+    id: 'portfolio-rebalancer', title: "Portfolio Rebalancer", date: "Nov 2026",
+    stack: ["React 19", "Express", "sql.js", "Recharts", "Vite"], badge: "New",
+    desc: "A household portfolio rebalancer: import a broker CSV, set target allocations by asset class, and get exact buy/sell trades per account — with cash never allowed to move between accounts.",
+    problem: "Brokers export a flat list of positions, but households think in asset classes and targets. Reconciling the two by hand across three or four accounts is where the spreadsheet sprawl starts.",
+    architecture: [
+      "A single-pass state-machine CSV parser handles quoted fields with embedded commas, escaped quotes, multi-line values and disclaimer footer rows",
+      "An editable ticker → asset-class mapping layer turns symbols into US Equity, International Equity, Gold, Treasuries, Thematic and Cash",
+      "Target allocation percentages that must sum to 100%, with three presets: Aggressive Growth, Conservative Income, Permanent Portfolio",
+      "Per-account liquidity floors — the minimum cash percentage purchases may never dip below",
+      "Shortfall handling: when buys exceed available cash, purchases scale down proportionally so cash never goes negative",
+      "Per-account isolation: each account rebalances against its own cash, because moving cash between a taxable and a tax-advantaged account is a taxable event",
+      "sql.js (SQLite compiled to WebAssembly) for persistence, so there are no native build dependencies",
+      "Share counts are estimated from the last available price — buys floored, sells ceiled — and labelled as estimates"
+    ],
+    decisions: [
+      "Per-account isolation over a global optimiser, because a global optimum that needs cash transferred between accounts cannot actually be executed",
+      "sql.js over better-sqlite3, so the project installs without a native toolchain",
+      "Cash modelled as a first-class target class rather than a residual, because the user wants explicit control over cash position",
+      "Proportional scaling for shortfalls rather than a priority solver, which could starve low-priority classes indefinitely"
+    ],
+    metrics: "12 API endpoints, three target presets, per-account liquidity floors and proportional shortfall handling",
+    github: "https://github.com/Harshit-3114/portfolio-rebalancer", demo: null, image: null, category: "fullstack", status: "live",
+    files: [{ name: "rebalancer.js", path: "server/rebalancer.js", url: "https://github.com/Harshit-3114/portfolio-rebalancer", type: "js" },{ name: "csv-parser.js", path: "server/csv-parser.js", url: "https://github.com/Harshit-3114/portfolio-rebalancer", type: "js" },{ name: "App.jsx", path: "client/src/App.jsx", url: "https://github.com/Harshit-3114/portfolio-rebalancer", type: "jsx" },{ name: "ARCHITECTURE.md", path: "docs/ARCHITECTURE.md", url: "https://github.com/Harshit-3114/portfolio-rebalancer", type: "md" }]
+  },
+  {
+    id: 'web-auditor', title: "Web Auditor", date: "Nov 2026",
+    stack: ["Node.js", "Cheerio", "puppeteer-core", "Chromium"], badge: "New",
+    desc: "A CLI that crawls a site and runs 77 checks across SEO, UX/accessibility, performance, security and duplicate content — then reports findings grouped by the team that has to fix them.",
+    problem: "Auditing a site page-by-page in devtools is slow, inconsistent, and easy to skip the boring-but-important checks. The output also tends to arrive as a flat list nobody can act on.",
+    architecture: [
+      "A breadth-first crawler follows internal links with configurable depth and page limits",
+      "Cheerio extracts DOM detail from the source while puppeteer-core drives real Chromium for what static analysis cannot see",
+      "77 checks in total — 10 SEO, 21 UX/accessibility, 16 performance, 14 security, 3 duplicate-content",
+      "Core Web Vitals (LCP, CLS, FCP), DOM size and console errors come from the browser, not from headers",
+      "Every finding carries a severity, a owning team and a remediation note",
+      "--platform wix filters the report to dashboard-fixable issues and gives the exact navigation path for each",
+      "Graceful fallback to HTTP-only mode when Chromium is unavailable, rather than failing the run",
+      "JSON output for CI pipelines"
+    ],
+    decisions: [
+      "A CLI over a web app, because a site audit is a batch job that should point at a URL and hand back a list",
+      "Grouping findings by team, so the output maps to who fixes what instead of being one undifferentiated pile",
+      "Real Chromium alongside Cheerio, because the two see complementary halves of the page",
+      "Falling back to HTTP-only instead of aborting, so a missing browser degrades the report rather than losing it"
+    ],
+    metrics: "77 checks across 5 categories, with a per-team breakdown and severity histogram",
+    github: "https://github.com/Harshit-3114/web-auditor", demo: null, image: null, category: "fullstack", status: "live",
+    files: [{ name: "audits.js", path: "lib/audits.js", url: "https://github.com/Harshit-3114/web-auditor", type: "js" },{ name: "index.js", path: "index.js", url: "https://github.com/Harshit-3114/web-auditor", type: "js" },{ name: "platform.js", path: "lib/platform.js", url: "https://github.com/Harshit-3114/web-auditor", type: "js" },{ name: "README.md", path: "README.md", url: "https://github.com/Harshit-3114/web-auditor", type: "md" }]
+  },
+  {
+    id: 'job-agent', title: "Job Agent", date: "Nov 2026",
+    stack: ["Python", "BeautifulSoup4", "OpenAI", "SQLite", "Chrome headless"], badge: "New",
+    desc: "A CLI that automates the mechanical half of job hunting — scrape listings, tailor your resume to each posting, render it to PDF, and track every application — while stopping exactly where judgement is required.",
+    problem: "Finding 30 relevant listings and rewriting your resume for each one is a lot of repetitive work, but the final judgement about which roles to pursue and whether an application sounds like you is not a machine's to make.",
+    architecture: [
+      "Multi-source scraping across Indeed, LinkedIn and Glassdoor with role, location and keyword filters",
+      "An exclude-keyword list and a job-age cutoff, plus a configurable request delay and rotating user agents",
+      "An LLM step that takes the job description and your base resume and returns a tailored resume and cover letter per role",
+      "HTML with print-specific CSS rendered to PDF through Chrome headless, with a pdfkit fallback",
+      "Every application is upserted into SQLite with a ready → applied status transition",
+      "auto_submit defaults to false — the agent prepares materials and never sends anything",
+      "Personal data (resume, API key, application database) is kept out of version control entirely"
+    ],
+    decisions: [
+      "Splitting the workflow at the point where judgement starts, so the tool automates tedium without automating decisions",
+      "auto_submit off by default, with submission as an explicit opt-in",
+      "HTML plus print CSS over a document library, which keeps the PDF typographically clean without a heavy dependency",
+      "A rotating user agent and a request delay, so scraping stays within reasonable limits"
+    ],
+    metrics: "Scrape → tailor → render → track, end to end, across 9 CLI subcommands",
+    github: "https://github.com/Harshit-3114/job-agent", demo: null, image: null, category: "fullstack", status: "live",
+    files: [{ name: "scraper.py", path: "src/scraper.py", url: "https://github.com/Harshit-3114/job-agent", type: "py" },{ name: "customizer.py", path: "src/customizer.py", url: "https://github.com/Harshit-3114/job-agent", type: "py" },{ name: "resume_renderer.py", path: "src/resume_renderer.py", url: "https://github.com/Harshit-3114/job-agent", type: "py" },{ name: "README.md", path: "README.md", url: "https://github.com/Harshit-3114/job-agent", type: "md" }]
+  },
+  {
+    id: 'trizen', title: "Trizen — Photo Sharing Platform", date: "Nov 2026",
+    stack: ["FastAPI", "SQLAlchemy", "React 18", "TypeScript", "Vercel"], badge: "New",
+    desc: "A full-stack photo-sharing platform for photography and event teams: the team uploads event photos, an admin curates them, and a PIN-protected customer gallery is published behind a shareable link.",
+    problem: "Event photographers deliver galleries by email, then answer the same 'where is my photo?' question endlessly. The customer needs a link, not a login; the team needs curation before anything goes public.",
+    architecture: [
+      "FastAPI backend with a lifespan handler, a storage abstraction over local disk or S3, and separate routers for events, memberships, photos and galleries",
+      "Schema built on SQLAlchemy models with users, events, event_members, photos, galleries and a gallery_photos join table",
+      "Public gallery access is gated by a bcrypt-hashed PIN, with per-slug rate limiting of 20 attempts per 10 minutes",
+      "Unpublished slugs return 404 rather than 403, so the API never leaks which galleries exist",
+      "Members can upload and view but cannot publish galleries, select photos, or delete other people's photos",
+      "Upload validation covers an image MIME allowlist, a 10 MB default cap and 50 files per request",
+      "React 18 + TypeScript SPA with an auth context and service layer",
+      "A Vercel serverless entrypoint with its own dependency set for deployment"
+    ],
+    decisions: [
+      "bcrypt-hashed PINs rather than plaintext comparison, and per-slug rate limiting to blunt guessing",
+      "404 instead of 403 for foreign events, because a 403 confirms that the resource exists",
+      "A storage abstraction so local disk works in development and S3 works in production behind one interface",
+      "create_all() over Alembic for a greenfield schema — with the trade-off documented, since it never alters existing tables"
+    ],
+    metrics: "PIN-gated public galleries, per-slug rate limiting and 404-not-403 isolation",
+    github: "https://github.com/Harshit-3114/trizen", demo: null, image: null, category: "fullstack", status: "live",
+    files: [{ name: "main.py", path: "backend/app/main.py", url: "https://github.com/Harshit-3114/trizen", type: "py" },{ name: "gallery.py", path: "backend/app/api/v1/endpoints/gallery.py", url: "https://github.com/Harshit-3114/trizen", type: "py" },{ name: "storage.py", path: "backend/app/core/storage.py", url: "https://github.com/Harshit-3114/trizen", type: "py" },{ name: "README.md", path: "README.md", url: "https://github.com/Harshit-3114/trizen", type: "md" }]
+  },
+  {
+    id: 'sdn', title: "SDN Lab — OpenFlow Control Plane", date: "Oct 2026",
+    stack: ["Mininet", "Open vSwitch", "Ryu", "OpenFlow 1.3", "Python"], badge: "Lab",
+    desc: "A software-defined networking lab: three Open vSwitches under one custom Ryu controller running a hand-written L2-learning application over OpenFlow 1.3, with a management GUI for live topology inspection.",
+    problem: "Learning SDN by reading about it does not teach you what actually breaks. The interesting failures — stale flow tables, a controller that loses a switch, MAC tables that never age — only show up against a live topology.",
+    architecture: [
+      "Mininet emulates a linear topology of three switches and six hosts with auto-assigned addressing and MACs",
+      "Open vSwitch provides the data plane; every switch opens its own OpenFlow 1.3 connection to the controller over TCP 6653",
+      "A custom Ryu controller application implements L2 learning — it installs flow rules rather than flooding packets",
+      "A Python management GUI drives the topology and inspects live state",
+      "Verification scripts check end-to-end connectivity and report failures rather than assuming the topology came up",
+      "State purging between runs, because a stale flow table is the single most common source of confusing lab results",
+      "Portable launchers for both Windows and Linux"
+    ],
+    decisions: [
+      "A linear topology rather than a full mesh, because a three-switch line is the smallest topology that still exercises the control plane",
+      "Ryu over OpenFlow-based controllers with more moving parts, keeping the learning surface narrow",
+      "Explicit state purging between runs, so a previous experiment cannot masquerade as a current result",
+      "A GUI alongside the CLI, because watching the flow table change is the part that teaches"
+    ],
+    metrics: "3 switches, 6 hosts, one controller, OpenFlow 1.3 over TCP 6653",
+    github: "https://github.com/Harshit-3114/SDN", demo: null, image: null, category: "fullstack", status: "live",
+    files: [{ name: "l2_learn_switch.py", path: "controller/l2_learn_switch.py", url: "https://github.com/Harshit-3114/SDN", type: "py" },{ name: "topology.py", path: "mininet/topology.py", url: "https://github.com/Harshit-3114/SDN", type: "py" },{ name: "sdn_gui.py", path: "gui/sdn_gui.py", url: "https://github.com/Harshit-3114/SDN", type: "py" },{ name: "README.md", path: "README.md", url: "https://github.com/Harshit-3114/SDN", type: "md" }]
+  },
+  {
+    id: 'prakash-plastics', title: "Prakash Plastics — Catalogue Site", date: "Nov 2026",
+    stack: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Express"], badge: "Client",
+    desc: "A product catalogue site for a plastic household goods manufacturer — 244 SKUs across 17 categories, with filtering, product detail pages, a Groq-powered PrakashAI assistant and a Web3Forms contact flow.",
+    problem: "A manufacturer with 244 SKUs across 17 categories needs a catalogue that a customer can actually search, and an assistant that can answer 'do you make a 20 L bucket in dark green?' without a human on the other end.",
+    architecture: [
+      "A typed catalogue of 244 SKUs across 17 categories, each with code, capacity, dimensions and colour options",
+      "Filtering by category, capacity and colour with URL-driven state, so a filtered view can be shared",
+      "Product detail pages with per-SKU specs and colour swatches",
+      "PrakashAI chatbot: the server injects a condensed catalogue context into a Groq prompt and proxies the request",
+      "A contact form with validation, a honeypot and Web3Forms delivery",
+      "JSON-LD for LocalBusiness, WebSite, FAQPage, BreadcrumbList and ItemList, plus canonical URLs, Open Graph and Twitter cards",
+      "A complete design system written before the UI — colour tokens, a 6-step type scale, spacing, component specs, motion rules and accessibility requirements",
+      "67 tests across catalogue integrity, components, hooks, API endpoints and pages"
+    ],
+    decisions: [
+      "DESIGN.md written before any component, so every later decision traces back to a rule rather than to taste",
+      "inline SVG category icons over an icon font, so they inherit colour and need no extra request",
+      "The catalogue context injected server-side rather than shipped to the browser, so the chatbot cannot be fed a different catalogue than the one displayed",
+      "Web3Forms with a honeypot over a custom backend, keeping form delivery to zero infrastructure"
+    ],
+    metrics: "244 SKUs, 17 categories, 67 passing tests and a full documented design system",
+    github: "https://github.com/Harshit-3114/prakash-plastics", demo: null, image: null, category: "client", status: "live",
+    files: [{ name: "DESIGN.md", path: "DESIGN.md", url: "https://github.com/Harshit-3114/prakash-plastics", type: "md" },{ name: "catalogue.ts", path: "src/data/catalogue.ts", url: "https://github.com/Harshit-3114/prakash-plastics", type: "ts" },{ name: "server.ts", path: "server.ts", url: "https://github.com/Harshit-3114/prakash-plastics", type: "ts" },{ name: "README.md", path: "README.md", url: "https://github.com/Harshit-3114/prakash-plastics", type: "md" }]
+  },
+  {
+    id: 'dun-digital', title: "Dun Digital", date: "2026",
+    stack: ["Astro", "Tailwind CSS", "TypeScript", "Sharp"], badge: "Client",
+    desc: "The public front door for Dun Digital — a Chennai agency taking on brand, content, media, PR, websites and live events under one point of contact. Eight service lines, four case studies and a conversion-focused enquiry path.",
+    problem: "Commercial decision-makers arrive asking 'can this team carry my whole brief?' and institutional buyers asking 'can you run a public-awareness campaign end to end?'. Both are skimming. The site has to answer both in one pass, and route them into a conversation.",
+    architecture: [
+      "A fully static Astro build — no accounts, no checkout, no backend, and almost no client JavaScript",
+      "Eight service line pages, four case-study pages, an about page, a contact page and a custom 404 — 17 URLs in the sitemap",
+      "Content curated by hand: 8 services, 4 case studies, 10 gallery frames and a 12-industry pill cloud",
+      "Three conversion paths — an enquiry drawer staged behind PUBLIC_INQUIRY_ENDPOINT, an optional Google Form embed, and mailto",
+      "Trailing-slash canonicals and an auto-generated sitemap",
+      "CI on pull requests, plus a DESIGN.md and PRODUCT.md that fix the positioning and the content rules",
+      "Image optimisation through sharp at build time"
+    ],
+    decisions: [
+      "Static Astro output over a CMS, because the content changes on a marketing cadence, not a news-feed one",
+      "An enquiry drawer plus a mailto fallback, so the contact path works even before the CRM endpoint is set",
+      "Proposal-stage benchmarks explicitly labelled as not-yet-realised, rather than quietly presented as traction",
+      "PRODUCT.md written before the pages, which fixed who the site is for and what it must not become"
+    ],
+    metrics: "17 routes, 8 service lines, 4 case studies and three conversion paths",
+    github: "https://github.com/Harshit-3114/Dun-DIgital", demo: null, image: null, category: "client", status: "live",
+    files: [{ name: "PRODUCT.md", path: "PRODUCT.md", url: "https://github.com/Harshit-3114/Dun-DIgital", type: "md" },{ name: "DESIGN.md", path: "DESIGN.md", url: "https://github.com/Harshit-3114/Dun-DIgital", type: "md" },{ name: "index.astro", path: "src/pages/index.astro", url: "https://github.com/Harshit-3114/Dun-DIgital", type: "jsx" },{ name: "ci.yml", path: ".github/workflows/ci.yml", url: "https://github.com/Harshit-3114/Dun-DIgital", type: "yml" }]
   },
 ];
 
@@ -273,17 +540,28 @@ export const ALL_PINS = [...PROJECTS_DETAILED, ...CERTIFICATIONS, ...EXPERIENCE,
 
 export const CORE_PROJECTS = [
   { id: 'github-innovator', title: 'GitHub Innovator', repo: 'Github-Innovator', category: 'ai' },
-  { id: 'skillroute', title: 'SkillRoute', repo: 'skillroute', category: 'ai' },
+  { id: 'argus', title: 'ARGUS', repo: 'ARGUS', category: 'ai' },
+  { id: 'skillroute', title: 'SkillRoute', category: 'ai' },
   { id: 'ai-ethics', title: 'AI Ethics Advisor', repo: 'ai-ethics-advisor', category: 'ai' },
+  { id: 'nexus-matcher', title: 'Nexus Matcher', repo: 'nexus-matcher', category: 'ai' },
+  { id: 'heatwave-predictor', title: 'HeatWave Predictor', repo: 'heatwave-predictor', category: 'ai' },
+  { id: 'scalar-meta', title: 'Scalar Meta', repo: 'scalar-meta', category: 'ai' },
+  { id: 'dsfs', title: 'Dynamic Societal Friction Simulator', repo: 'Dynamic-Societal-Friction-Simulator', category: 'ai', githubUrl: 'https://github.com/vivek797029/Dynamic-Societal-Friction-Simulator' },
   { id: 'deepfake', title: 'DeepFake Detection', repo: 'Deepfake-Detection', category: 'fullstack' },
   { id: 'insightx', title: 'InsightX Analytics', repo: 'InsightX', category: 'fullstack' },
-  { id: 'edee', title: 'Edee Apply', repo: 'Edee', category: 'client' },
-  { id: 'sosp', title: 'SOS Packaging', repo: 'SOSP', category: 'client' },
-  { id: 'carboutiqueato', title: 'CarBoutique (Crest Automotive)', repo: 'crest-automotive', category: 'client' },
-  { id: 'dsfs', title: 'Dynamic Societal Friction Simulator', repo: 'Dynamic-Societal-Friction-Simulator', category: 'ai', githubUrl: 'https://github.com/vivek797029/Dynamic-Societal-Friction-Simulator' },
-  { id: 'cosmic-calendar', title: 'Cosmic Calendar', repo: 'cosmic-calendar', category: 'fullstack' },
+  { id: 'web-auditor', title: 'Web Auditor', repo: 'web-auditor', category: 'fullstack' },
+  { id: 'portfolio-rebalancer', title: 'Portfolio Rebalancer', repo: 'portfolio-rebalancer', category: 'fullstack' },
+  { id: 'job-agent', title: 'Job Agent', repo: 'job-agent', category: 'fullstack' },
+  { id: 'trizen', title: 'Trizen', repo: 'trizen', category: 'fullstack' },
+  { id: 'sdn', title: 'SDN Lab', repo: 'SDN', category: 'fullstack' },
+  { id: 'cosmic-calendar', title: 'Cosmic Calendar', category: 'fullstack' },
   { id: 'finance-tracker', title: 'Finance Tracker', repo: 'Finance-tracker', category: 'fullstack' },
   { id: 'saas-vm', title: 'SaaS Vending Machine', repo: 'Saas-Vending-Machine', category: 'fullstack' },
+  { id: 'edee', title: 'Edee Apply', repo: 'Edee', category: 'client' },
+  { id: 'sosp', title: 'SOS Packaging', repo: 'SOSP', category: 'client' },
+  { id: 'crest', title: 'Crest Automotive', category: 'client', githubUrl: 'https://github.com/concealedaaryan/carboutiqueauto' },
+  { id: 'prakash-plastics', title: 'Prakash Plastics', repo: 'prakash-plastics', category: 'client' },
+  { id: 'dun-digital', title: 'Dun Digital', repo: 'Dun-DIgital', category: 'client' },
 ];
 
 export const PROCESS_DATA = {
@@ -372,8 +650,8 @@ export const PROCESS_DATA = {
     ],
     skillsLearned: ["Streamlit app development and state management", "Google Gemini API for NL-to-SQL generation", "4-point structured insight report design", "SQL safety validation and execution guardrails", "Indian Rupee formatting across UI layers"]
   },
-  carboutiqueato: {
-    thinking: "Full-stack premium automotive services platform for a luxury car detailing studio in Gurgaon. Built with React 18 + TypeScript + Vite + Tailwind CSS v4 + R3F (3D PPF animation) + Framer Motion frontend, and FastAPI + SQLAlchemy async + asyncpg + PostgreSQL 15 backend. Three role-aware portals (Customer/Owner/Worker) from a single codebase. Features JWT + Google OAuth + phone OTP auth, Razorpay payments, Twilio WhatsApp notifications, Redis-backed token blacklist, Groq AI chatbot (llama-3.3-70b-versatile), multi-studio booking, inventory management, staff assignment lifecycle, and full OWASP API Security Top 10 hardening. The scope was massive — learned to prioritize ruthlessly.",
+  crest: {
+    thinking: "Full-stack premium automotive services platform for a luxury car detailing studio in Gurgaon. Built with React 18 + TypeScript + Vite + Tailwind CSS v4 + R3F (3D PPF animation) + Framer Motion frontend, and FastAPI + SQLAlchemy async + asyncpg + PostgreSQL 15 backend. Three role-aware portals (Customer/Owner/Worker) from a single codebase. Features JWT + Google OAuth + phone OTP auth, Razorpay payments, Twilio WhatsApp notifications, Redis-backed token blacklist, Groq AI chatbot (llama-3.3-70b-versatile), multi-studio booking, inventory management, staff assignment lifecycle, and full OWASP API Security Top 10 hardening. The scope was massive — learned to prioritize ruthlessly. The public marketing site for the studio is the published piece.",
     errors: [
       "Razorpay webhook verification initially failed in staging — IP whitelist was missing the test server. Added conditional webhook verification per environment.",
       "PostgreSQL connection pooling under async SQLAlchemy leaked connections under load. Switched from create_async_engine to async with async_sessionmaker + connection pool limits.",
@@ -409,6 +687,116 @@ export const PROCESS_DATA = {
       "Batch menu `choice` command failed on non-English Windows locales. Replaced with set /p input parsing."
     ],
     skillsLearned: ["Terraform multi-environment infrastructure provisioning", "Kubernetes (Kind + EKS) tenant isolation with namespaces", "Ansible playbook design with OS detection", "70+ automated tests for infra-as-code", "Windows batch scripting for DevOps tooling", "3-tier SaaS resource allocation (Basic/Standard/Premium)"]
+  },
+  argus: {
+    thinking: "ARGUS is a login gate that fuses two biometric modalities instead of trusting a password. The face branch embeds webcam frames with FaceNet512 via DeepFace and scores them by maximum cosine similarity against enrolled templates. The keystroke branch takes browser keydown/keyup timestamps, normalises them per user, and scores them with a scaled-Manhattan filter — sim = 1/(1+d). Both land in [0,1] and fuse with weights of 0.6 face and 0.4 keystroke. The reasoning behind pairing a physiological trait with a behavioural one is simple: a photograph of you cannot reproduce your typing rhythm, and an impostor who knows the passphrase cannot reproduce your face or your rhythm. The evaluation harness reports FAR, FRR, EER and AUC per modality and for the fused system, with ROC curves rendered automatically.",
+    errors: [
+      "The first version compared raw pixel arrays between captured and enrolled frames, so the match collapsed whenever the lighting changed. Switching to FaceNet512 embeddings and cosine similarity made the score invariant to lighting and pose.",
+      "A global keystroke model performed badly because typing rhythm is personal — a fast typist looked like an impostor to a slow profile. Moved to per-user templates, where the filter only has to distinguish that user from everyone else.",
+      "The fused score sat in a narrow band around the threshold, so a handful of legitimate logins were rejected after a small change in the weighting. Added the ROC and score-distribution views to see the actual separation rather than tuning the threshold blind.",
+      "The admin console was initially open on the enrolment endpoint, which meant anyone could add a face. Put it behind a PIN before writing a single evaluation script."
+    ],
+    skillsLearned: ["FaceNet512 / DeepFace embedding and cosine-similarity matching", "Keystroke dynamics capture and per-user template modelling", "Score-level fusion with weighted modality combination", "Biometric error-rate analysis — FAR, FRR, EER and AUC", "ROC curve and score-distribution interpretation", "Flask application structure with a separate evaluation harness"]
+  },
+  'heatwave-predictor': {
+    thinking: "HeatWave AI forecasts heat wave conditions for 22 Indian cities using a statistical seasonal model rather than a trained network. Each city's summer high is adjusted by a 12-month offset curve, a day-of-year sinusoidal trend with a secondary cosine, a latitude factor and an urban heat island approximation, with Gaussian jitter for day-to-day variation. Thresholds follow IMD practice — plains at 40 °C, coastal at 37 °C, hilly at 30 °C — and severity is set by how far the prediction departs from the city's own summer high. The whole choice of approach was about trust: a district officer can be shown the formula, and when the policy threshold changes, it can be changed in one place.",
+    errors: [
+      "A single global threshold produced nonsense for coastal cities, where 37 °C is ordinary and for hilly ones, where 30 °C is severe. Split the thresholds by zone, which immediately made the hot-spot list believable.",
+      "The first version showed confidence as a fixed 90%, which meant nothing. Confidence is now derived from the distance between the prediction and the city's seasonal norm, bounded to 40–95%, so it actually falls when the model is extrapolating.",
+      "Smoothing the seasonal curve too aggressively made May and June indistinguishable. Kept a secondary cosine term to preserve the shoulder of the curve, where the Indian summer actually peaks.",
+      "Adding a city to the dataset left it missing from the dropdown until the UI was touched. Made the city list the single source of truth so a new entry appears everywhere on its own."
+    ],
+    skillsLearned: ["Statistical seasonal modelling with sinusoidal and offset curves", "Zone-aware threshold design following IMD practice", "Heat island and latitude adjustment as explicit, inspectable terms", "Flask API design with a dependency-free template layer", "Model honesty — separating what the model is from what it is not", "Single-source-of-truth data modelling"]
+  },
+  'scalar-meta': {
+    thinking: "Scalar Meta is an OpenEnv benchmark environment for routing customer support tickets to the right department. It implements the Gym-style interface OpenEnv expects — reset(), state(), step(action), grader() — across three task tiers. The design decision that mattered most was the reward: fractional, at 1/len(tickets) per correct routing, rather than binary. A five-ticket task that gets three right should not read as a total failure, and with a binary reward there is no gradient to learn from. Ticket order is fixed per task so two models can be compared on exactly the same sequence.",
+    errors: [
+      "The hard tier was initially too easy — every ticket contained its department keyword. Rewrote the tier so 'Charged twice!' and 'I hate this, give me my money back immediately' both route to billing with different vocabulary, and 'The app keeps crashing on startup' is a tech ticket that a keyword heuristic sends to repair.",
+      "The reward was all-or-nothing in the first version, which made every multi-ticket task score 0.0 regardless of how close it was. Switched to fractional reward so partial credit is visible in the signal.",
+      "The done flag was raised before the grader ran, which truncated the final ticket on some runs. Fixed the lifecycle so done is raised only after the last ticket is scored.",
+      "The Dockerfile pinned python:3.9-slim while the type annotations used PEP 604 unions, so the image could not even import the module. Bumped the base image to 3.11-slim."
+    ],
+    skillsLearned: ["Gym-style environment interface design", "Fractional reward shaping for multi-step tasks", "OpenEnv environment compatibility and openenv.yaml manifests", "Deterministic task design for cross-model comparability", "pytest suites covering reward arithmetic and state lifecycles", "OpenAI-compatible API base configuration for local model hosting"]
+  },
+  'nexus-matcher': {
+    thinking: "Nexus matches a free-text technical problem to the nearest of 10,000 synthetic global expert profiles. Gemini 2.5 Flash distils the visitor's problem into a concrete skill statement, all-MiniLM-L6-v2 embeds it into 384 dimensions, and a flat L2 FAISS index returns the nearest profiles in milliseconds. Gemini then writes a four-point dossier — why matched, profile, pros, friction — and drafts the outreach email. The payoff of the semantic route over keyword search is the whole point: 'someone who has seen a mainframe before' shares no words with the engineer who has actually maintained one, but the encoder knows what a mainframe is.",
+    errors: [
+      "The FAISS index and metadata pickle were committed as 18 MB of opaque binaries with no way to rebuild them. Wrote build_index.py, which regenerates both from the source CSV, and stopped tracking the artefacts.",
+      "The project README had been emptied in the repository while its content sat in a typo'd filename, 'nexus matcher readmde.md'. Moved it back to README.md.",
+      "The original index could not be matched to the app's scoring, because the app converts FAISS distance into a match percentage assuming L2. Rebuilt with IndexFlatL2 to match, and verified the search returns semantically sensible results for a finance query.",
+      "The first dataset attempt used a different embedding model, so vector dimensions did not line up with what the app expected at load time. Pinned all-MiniLM-L6-v2 in the builder so the index and the app cannot drift apart."
+    ],
+    skillsLearned: ["FAISS IndexFlatL2 design and the distance-to-percentage mapping", "Sentence-Transformers embedding pipelines with mean pooling and normalisation", "Zero-shot classification by anchor-phrase similarity", "Making generated artefacts reproducible instead of committing binaries", "Gemini prompt design for structured dossier output", "Streamlit state management and Plotly gauge visualisation"]
+  },
+  'web-auditor': {
+    thinking: "Web Auditor crawls a site and runs 77 checks across five categories — 10 SEO, 21 UX/accessibility, 16 performance, 14 security and 3 duplicate-content — then groups every finding by the team that has to fix it. The grouping is the point. An audit that returns '78 problems' gets filed and forgotten; one that returns '3 high SEO, 1 high security, 2 for the design team' gets worked through. The tool pairs Cheerio for the source with real Chromium through puppeteer-core for what actually rendered, because the two see complementary halves of the page — LCP, CLS and console errors only exist in the browser.",
+    errors: [
+      "The first crawler followed every outbound link and ended up auditing the entire internet. Restricted it to internal links with a breadth-first queue, plus depth and page caps.",
+      "The browser step was mandatory, so the whole tool failed on machines without Chrome. Made it optional and fell back to HTTP-only mode with a warning, which degrades the report instead of losing it.",
+      "Finding titles were counted in the wrong units, so a 70-character title was reported as fine. Switched to character counts against 10–60, which is what actually determines SERP truncation.",
+      "The platform-specific fix guidance was buried in a long list of findings, which made it useless. Added --platform wix to filter the report down to dashboard-fixable items, each with the exact navigation path to fix it."
+    ],
+    skillsLearned: ["Breadth-first web crawling with depth and page budgets", "Cheerio DOM extraction for meta, headings, links and forms", "puppeteer-core driving Chromium for Core Web Vitals and console errors", "Security header and cookie-flag auditing", "Severity and team-scoped finding taxonomies", "Graceful degradation when an optional runtime is unavailable"]
+  },
+  'portfolio-rebalancer': {
+    thinking: "The hard constraint in Portfolio Rebalancer is that cash cannot move between accounts, because transferring from a tax-advantaged account into a taxable one is a taxable event. That single constraint drove the entire algorithm. Each account rebalances independently: aggregate the account value per asset class, compute the target dollar amount, take the delta, fund the buys from that account's own cash above its liquidity floor, settle, then distribute the buys and sells across the tickers in each class by current weight. A global optimiser could produce fewer trades, but its output would not be executable — and an unexecutable optimum is worthless.",
+    errors: [
+      "The first CSV parser split on newlines and stripped quotes, which silently corrupted dollar values like \"$71,469.06\" into two fields. Rewrote it as a single-pass state machine that handles quoted fields, embedded commas, escaped quotes and multi-line values.",
+      "The first version assumed cash could be pooled across accounts, which produced beautiful targets and trades that could not be placed. Rebuilt the algorithm around per-account isolation.",
+      "better-sqlite3 failed to install because it needs native compilation and the machine had no Visual Studio build tools. Switched to sql.js — SQLite compiled to WebAssembly — which trades memory-resident operation for a zero-toolchain install.",
+      "Accounts with negligible total value produced walls of meaningless zero-value trades. Added a threshold below which an account is skipped entirely."
+    ],
+    skillsLearned: ["Single-pass state-machine CSV parsing for messy financial exports", "Per-account, cash-isolated portfolio optimisation", "Proportional shortfall scaling that keeps cash non-negative", "Liquidity floors as an explicit modelling concept", "sql.js / WebAssembly SQLite for zero-native-dependency persistence", "React 19 with Recharts for allocation visualisation"]
+  },
+  'job-agent': {
+    thinking: "Job Agent automates the mechanical half of job hunting and stops exactly where judgement begins. It scrapes listings across three boards with role, location and keyword filters, an exclude list and an age cutoff; tailors your resume and cover letter per posting with an LLM; renders each to PDF through Chrome headless; and tracks every application in SQLite with a ready → applied transition. The deliberate design choice is that it never submits. auto_submit is false by default and the send is a human action, because an application is a claim about who you are and that should stay yours.",
+    errors: [
+      "The first scraper hammered the job boards with no delay and a fixed user agent. Added a configurable request delay between requests and rotating user agents, and documented that the terms of service of any site you point it at still apply.",
+      "The LLM customiser returned resume bullets in wildly different lengths, which made the rendered PDFs look inconsistent. Constrained the output shape and applied the same print CSS to every variant.",
+      "The renderer assumed Chrome was present and failed with a raw path error. Added a pdfkit fallback and a clear message when neither is available.",
+      "The first version of the config file held the API key in the same JSON as the search preferences, and that file was tracked by git. Split it, and moved the personal data — resume, API key, application database — out of version control entirely."
+    ],
+    skillsLearned: ["Responsible job-board scraping with rate limiting and user-agent rotation", "LLM-driven resume tailoring constrained to a stable output shape", "HTML-to-PDF rendering via Chrome headless with a pdfkit fallback", "SQLite application tracking with explicit status transitions", "Separating secrets and personal data from version control", "CLI design with composable subcommands"]
+  },
+  trizen: {
+    thinking: "Trizen is a photo-sharing platform for photography and event teams. The team uploads event photos, an admin curates them into a gallery, and the gallery is published behind a PIN-protected customer link — no customer account, because the photographer's client should not have to sign up for anything. The security model drove the design: PINs are bcrypt-hashed, each slug gets its own rate limit of 20 attempts per 10 minutes, and unpublished slugs return 404 rather than 403 so the API never confirms which galleries exist.",
+    errors: [
+      "The first attempt returned 403 for galleries a visitor did not have a PIN for, which confirmed the gallery existed. Changed it to 404 — a resource that does not leak its existence is worth more than a precise status code.",
+      "Members could publish galleries and select photos because the authorisation check only covered the upload path. Tightened the permission model so members can upload and view, but not publish, select or delete other people's photos.",
+      "The upload endpoint accepted any file type and no size cap, which made the local disk a denial-of-service target. Added an image MIME allowlist, a 10 MB default cap and a limit of 50 files per request.",
+      "The project carried an Alembic pin and an alembic/ directory long after the schema moved to Base.metadata.create_all(). Removed the dead dependency — and documented the trade-off, because create_all() creates missing tables but never alters existing ones."
+    ],
+    skillsLearned: ["FastAPI application structure with a lifespan handler", "bcrypt PIN hashing and per-resource rate limiting", "Returning 404 instead of 403 to avoid resource-existence leaks", "Role-based permission checks across upload, curation and publish paths", "Storage abstraction over local disk and S3", "Vercel serverless deployment with a separate dependency set"]
+  },
+  sdn: {
+    thinking: "The SDN lab is three Open vSwitches under one custom Ryu controller running a hand-written L2-learning application over OpenFlow 1.3, with six hosts on a linear topology and a Python GUI for live inspection. The point of building it was to see the things a textbook does not show: a flow table that never ages, a controller that loses a switch, MACs that move between ports. Mininet handles the emulation, Open vSwitch provides the data plane, and the controller installs flow rules instead of flooding packets.",
+    errors: [
+      "The first run of every lab session produced different results, because the previous run's flow tables were still installed. Added explicit state purging between runs — the single most common source of confusing results in an SDN lab.",
+      "The topology came up but hosts could not reach each other, because the controller had no flood rule for unknown destinations. Added the standard L2-learning behaviour of installing a miss rule that floods and then learns from the source MAC.",
+      "Addresses and MACs were hard-coded in the topology script, so two instances on the same machine collided. Switched to Mininet's automatic addressing and autoSetMacs.",
+      "The GUI only worked on Windows and the launcher on Linux, which made the project awkward to demo. Added portable launchers for both platforms."
+    ],
+    skillsLearned: ["Mininet network emulation with auto-assigned addressing", "Open vSwitch as the data plane under OpenFlow 1.3", "Ryu controller application development", "L2 learning and flow-rule installation", "Flow-table state management between lab runs", "Python GUI tooling for live topology inspection"]
+  },
+  'prakash-plastics': {
+    thinking: "The Prakash Plastics catalogue covers 244 SKUs across 17 categories for a manufacturer of plastic household products. The decision that shaped the project was writing DESIGN.md before any component: colour tokens, a 6-step type scale, spacing rules, component specs, motion rules, accessibility requirements and SEO structure. Every later decision could be checked against a written rule instead of re-litigated by taste. The catalogue itself is typed TypeScript, filtering runs on category, capacity and colour with URL-driven state, and PrakashAI answers product questions by proxying to Groq with the catalogue context injected server-side.",
+    errors: [
+      "15 of the 67 tests were failing because jsdom implements neither IntersectionObserver nor a working requestAnimationFrame, so every page render threw and the animated counters never reached their final value. Added both stubs to the test setup.",
+      "The contact hook read the failure detail from result.message only. Providers are inconsistent about the field, so the detail was being swallowed behind a generic message. Now it reads either field.",
+      "The live Groq API key sat in a .env file that the existing ignore rules did not cover, and the file was staged for commit. Fixed the ignore rules and added a committed .env.example.",
+      "The React build failed on two TypeScript errors introduced by my own test changes — a BodyInit narrowed to string, and parameter properties under erasableSyntaxOnly. Fixed both rather than loosening the compiler."
+    ],
+    skillsLearned: ["Design-system authoring before implementation, in DESIGN.md", "Typed product catalogues at 244 SKUs with filter state in the URL", "Server-side catalogue context injection for a grounded chatbot", "Vitest, Testing Library and Supertest across five test layers", "jsdom environment gaps — IntersectionObserver and requestAnimationFrame", "Secret hygiene in .env handling and gitignore rules"]
+  },
+  'dun-digital': {
+    thinking: "Dun Digital is a Chennai agency taking on brand, content, media, PR, websites and live events under a single point of contact. The site is their public front door, and it has to answer two audiences who arrive with the same question — 'can this team carry my whole brief?' — commercial decision-makers and institutional buyers. PRODUCT.md was written first to pin that down, along with the positioning, the operating context and an explicit list of what the site must not become. The build is fully static Astro: 17 routes, no accounts, no checkout, no backend, and almost no client JavaScript.",
+    errors: [
+      "The first draft read like a brochure and converted nothing. Rewrote around the two audiences and the proof they each need — capacity for one account, and delivery evidence for a campaign.",
+      "Benchmark numbers for work that had not actually happened yet sat next to real traction with no distinction. Labelled proposal-stage benchmarks explicitly as not-yet-realised.",
+      "The enquiry form had no destination configured, so it silently failed. The drawer is now staged behind PUBLIC_INQUIRY_ENDPOINT, with an optional Google Form embed and a mailto fallback as the working default.",
+      "The contact form was spammed within days of going live. Added a honeypot field and moved delivery to a hosted form service so there is no server-side honeypot to bypass."
+    ],
+    skillsLearned: ["Product and positioning definition before UI, in PRODUCT.md", "Static Astro architecture with zero backend and minimal client JS", "Conversion-path design with staged endpoints and graceful fallbacks", "Honest labelling of projected versus realised metrics", "Two-audience information architecture for a single landing proposition", "CI, canonicals, sitemap generation and sharp image optimisation"]
   },
 };
 

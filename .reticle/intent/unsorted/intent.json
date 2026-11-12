@@ -1,0 +1,264 @@
+{
+  "intents": {
+    "inline:choosing-the-dense-preset-turns-the-transform-on-97d4d0b6": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[data-tf=\"on\"]",
+              "self": true
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[style*=\"--tf-density: 0.950\"]",
+              "self": true
+            }
+          },
+          {
+            "contains": "+0.95",
+            "kind": "text",
+            "scope": ".tf-panel"
+          }
+        ]
+      },
+      "declaredAt": 1794460609637,
+      "id": "inline:choosing-the-dense-preset-turns-the-transform-on-97d4d0b6",
+      "provenBy": {
+        "at": 1794460609890,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794460609890"
+      },
+      "state": "proved",
+      "statement": "Choosing the 'dense' preset turns the transform on and writes the density axis onto <html> as CSS custom properties, so the layout restyles without React re-rendering.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/TransformPanel.jsx"
+        ]
+      },
+      "updatedAt": 1794460609927
+    },
+    "inline:pressing-shift-t-opens-the-transformer-panel-so-22901fc3": {
+      "binding": {
+        "kind": "element",
+        "query": {
+          "name": "The transformer",
+          "role": "dialog"
+        }
+      },
+      "declaredAt": 1794461711596,
+      "id": "inline:pressing-shift-t-opens-the-transformer-panel-so-22901fc3",
+      "state": "bound",
+      "statement": "Pressing Shift+T opens the transformer panel so a visitor can restyle the site on demand.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794461711652
+    },
+    "inline:pressing-shift-t-opens-the-transformer-panel-so-25798bfd": {
+      "binding": {
+        "kind": "element",
+        "query": {
+          "name": "The transformer",
+          "role": "dialog"
+        }
+      },
+      "declaredAt": 1794459350341,
+      "id": "inline:pressing-shift-t-opens-the-transformer-panel-so-25798bfd",
+      "provenBy": {
+        "at": 1794460609572,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794460609572"
+      },
+      "state": "proved",
+      "statement": "Pressing Shift+T opens the transformer panel so a visitor can restyle the site on demand — the transform is never applied without being asked for.",
+      "status": "proved",
+      "subject": "unsorted",
+      "updatedAt": 1794460609582
+    },
+    "inline:pressing-shift-t-opens-the-transformer-panel-so-a6494b30": {
+      "binding": {
+        "kind": "element",
+        "query": {
+          "name": "The transformer",
+          "role": "dialog"
+        }
+      },
+      "declaredAt": 1794462485639,
+      "id": "inline:pressing-shift-t-opens-the-transformer-panel-so-a6494b30",
+      "provenBy": {
+        "at": 1794462743177,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794462743177"
+      },
+      "state": "proved",
+      "statement": "Pressing Shift+T opens the transformer panel so a visitor can restyle the site on demand - the transform is never applied without being asked for.",
+      "status": "proved",
+      "subject": "unsorted",
+      "updatedAt": 1794462743194
+    },
+    "inline:the-dense-preset-turns-the-transform-on-and-writ-b23e259b": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[data-tf=\"on\"]",
+              "self": true
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[style*=\"--tf-density: 0.950\"]",
+              "self": true
+            }
+          },
+          {
+            "contains": "+0.95",
+            "kind": "text",
+            "scope": ".tf-panel"
+          }
+        ]
+      },
+      "declaredAt": 1794462496149,
+      "id": "inline:the-dense-preset-turns-the-transform-on-and-writ-b23e259b",
+      "provenBy": {
+        "at": 1794462743692,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794462743692"
+      },
+      "state": "proved",
+      "statement": "The dense preset turns the transform on and writes the density axis onto <html> as CSS custom properties, so the layout restyles without React re-rendering.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/TransformPanel.jsx"
+        ]
+      },
+      "updatedAt": 1794462743737
+    },
+    "inline:the-dense-preset-turns-the-transform-on-and-writ-c645344e": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[data-tf=\"on\"]",
+              "self": true
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[style*=\"--tf-density: 0.950\"]",
+              "self": true
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794461469624,
+      "id": "inline:the-dense-preset-turns-the-transform-on-and-writ-c645344e",
+      "provenBy": {
+        "at": 1794461470116,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794461470116"
+      },
+      "state": "proved",
+      "statement": "The dense preset turns the transform on and writes the density axis onto <html> as CSS custom properties.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/TransformPanel.jsx"
+        ]
+      },
+      "updatedAt": 1794461470206
+    },
+    "inline:the-shell-command-transform-dense-applies-the-sa-46b88679": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[data-tf=\"on\"]",
+              "self": true
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[style*=\"--tf-density: 0.950\"]",
+              "self": true
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794462744374,
+      "id": "inline:the-shell-command-transform-dense-applies-the-sa-46b88679",
+      "provenBy": {
+        "at": 1794462744694,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794462744694"
+      },
+      "state": "proved",
+      "statement": "The shell command 'transform dense' applies the same transform as the panel, so the console and the panel are one control surface.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/Console.jsx"
+        ]
+      },
+      "updatedAt": 1794462744723
+    },
+    "inline:the-shell-command-transform-dense-applies-the-sa-fad7ba3f": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[data-tf=\"on\"]",
+              "self": true
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[style*=\"--tf-density: 0.950\"]",
+              "self": true
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794461722810,
+      "id": "inline:the-shell-command-transform-dense-applies-the-sa-fad7ba3f",
+      "provenBy": {
+        "at": 1794461723124,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794461723124"
+      },
+      "state": "proved",
+      "statement": "The shell command 'transform dense' applies the same transform as the panel, so the console and the UI are one control surface.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/Console.jsx"
+        ]
+      },
+      "updatedAt": 1794461723145
+    }
+  },
+  "subject": "unsorted",
+  "version": 1
+}

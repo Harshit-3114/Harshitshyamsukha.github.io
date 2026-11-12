@@ -29,6 +29,7 @@ export default function Console({
   onOpenProject,
   onDownloadResume,
   onSetHour,
+  onTransform,
   soundEnabled,
   open,
   onToggle,
@@ -180,6 +181,7 @@ export default function Console({
       onOpenProject: (id) => { setOpenedCount((n) => n + 1); onOpenProject?.(id); },
       onDownloadResume,
       onSetHour,
+      onTransform,
       onRickroll,
       onClear: () => { setLog([]); setTyped(0); },
     });
@@ -188,7 +190,7 @@ export default function Console({
     result.lines.forEach((l) => print(l.kind, l.text));
     if (result.lines.some((l) => l.kind === 'rick')) setRick(true);
   }, [cwd, print, ambience, soundEnabled, history, repos, commits, openedCount,
-    onWeather, onAuto, onSound, onTheme, onSpectacle, onOpenProject, onDownloadResume, onSetHour, onRickroll]);
+    onWeather, onAuto, onSound, onTheme, onSpectacle, onOpenProject, onDownloadResume, onSetHour, onTransform, onRickroll]);
 
   const onKeyDown = useCallback((e) => {
     if (e.key === 'Enter') {

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "origin": "failed-assert",
+  "expected": "element \"The transformer\"",
+  "observed": "no element matched {\"role\":\"dialog\",\"name\":\"The transformer\"}",
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "testid",
+        "value": ""
+      },
+      "action": "press"
+    }
+  ],
+  "id": "1794462495879-press-e5517a28",
+  "createdAt": 1794462495880,
+  "seen": 1,
+  "lastSeenAt": 1794462495880
+}

@@ -143,15 +143,19 @@ export default function TabContent({
               <h3 className="process-title">
                 {projects.find((p) => p.id === selectedProcessProject)?.title}
               </h3>
-              <a
-                href={projects.find((p) => p.id === selectedProcessProject)?.githubUrl
-                  || `https://github.com/${PROFILE.githubHandle}/${projects.find((p) => p.id === selectedProcessProject)?.repo}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="process-repo-link"
-              >
-                View on GitHub <Icon name="arrowUpRight" size={12} />
-              </a>
+              {(() => {
+                /* Only render the link when there is a real destination.
+                   A "View on GitHub" that 404s is worse than no link. */
+                const p = projects.find((x) => x.id === selectedProcessProject);
+                const href = p?.githubUrl
+                  || (p?.repo ? `https://github.com/${PROFILE.githubHandle}/${p.repo}` : null);
+                if (!href) return null;
+                return (
+                  <a href={href} target="_blank" rel="noopener noreferrer" className="process-repo-link">
+                    View on GitHub <Icon name="arrowUpRight" size={12} />
+                  </a>
+                );
+              })()}
               <div className="process-block">
                 <h4 className="process-block-title">Thinking Process</h4>
                 <p className="process-text">

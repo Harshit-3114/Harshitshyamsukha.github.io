@@ -1,0 +1,346 @@
+/* ============================================================
+   THE TRANSFORMER — the layout as the output of attention
+   ============================================================ */
+
+:root {
+  /* page-level axes, written by the transformer */
+  --tf-density: 0;
+  --tf-emphasis: 0;
+  --tf-temp: 0;
+  --tf-gravity: 0;
+  --tf-flow: 0;
+  --tf-sharp: 0;
+  --tf-scale: 1;
+  --tf-col-a: 1.05;
+  --tf-col-b: 0.95;
+  --tf-measure: 44ch;
+  --tf-lead: 0;
+}
+
+/* ------------------------------------------------------------
+   PAGE LEVEL — the intent, applied to the whole document
+   ------------------------------------------------------------ */
+body {
+  line-height: calc(1.65 + var(--tf-lead));
+}
+
+.about-hero {
+  grid-template-columns: minmax(0, var(--tf-col-a)fr) minmax(0, var(--tf-col-b)fr);
+  gap: calc(var(--sp-16) + var(--tf-density) * var(--sp-8));
+}
+
+.about-name {
+  font-size: calc(clamp(3rem, 7.2vw, 6.4rem) * var(--tf-scale));
+  font-weight: calc(300 + var(--tf-emphasis) * 230);
+  font-variation-settings: "SOFT" 0, "WONK" calc(var(--tf-emphasis) * 0.85);
+  letter-spacing: calc(-0.045em + var(--tf-gravity) * 0.005em);
+  line-height: calc(0.88 - var(--tf-gravity) * 0.04);
+}
+
+.section-title {
+  font-size: calc(clamp(2.1rem, 4.6vw, 3.9rem) * var(--tf-scale));
+  font-weight: calc(300 + var(--tf-emphasis) * 230);
+  font-variation-settings: "SOFT" 0, "WONK" calc(var(--tf-emphasis) * 0.65);
+  letter-spacing: calc(-0.035em + var(--tf-gravity) * 0.004em);
+  margin-bottom: calc(var(--sp-10) + var(--tf-density) * var(--sp-5));
+}
+
+.about-role {
+  max-width: var(--tf-measure);
+  line-height: calc(1.6 + var(--tf-lead) * 0.6);
+}
+
+.bento {
+  gap: calc(var(--sp-5) + var(--tf-density) * var(--sp-3));
+}
+
+.pin-card-inner {
+  padding: calc(var(--sp-5) - var(--tf-density) * var(--sp-2));
+}
+
+.about-panel {
+  padding: calc(var(--sp-6) - var(--tf-density) * var(--sp-2));
+  gap: calc(var(--sp-4) - var(--tf-density) * var(--sp-2));
+  border-radius: calc(var(--r-core) + var(--tf-sharp) * 0.35rem);
+}
+
+.about-card {
+  border-radius: calc(var(--r-core) + var(--tf-sharp) * 0.35rem);
+}
+
+.pin-card {
+  border-radius: calc(var(--r-shell) + var(--tf-sharp) * 0.4rem);
+}
+
+/* the accents take the temperature */
+.pin-icon,
+.pin-category,
+.about-card-icon,
+.about-panel::before,
+.section-title::before,
+.pin-tag,
+.about-card-tag,
+.process-tag,
+.about-card::before {
+  filter: hue-rotate(calc(var(--tf-temp) * 26deg));
+}
+
+/* ------------------------------------------------------------
+   ELEMENT LEVEL — the attention, applied per token
+   ------------------------------------------------------------ */
+html[data-tf="on"] .pin-title {
+  font-weight: calc(400 + var(--tf-e) * 190);
+}
+html[data-tf="on"] .about-card-title {
+  font-weight: calc(400 + var(--tf-e) * 190);
+}
+html[data-tf="on"] [data-tf="card"] {
+  opacity: calc(1 - (1 - var(--tf-a)) * 0.2);
+}
+html[data-tf="on"] [data-tf="caption"] {
+  opacity: calc(1 - (1 - var(--tf-a)) * 0.3);
+}
+html[data-tf="on"] [data-tf="panel"] {
+  opacity: calc(1 - (1 - var(--tf-a)) * 0.16);
+}
+html[data-tf="on"] [data-tf="label"] {
+  opacity: calc(1 - (1 - var(--tf-a)) * 0.24);
+}
+html[data-tf="on"] [data-tf="title"] {
+  letter-spacing: calc(-0.03em + var(--tf-e) * 0.012em);
+}
+
+/* the attention map — every token, lit by how much of the intent
+   it received */
+.tf-viz [data-tf] {
+  outline: 1px solid color-mix(in srgb, var(--c-violet) calc(var(--tf-a) * 85%), transparent);
+  outline-offset: 2px;
+}
+.tf-viz [data-tf="title"],
+.tf-viz [data-tf="hero"] {
+  outline-color: color-mix(in srgb, var(--c-amber) calc(var(--tf-a) * 90%), transparent);
+}
+.tf-viz [data-tf="card"],
+.tf-viz [data-tf="panel"] {
+  outline-color: color-mix(in srgb, var(--c-teal) calc(var(--tf-a) * 90%), transparent);
+}
+.void-theme.tf-viz [data-tf] {
+  outline-color: color-mix(in srgb, var(--c-violet-2) calc(var(--tf-a) * 85%), transparent);
+}
+
+/* ------------------------------------------------------------
+   THE TRANSFORM PANEL
+   ------------------------------------------------------------ */
+.tf-panel {
+  position: fixed;
+  top: 84px;
+  right: var(--sp-4);
+  z-index: 60;
+  width: min(420px, calc(100vw - 32px));
+  background: var(--c-panel);
+  color: var(--c-panel-ink);
+  border: 1px solid var(--c-panel-line);
+  border-radius: var(--r-core);
+  box-shadow: 0 24px 60px -22px rgba(20, 16, 12, 0.75);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  overflow: hidden;
+}
+.tf-panel-hdr {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 8px var(--sp-3);
+  border-bottom: 1px solid var(--c-panel-line);
+}
+.tf-panel-hdr .rt-title { flex: 1; letter-spacing: 0.12em; font-size: 9.5px; text-transform: uppercase; color: var(--c-panel-ink-2); }
+.tf-panel-close {
+  border: 1px solid var(--c-panel-line);
+  background: transparent;
+  color: var(--c-panel-ink-2);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+.tf-panel-close:hover { color: var(--c-panel-ink); border-color: var(--c-panel-ink); }
+.tf-panel-body { padding: var(--sp-3); max-height: 70vh; overflow-y: auto; }
+
+/* the active indicator — dark when the transformer is idle */
+.tf-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-panel-ink-2);
+  opacity: 0.45;
+  flex: none;
+  transition: background 160ms ease, opacity 160ms ease;
+}
+.tf-dot.is-on {
+  background: var(--c-violet-2);
+  opacity: 1;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--c-violet-2) 70%, transparent);
+}
+
+.tf-prompt-row { display: flex; gap: var(--sp-2); align-items: center; }
+.tf-prompt {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--c-panel-line);
+  border-radius: var(--r-sm);
+  color: var(--c-panel-ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 7px 8px;
+  outline: none;
+}
+.tf-prompt:focus { border-color: var(--c-violet-2); }
+.tf-prompt::placeholder { color: var(--c-panel-ink-2); opacity: 0.6; }
+.tf-go {
+  border: 1px solid var(--c-panel-line);
+  background: var(--c-violet);
+  color: var(--c-on-violet);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 7px 10px;
+  cursor: pointer;
+  flex: none;
+}
+.tf-go:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.tf-section-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-panel-ink-2);
+  margin: var(--sp-3) 0 var(--sp-2);
+}
+
+.tf-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.tf-chip {
+  border: 1px solid var(--c-panel-line);
+  background: transparent;
+  color: var(--c-panel-ink-2);
+  border-radius: var(--r-pill);
+  padding: 3px 9px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  cursor: pointer;
+}
+.tf-chip:hover { color: var(--c-panel-ink); border-color: var(--c-panel-ink); }
+.tf-chip.is-on { background: var(--c-violet); border-color: var(--c-violet); color: var(--c-on-violet); }
+
+.tf-axes { display: flex; flex-direction: column; gap: 6px; }
+.tf-axis { display: grid; grid-template-columns: 82px minmax(0, 1fr) 44px; align-items: center; gap: var(--sp-2); }
+.tf-axis-name { color: var(--c-panel-ink-2); font-size: 10px; }
+.tf-axis-track {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.09);
+}
+.tf-axis-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 2px;
+  background: var(--c-amber);
+}
+.tf-axis-zero {
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  bottom: -2px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.22);
+}
+.tf-axis-val { color: var(--c-panel-ink); font-size: 9.5px; text-align: right; }
+
+.tf-note {
+  margin-top: var(--sp-2);
+  color: var(--c-panel-ink-2);
+  font-size: 10px;
+  line-height: 1.5;
+}
+.tf-note b { color: var(--c-panel-ink); font-weight: 400; }
+.tf-note-err { color: var(--c-amber); }
+.tf-note-err b { color: var(--c-amber); }
+
+/* the focus dial */
+.tf-focus-row { grid-template-columns: 82px minmax(0, 1fr) 44px; }
+.tf-range {
+  width: 100%;
+  height: 4px;
+  margin: 0;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.09);
+  border-radius: 2px;
+  cursor: pointer;
+}
+.tf-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--c-violet-2);
+  border: none;
+  cursor: pointer;
+}
+.tf-range::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--c-violet-2);
+  border: none;
+  cursor: pointer;
+}
+.tf-range:focus-visible { outline: 1px solid var(--c-violet-2); outline-offset: 3px; }
+
+.tf-reset { margin-top: var(--sp-3); }
+
+.tf-neural {
+  margin-top: var(--sp-3);
+  border-top: 1px solid var(--c-panel-line);
+  padding-top: var(--sp-3);
+}
+.tf-neural-btn {
+  width: 100%;
+  border: 1px solid var(--c-panel-line);
+  background: transparent;
+  color: var(--c-panel-ink);
+  border-radius: var(--r-sm);
+  padding: 7px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  cursor: pointer;
+}
+.tf-neural-btn:hover { border-color: var(--c-violet-2); }
+.tf-neural-btn:disabled { opacity: 0.5; cursor: progress; }
+.tf-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 6px;
+  overflow: hidden;
+}
+.tf-bar span { display: block; height: 100%; background: var(--c-violet-2); transition: width 120ms linear; }
+
+.tf-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+  color: var(--c-panel-ink-2);
+  font-size: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.tf-toggle input { accent-color: var(--c-violet); }
+.tf-toggle.is-on { color: var(--c-panel-ink); }
+
+@media (max-width: 700px) {
+  .tf-panel { top: 76px; left: var(--sp-3); right: var(--sp-3); width: auto; }
+}

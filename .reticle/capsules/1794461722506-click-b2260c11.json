@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "origin": "failed-assert",
+  "expected": "element ? AND element ?",
+  "observed": "scope resolved to no element — cannot confirm {\"scope\":\"html[data-tf=\\\"off\\\"]\",\"self\":true} is present",
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "testid",
+        "value": "",
+        "source": {
+          "file": "src/components/TransformPanel.jsx",
+          "line": 168,
+          "column": 8
+        }
+      },
+      "action": "click"
+    }
+  ],
+  "id": "1794461722506-click-b2260c11",
+  "createdAt": 1794461722508,
+  "seen": 1,
+  "lastSeenAt": 1794461722508
+}

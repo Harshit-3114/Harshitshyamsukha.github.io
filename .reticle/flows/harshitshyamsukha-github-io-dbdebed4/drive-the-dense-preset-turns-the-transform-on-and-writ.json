@@ -1,0 +1,180 @@
+{
+  "version": 2,
+  "name": "drive-the-dense-preset-turns-the-transform-on-and-writ",
+  "projectId": "harshitshyamsukha-github-io-dbdebed4",
+  "createdAt": 1794462046789,
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "T",
+        "modifiers": [
+          "Shift"
+        ]
+      },
+      "action": "press",
+      "degraded": true,
+      "expect": {
+        "kind": "element",
+        "query": {
+          "role": "dialog",
+          "name": "The transformer"
+        }
+      },
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "dense"
+      },
+      "args": {},
+      "action": "click",
+      "expect": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[data-tf=\"on\"]",
+              "self": true
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[style*=\"--tf-density: 0.950\"]",
+              "self": true
+            }
+          }
+        ]
+      },
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "T",
+        "modifiers": [
+          "Shift"
+        ]
+      },
+      "action": "press",
+      "degraded": true,
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "dense"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "reset the site"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "Toggle the console"
+      },
+      "args": {},
+      "action": "click",
+      "expect": {
+        "kind": "element",
+        "query": {
+          "role": "textbox",
+          "name": "Console command"
+        }
+      },
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "textbox",
+        "name": "Console command"
+      },
+      "args": {
+        "value": "transform dense"
+      },
+      "action": "fill",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "textbox",
+        "name": "Console command"
+      },
+      "args": {
+        "text": "Enter"
+      },
+      "action": "press",
+      "expect": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[data-tf=\"on\"]",
+              "self": true
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "scope": "html[style*=\"--tf-density: 0.950\"]",
+              "self": true
+            }
+          }
+        ]
+      },
+      "page": "/"
+    }
+  ],
+  "startPath": "/",
+  "intent": "The dense preset turns the transform on and writes the density axis onto <html> as CSS custom properties.",
+  "requires": [
+    {
+      "kind": "route",
+      "pathname": "/"
+    }
+  ],
+  "ensures": [
+    {
+      "kind": "route",
+      "pathname": "/"
+    }
+  ],
+  "author": {
+    "agent": "opencode"
+  },
+  "intentId": "flow:drive-the-dense-preset-turns-the-transform-on-and-writ"
+}

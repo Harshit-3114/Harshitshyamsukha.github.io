@@ -1,0 +1,42 @@
+{
+  "intents": {
+    "flow:drive-pressing-shift-t-opens-the-transformer-panel-so": {
+      "declaredAt": 1794459799458,
+      "id": "flow:drive-pressing-shift-t-opens-the-transformer-panel-so",
+      "state": "declared",
+      "statement": "Pressing Shift+T opens the transformer panel so a visitor can restyle the site on demand — the transform is never applied without being asked for.",
+      "status": "proposed",
+      "subject": "drive-pressing-shift-t-opens-the-transfo",
+      "surface": {
+        "flow": "drive-pressing-shift-t-opens-the-transformer-panel-so"
+      },
+      "updatedAt": 1794459799471
+    },
+    "flow:drive-pressing-shift-t-opens-the-transformer-panel-so-072679": {
+      "declaredAt": 1794462744902,
+      "id": "flow:drive-pressing-shift-t-opens-the-transformer-panel-so-072679",
+      "state": "declared",
+      "statement": "Pressing Shift+T opens the transformer panel so a visitor can restyle the site on demand - the transform is never applied without being asked for.",
+      "status": "proposed",
+      "subject": "drive-pressing-shift-t-opens-the-transfo",
+      "surface": {
+        "flow": "drive-pressing-shift-t-opens-the-transformer-panel-so-072679"
+      },
+      "updatedAt": 1794462744910
+    },
+    "flow:drive-pressing-shift-t-opens-the-transformer-panel-so-9b9666": {
+      "declaredAt": 1794460936723,
+      "id": "flow:drive-pressing-shift-t-opens-the-transformer-panel-so-9b9666",
+      "state": "declared",
+      "statement": "Pressing Shift+T opens the transformer panel so a visitor can restyle the site on demand — the transform is never applied without being asked for.",
+      "status": "proposed",
+      "subject": "drive-pressing-shift-t-opens-the-transfo",
+      "surface": {
+        "flow": "drive-pressing-shift-t-opens-the-transformer-panel-so-9b9666"
+      },
+      "updatedAt": 1794460936773
+    }
+  },
+  "subject": "drive-pressing-shift-t-opens-the-transfo",
+  "version": 1
+}

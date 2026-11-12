@@ -10,12 +10,14 @@ import WeatherField from './components/WeatherField.jsx';
 import Constellation from './components/Constellation.jsx';
 import Console from './components/Console.jsx';
 import Spectacle from './components/Spectacle.jsx';
+import TransformPanel from './components/TransformPanel.jsx';
 import PrintCV from './components/PrintCV.jsx';
 import useRevealObserver from './hooks/useRevealObserver.js';
 import { useTilt } from './hooks/useTilt.js';
 import useAmbience, { AMBIENCE_MODES } from './hooks/useAmbience.js';
 import useSound from './hooks/useSound.js';
 import useGitHubStatus from './hooks/useGitHubStatus.js';
+import useTransformer from './hooks/useTransformer.js';
 import { ALL_PINS, KNOWLEDGE, CORE_PROJECTS, PROCESS_DATA, PROFILE, TABS } from './data/portfolio.js';
 
 const VALID_TABS = ['about', 'all', 'ai', 'fullstack', 'client', 'credentials', 'experience', 'activity', 'process', 'contact', 'void'];
@@ -67,11 +69,13 @@ export default function App() {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [focusMode, setFocusMode] = useState(false);
   const [consoleOpen, setConsoleOpen] = useState(false);
+  const [transformOpen, setTransformOpen] = useState(false);
   const [spectacle, setSpectacle] = useState(null);
   const [modalOrigin, setModalOrigin] = useState(null);
   const ambience = useAmbience();
   const sound = useSound();
   const ghStatus = useGitHubStatus();
+  const transformer = useTransformer({ tab: filterTab });
 
   const { mode: ambienceMode, setMode: setAmbienceMode, setOverride: setAmbienceOverride, setHour: setAmbienceHour } = ambience;
   const { enabled: soundEnabled, toggle: toggleSound, setEnabled: setSoundEnabled } = sound;
@@ -194,6 +198,19 @@ export default function App() {
     setTimeout(() => setRainbowMode(false), 6000);
     playSound('scratch');
   }, [markEgg, playSound]);
+
+  /* ---------------- the transformer, from the shell ---------------- */
+  const { applyPreset: transformPreset, runPrompt: transformPrompt } = transformer;
+  const consoleTransform = useCallback((cmd) => {
+    setTransformOpen(true);
+    if (!cmd) return;
+    /* a preset id, or a sentence to read as a style intent */
+    if (cmd.kind === 'preset') {
+      transformPreset(cmd.id);
+      return;
+    }
+    if (cmd.kind === 'text') transformPrompt(cmd.text);
+  }, [transformPreset, transformPrompt]);
 
   const openProjectModal = useCallback((pin, opts = {}) => {
     if (hoverTimerRef.current) { clearTimeout(hoverTimerRef.current); hoverTimerRef.current = null; }
@@ -355,6 +372,13 @@ export default function App() {
       if (e.key === '`' || e.key === '~') {
         e.preventDefault();
         setConsoleOpen((v) => !v);
+      }
+      /* shift+T opens the transformer. Deliberately not a browser
+         shortcut, and deliberately not plain T — a bare letter would
+         fire while the visitor is just reading. */
+      if (e.shiftKey && (e.key === 'T' || e.key === 't')) {
+        e.preventDefault();
+        setTransformOpen((v) => !v);
       }
     };
     window.addEventListener('keydown', handleKey);
@@ -844,11 +868,33 @@ export default function App() {
           onOpenProject={consoleOpenProject}
           onDownloadResume={consoleDownloadResume}
           onSetHour={consoleSetHour}
+          onTransform={consoleTransform}
           soundEnabled={sound.enabled}
           open={consoleOpen}
           onToggle={() => setConsoleOpen((v) => !v)}
           onRickroll={consoleRickroll}
         />
+        {transformOpen && (
+          <TransformPanel
+            active={transformer.active}
+            readout={transformer.readout}
+            source={transformer.source}
+            detail={transformer.detail}
+            showAttention={transformer.showAttention}
+            focus={transformer.focus}
+            neuralReady={transformer.neuralReady}
+            neuralLoading={transformer.neuralLoading}
+            neuralProgress={transformer.neuralProgress}
+            neuralError={transformer.neuralError}
+            applyPreset={transformer.applyPreset}
+            loadNeural={transformer.loadNeural}
+            runPrompt={transformer.runPrompt}
+            setFocus={transformer.setFocus}
+            setShowAttention={transformer.setShowAttention}
+            reset={transformer.reset}
+            onClose={() => setTransformOpen(false)}
+          />
+        )}
         <StatusBar ambience={ambience} gh={ghStatus} />
 
         {!chatOpen && (

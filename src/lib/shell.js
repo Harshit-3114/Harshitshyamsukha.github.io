@@ -14,6 +14,7 @@
 import { parseCommand, COMMAND_HINTS, SPECTACLES } from './weather-commands.js';
 import { buildVfs, resolvePath, treeOf } from './vfs.js';
 import { formatHour } from './sun.js';
+import { PRESETS } from './transform.js';
 import { ALL_PINS, PROFILE } from '../data/portfolio.js';
 
 export const COMMANDS = [
@@ -33,6 +34,7 @@ export const COMMANDS = [
   { name: 'weather', args: '[phrase]', desc: 'change the weather — try "thor"' },
   { name: 'sun', args: '[hour]', desc: 'move the sun — try "sun 17"' },
   { name: 'theme', args: '[void|light]', desc: 'switch themes' },
+  { name: 'transform', args: '[preset|prompt]', desc: 'restyle the site — try "transform dense"' },
   { name: 'sound', args: '[on|off]', desc: 'switch the interface sound' },
   { name: 'status', args: '', desc: 'the current vibe' },
   { name: 'history', args: '', desc: 'what you have typed' },
@@ -277,6 +279,25 @@ export function runShell(input, ctx) {
       if (rest === 'on') { ctx.onSound?.(true); lines.push(out('ok', '  ✓ interface sound on')); }
       else if (rest === 'off') { ctx.onSound?.(false); lines.push(out('ok', '  ✓ interface sound muted')); }
       else lines.push(out('err', '  sound: try on or off'));
+      break;
+    }
+
+    case 'transform': {
+      if (!rest) {
+        ctx.onTransform?.();
+        lines.push(out('ok', '  ✓ the transformer opens'));
+        lines.push(out('dim', `  presets: ${PRESETS.map((p) => p.id).join(' · ')}`));
+        lines.push(out('dim', '  or describe a look: transform "a 1980s mainframe"'));
+        break;
+      }
+      const preset = PRESETS.find((p) => p.id === rest.toLowerCase());
+      if (preset) {
+        ctx.onTransform?.({ kind: 'preset', id: preset.id });
+        lines.push(out('ok', `  ✓ the site becomes ${preset.label} — ${preset.hint}`));
+        break;
+      }
+      ctx.onTransform?.({ kind: 'text', text: rest });
+      lines.push(out('out', `  ✓ reading "${rest}" as a style intent`));
       break;
     }
 

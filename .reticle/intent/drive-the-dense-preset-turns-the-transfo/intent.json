@@ -1,0 +1,18 @@
+{
+  "intents": {
+    "flow:drive-the-dense-preset-turns-the-transform-on-and-writ": {
+      "declaredAt": 1794462046949,
+      "id": "flow:drive-the-dense-preset-turns-the-transform-on-and-writ",
+      "state": "declared",
+      "statement": "The dense preset turns the transform on and writes the density axis onto <html> as CSS custom properties.",
+      "status": "proposed",
+      "subject": "drive-the-dense-preset-turns-the-transfo",
+      "surface": {
+        "flow": "drive-the-dense-preset-turns-the-transform-on-and-writ"
+      },
+      "updatedAt": 1794462047078
+    }
+  },
+  "subject": "drive-the-dense-preset-turns-the-transfo",
+  "version": 1
+}
