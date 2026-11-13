@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    environment {
+        IMAGE_NAME = "cicd-demo-app:latest"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Pulling source code...'
+                // If using a local Git repo, Jenkins handles this automatically
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker image directly into Minikube...'
+                bat '@FOR /f "tokens=*" %%i IN (\'minikube -p minikube docker-env --shell cmd\') DO @%%i && docker build -t %IMAGE_NAME% assignment7/app/'
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                echo 'Running tests...'
+            }
+        }
+        stage('Push to Registry') {
+            steps {
+                echo 'Image built directly in Minikube; skipping push.'
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                bat 'kubectl apply -f assignment7/k8s/deployment.yaml'
+                bat 'kubectl apply -f assignment7/k8s/service.yaml'
+            }
+        }
+        stage('Verify') {
+            steps {
+                bat 'kubectl rollout status deployment/cicd-demo-app'
+                bat 'kubectl get pods'
+            }
+        }
+    }
+}

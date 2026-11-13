@@ -41,13 +41,13 @@ export const PROJECTS_DETAILED = [
   {
     id: 'skillroute', title: "SkillRoute", date: "Ongoing",
     stack: ["FAISS", "Sentence Transformers", "React 19", "MapLibre GL JS", "FastAPI"], badge: null,
-    desc: "Intelligent talent routing system that matches candidates to opportunities using vector similarity search and geospatial dispatch visualization. The source is not public yet — the IEEE-format paper is available below.",
+    desc: "Intelligent talent routing system that matches candidates to opportunities using vector similarity search and geospatial dispatch visualization. The source was never published and the paper could not be recovered — the implementation notes below are what remains.",
     problem: "Talent matching platforms use keyword filtering that misses nuanced skill adjacencies. Organizations need semantic understanding of candidate profiles plus geographic dispatch optimization.",
     architecture: ["Candidate profiles embedded via sentence-transformers into a FAISS vector index", "Synergy Score computed from cosine similarity + weighted experience factors", "MapLibre GL JS renders dispatch map showing candidate-to-opportunity routing", "FastAPI backend handles indexing, querying, and scoring orchestration", "ROI calculator projects cost-of-delay, cost-to-hire and break-even windows", "SECURITY.md documents a full audit that closed 12 vulnerabilities"],
     decisions: ["FAISS enables sub-50ms similarity search across thousands of candidate profiles", "MapLibre GL JS avoids paid map SDKs while delivering full-featured geospatial viz", "Synergy Score combines semantic match, location proximity, and availability windows", "Evolved from a Streamlit prototype into a production React 19 + FastAPI application"],
     metrics: "Full security audit closed 12 vulnerabilities, including a live API key in the repo, wildcard CORS, and missing auth/rate limiting",
     github: null, demo: null, image: null, category: "ai", status: "wip",
-    files: [{ name: "SkillRoute_IEEE.pdf", path: "papers/skillroute_ieee.pdf", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/papers/skillroute_ieee.pdf", type: "pdf" }]
+    files: []
   },
   {
     id: 'ai-ethics', title: "AI Ethics Advisor", date: "Jan 2026 – Ongoing",
@@ -145,17 +145,17 @@ export const PROJECTS_DETAILED = [
     architecture: ["React frontend with separate routing for owner / customer / worker roles", "FastAPI backend handling appointments, worker assignment, and job status", "Supabase for auth, database, and real-time job status updates", "Deployed on GitHub Pages (frontend) with a cloud backend"],
     decisions: ["Supabase chosen for real-time subscriptions without a custom WebSocket server", "Role-based routing via React context — single codebase, three portal views", "TailwindCSS for rapid consistent UI across all three portals"],
     metrics: null, github: "https://github.com/concealedaaryan/carboutiqueauto", demo: null, image: null, category: "client", status: "live",
-    files: [{ name: "carboutiqueauto", path: "astro site", url: "https://github.com/concealedaaryan/carboutiqueauto", type: "md" },{ name: "Car-service-updates", path: "detailing updates app", url: "https://github.com/concealedaaryan/Car-service-updates", type: "md" }]
+    files: [{ name: "carboutiqueauto", path: "astro site", url: "https://github.com/concealedaaryan/carboutiqueauto", type: "md" }]
   },
   {
     id: 'cosmic-calendar', title: "Cosmic Calendar", date: "2025 (Hackathon)",
     stack: ["React", "Vite", "Tailwind CSS", "NASA APOD API", "HuggingFace Spaces"], badge: "Hackathon",
-    desc: "Interactive space exploration web app built for AstralWeb Innovate Hackathon 2025 — NASA APOD daily imagery, space quiz, AI astronomy chatbot, bookmarks, and countdown timers. Built over the hackathon weekend; the source was never released publicly.",
+    desc: "Interactive space exploration web app built for AstralWeb Innovate Hackathon 2025 - NASA APOD daily imagery, space quiz, AI astronomy chatbot, bookmarks, and countdown timers. Built over the hackathon weekend; the source was never released publicly, but the app is still running.",
     problem: "Building a polished, demoworthy full-stack space app in a single hackathon weekend required ruthless feature prioritization.",
     architecture: ["React + Vite frontend consuming NASA APOD API for daily astronomy pictures", "HuggingFace Spaces Gradio chatbot (FLAN-T5 Large) for AI astronomy Q&A", "localStorage for bookmarking, theme persistence, and API caching", "Light/dark theme toggle with system preference detection"],
     decisions: ["FLAN-T5 Large over cloud LLMs for zero-cost inference on HuggingFace free tier", "localStorage API caching with TTL to stay under NASA's 1000 req/day limit", "Prioritized 4 core features over 8 planned ones to ship on time"],
-    metrics: null, github: null, demo: null, image: null, category: "fullstack", status: "live",
-    files: []
+    metrics: null, github: null, demo: "https://cosmic-calendar-chi.vercel.app", image: null, category: "fullstack", status: "live",
+    files: [{ name: "README.md", path: "project documentation", url: "https://github.com/Harshit-3114/cosmic-calendar", type: "md" }]
   },
   {
     id: 'argus', title: "ARGUS — Multimodal Biometric Login", date: "Oct 2026",
@@ -501,19 +501,19 @@ export const ACADEMIC = [
     id: 'compiler-design', title: "Compiler Design", institution: "SRMIST · 18CSC304J", date: "Semester 4", category: "academic",
     desc: "Lexical analysis, parsing (LL/LR), shift-reduce parsing, LR(0) items, intermediate code generation. Lab experiments in C.",
     highlights: ["Implemented shift-reduce parser from scratch in C", "Built LR(0) item set construction and goto tables", "Intermediate code generation: three-address code", "Wrote complete lab experiment reports for all 8 experiments"],
-    usedIn: ["dsfs", "insightx"], files: [{ name: "shift_reduce.c", path: "compiler-lab/exp3/shift_reduce.c", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/compiler-lab/exp3/shift_reduce.c", type: "c" },{ name: "lr0_items.c", path: "compiler-lab/exp5/lr0_items.c", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/compiler-lab/exp5/lr0_items.c", type: "c" },{ name: "lab_report.pdf", path: "docs/compiler_design_lab.pdf", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/docs/compiler_design_lab.pdf", type: "pdf" }], visual: "compiler"
+    usedIn: ["dsfs", "insightx"], files: [{ name: "ft1_image_compression.ipynb", path: "compiler-lab/ft1_image_compression.ipynb", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/compiler-lab/ft1_image_compression.ipynb", type: "py" }], visual: "compiler"
   },
   {
     id: 'data-science', title: "Data Science", institution: "SRMIST · 21CSS303T", date: "Semester 4", category: "academic",
     desc: "Statistical foundations, data wrangling, EDA, regression, classification, and model evaluation in Python.",
     highlights: ["Applied Pandas and NumPy for data cleaning pipelines", "Built regression and classification models using scikit-learn", "Exploratory data analysis with matplotlib and seaborn", "Direct foundation for DSFS data pipeline design"],
-    usedIn: ["dsfs", "insightx"], files: [{ name: "eda_notebook.ipynb", path: "data-science/eda_notebook.ipynb", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/data-science/eda_notebook.ipynb", type: "py" },{ name: "study_guide.html", path: "docs/data_science_notes.html", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/docs/data_science_notes.html", type: "md" }], visual: "data-science"
+    usedIn: ["dsfs", "insightx"], files: [], visual: "data-science"
   },
   {
     id: 'devops', title: "DevOps", institution: "SRMIST", date: "Semester 5", category: "academic",
     desc: "CI/CD pipelines, containerization, Kubernetes orchestration, monitoring. Units 3–4 covered Helm, GitOps, and observability.",
-    highlights: ["Configured GitHub Actions CI/CD pipelines for automated testing", "Kubernetes deployment manifests, services, and ingress rules", "Docker multi-stage builds for production image optimization", "Helm chart templating for reproducible deployments"],
-    usedIn: ["deepfake", "skillroute"], files: [{ name: "ci_pipeline.yml", path: "devops-lab/github-actions/ci.yml", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/devops-lab/github-actions/ci.yml", type: "yml" },{ name: "k8s_deploy.yaml", path: "devops-lab/k8s/deployment.yaml", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/devops-lab/k8s/deployment.yaml", type: "yaml" }], visual: "devops"
+    highlights: ["Wrote a Jenkins CI/CD pipeline that builds and pushes the container image", "Kubernetes deployment and service manifests for the app", "Docker multi-stage builds for production image optimization", "Helm chart templating for reproducible deployments"],
+    usedIn: ["deepfake", "skillroute"], files: [{ name: "Jenkinsfile", path: "devops-lab/Jenkinsfile", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/devops-lab/Jenkinsfile", type: "md" },{ name: "k8s_deploy.yaml", path: "devops-lab/k8s/deployment.yaml", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/devops-lab/k8s/deployment.yaml", type: "yaml" },{ name: "k8s_service.yaml", path: "devops-lab/k8s/service.yaml", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/devops-lab/k8s/service.yaml", type: "yaml" }], visual: "devops"
   },
   {
     id: 'software-engineering', title: "Software Engineering & Project Management", institution: "SRMIST · 21CSC303J", date: "Semester 4", category: "academic",
@@ -524,8 +524,8 @@ export const ACADEMIC = [
   {
     id: 'research-papers', title: "Research & Academic Publications", institution: "SRMIST", date: "2024 – Ongoing", category: "academic",
     desc: "IEEE-format research papers and SRM project reports across AI/ML systems. Focus on reproducible experiments and formal evaluation.",
-    highlights: ["DSFS: IEEE research paper with LTROC 0.73 benchmark", "SkillRoute: IEEE-format paper on semantic talent routing with FAISS", "LLM-IoT Bridge: B.Tech project report", "Kissan AI: multimodal crop disease detection academic report"],
-    usedIn: [], files: [{ name: "DSFS_IEEE.pdf", path: "papers/dsfs_ieee.pdf", url: "/papers/dsfs.pdf", type: "pdf" },{ name: "SkillRoute_IEEE.pdf", path: "papers/skillroute_ieee.pdf", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/papers/skillroute_ieee.pdf", type: "pdf" },{ name: "LLM_IoT_Report.pdf", path: "papers/llm_iot_report.pdf", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/papers/llm_iot_report.pdf", type: "pdf" },{ name: "Kissan_AI.pdf", path: "papers/kissan_ai_report.pdf", url: "https://github.com/Harshit-3114/Harshitshyamsukha.github.io/blob/main/papers/kissan_ai_report.pdf", type: "pdf" }], visual: "research"
+    highlights: ["DSFS: IEEE conference paper 'Mechanistic Hazard Ensembles for Geopolitical Forecasting' — Brier 0.0760 with the crowd forecaster combined", "SkillRoute: IEEE-format paper on semantic talent routing with FAISS", "LLM-IoT Bridge: B.Tech project report", "Kissan AI: multimodal crop disease detection academic report"],
+    usedIn: [], files: [{ name: "Mechanistic Hazard Ensembles (IEEE).pdf", path: "papers/mechanistic-hazard-ensembles.pdf", url: "/papers/mechanistic-hazard-ensembles.pdf", type: "pdf" }], visual: "research"
   },
 ];
 

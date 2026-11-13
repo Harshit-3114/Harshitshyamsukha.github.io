@@ -1,0 +1,10 @@
+{
+    "name": "cicd-demo-app",
+    "version": "1.0.0",
+    "description": "Node.js app for DevOps Exp 7",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {}
+}

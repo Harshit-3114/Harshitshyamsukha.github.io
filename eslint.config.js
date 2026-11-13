@@ -5,7 +5,10 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // `dist` is the build output. `devops-lab` and `compiler-lab` are archived
+  // coursework, committed so the links in the portfolio resolve - they are
+  // separate projects with their own conventions, not part of this app.
+  globalIgnores(['dist', 'devops-lab', 'compiler-lab']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
