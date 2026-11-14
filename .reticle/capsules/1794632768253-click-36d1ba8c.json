@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "origin": "failed-assert",
+  "expected": "text \"TrustFed treats a federated-learning client as something to be scored rather than trusted.\" AND text \"Errors Encountered\" AND text \"Skills Learned\"",
+  "observed": "no element matched {\"text\":\"TrustFed treats a federated-learning client as something to be scored rather than trusted.\"} — that text IS on the page, split across the children of generic — no single element's own text carries it, so no text query can match it; retry as {\"kind\":\"text\",\"contains\":\"TrustFed treats a federated-learning client as something to be scored rather than trusted.\",\"scope\":\"e423\",\"self\":true}",
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "testid",
+        "value": "e303",
+        "source": {
+          "file": "src/tabs/TabContent.jsx",
+          "line": 132,
+          "column": 14
+        }
+      },
+      "action": "click"
+    }
+  ],
+  "id": "1794632768253-click-36d1ba8c",
+  "createdAt": 1794632768254,
+  "seen": 1,
+  "lastSeenAt": 1794632768254
+}

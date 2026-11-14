@@ -1,0 +1,18 @@
+{
+  "intents": {
+    "flow:drive-each-project-in-the-process-tab-has-its-own-engi": {
+      "declaredAt": 1794633523287,
+      "id": "flow:drive-each-project-in-the-process-tab-has-its-own-engi",
+      "state": "declared",
+      "statement": "Each project in the Process tab has its own engineering notes - the thinking, the bugs and what was learned - for Misinformation Detector.",
+      "status": "proposed",
+      "subject": "drive-each-project-in-the-process-tab-ha",
+      "surface": {
+        "flow": "drive-each-project-in-the-process-tab-has-its-own-engi"
+      },
+      "updatedAt": 1794633523319
+    }
+  },
+  "subject": "drive-each-project-in-the-process-tab-ha",
+  "version": 1
+}

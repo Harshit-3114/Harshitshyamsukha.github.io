@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "origin": "failed-assert",
+  "expected": "text \"Byzantine-robust federated learning that scores client reputation\"",
+  "observed": "no element matched {\"text\":\"Byzantine-robust federated learning that scores client reputation\"}",
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "testid",
+        "value": "e91",
+        "source": {
+          "file": "src/components/ProjectCard.jsx",
+          "line": 39,
+          "column": 12
+        }
+      },
+      "action": "click"
+    }
+  ],
+  "id": "1794632324491-click-6cd980bb",
+  "createdAt": 1794632324491,
+  "seen": 1,
+  "lastSeenAt": 1794632324491
+}

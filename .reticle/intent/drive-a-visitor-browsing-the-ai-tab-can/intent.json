@@ -1,0 +1,18 @@
+{
+  "intents": {
+    "flow:drive-a-visitor-browsing-the-ai-tab-can-see-every-publ": {
+      "declaredAt": 1794632836799,
+      "id": "flow:drive-a-visitor-browsing-the-ai-tab-can-see-every-publ",
+      "state": "declared",
+      "statement": "A visitor browsing the AI tab can see every published research project, including TrustFed, MedTrace FL, CASSANDRA Core and the Misinformation Detector.",
+      "status": "proposed",
+      "subject": "drive-a-visitor-browsing-the-ai-tab-can",
+      "surface": {
+        "flow": "drive-a-visitor-browsing-the-ai-tab-can-see-every-publ"
+      },
+      "updatedAt": 1794632836836
+    }
+  },
+  "subject": "drive-a-visitor-browsing-the-ai-tab-can",
+  "version": 1
+}

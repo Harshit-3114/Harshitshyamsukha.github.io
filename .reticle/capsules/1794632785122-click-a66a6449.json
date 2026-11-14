@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "origin": "failed-assert",
+  "expected": "text \"CASSANDRA Core is an attempt to build strategic forecasting that can answer\" AND text \"Errors Encountered\" AND text \"Skills Learned\"",
+  "observed": "no element matched {\"text\":\"CASSANDRA Core is an attempt to build strategic forecasting that can answer\"} — that text IS on the page, split across the children of generic — no single element's own text carries it, so no text query can match it; retry as {\"kind\":\"text\",\"contains\":\"CASSANDRA Core is an attempt to build strategic forecasting that can answer\",\"scope\":\"e423\",\"self\":true}",
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "testid",
+        "value": "e305",
+        "source": {
+          "file": "src/tabs/TabContent.jsx",
+          "line": 132,
+          "column": 14
+        }
+      },
+      "action": "click"
+    }
+  ],
+  "id": "1794632785122-click-a66a6449",
+  "createdAt": 1794632785122,
+  "seen": 1,
+  "lastSeenAt": 1794632785122
+}

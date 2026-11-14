@@ -1,0 +1,18 @@
+{
+  "intents": {
+    "flow:drive-a-visitor-on-the-about-tab-sees-the-corrected-pr": {
+      "declaredAt": 1794637184404,
+      "id": "flow:drive-a-visitor-on-the-about-tab-sees-the-corrected-pr",
+      "state": "declared",
+      "statement": "A visitor on the About tab sees the corrected project and research cards - the new federated-learning projects, InsightX on NVIDIA NIM rather than Gemini, and the IEEE paper under its own title.",
+      "status": "proposed",
+      "subject": "drive-a-visitor-on-the-about-tab-sees-th",
+      "surface": {
+        "flow": "drive-a-visitor-on-the-about-tab-sees-the-corrected-pr"
+      },
+      "updatedAt": 1794637184422
+    }
+  },
+  "subject": "drive-a-visitor-on-the-about-tab-sees-th",
+  "version": 1
+}

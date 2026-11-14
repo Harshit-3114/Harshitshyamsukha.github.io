@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "origin": "failed-assert",
+  "expected": "text \"27 projects in total, across 29 public repositories\" AND text \"NL-to-SQL analytics engine on NVIDIA NIM\" AND text \"Mechanistic Hazard Ensembles for Geopolitical Forecasting\" AND text \"Byzantine-robust federated learning with client reputation\"",
+  "observed": "no element matched {\"text\":\"27 projects in total, across 29 public repositories\"}",
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "testid",
+        "value": "",
+        "source": {
+          "file": "src/components/Nav.jsx",
+          "line": 116,
+          "column": 14
+        }
+      },
+      "action": "click"
+    }
+  ],
+  "id": "1794636417132-click-6d0b5717",
+  "createdAt": 1794636417132,
+  "seen": 1,
+  "lastSeenAt": 1794636417132
+}

@@ -1,0 +1,460 @@
+{
+  "version": 2,
+  "name": "drive-a-visitor-browsing-the-ai-tab-can-see-every-publ",
+  "projectId": "harshitshyamsukha-github-io-dbdebed4",
+  "createdAt": 1794632836742,
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "tab",
+        "name": "AI"
+      },
+      "args": {},
+      "action": "click",
+      "expect": {
+        "kind": "text",
+        "contains": "TrustFed"
+      },
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "heading",
+        "name": "TrustFed — Byzantine-Robust Federated Learning"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "Escape"
+      },
+      "action": "press",
+      "degraded": true,
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "heading",
+        "name": "TrustFed — Byzantine-Robust Federated Learning"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "Escape"
+      },
+      "action": "press",
+      "degraded": true,
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "heading",
+        "name": "MedTrace FL — Privacy-Preserving Medical AI"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "Escape"
+      },
+      "action": "press",
+      "degraded": true,
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "heading",
+        "name": "CASSANDRA Core — Simulation-Supervised Risk Analysis"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "Escape"
+      },
+      "action": "press",
+      "degraded": true,
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "heading",
+        "name": "Misinformation Detector"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "Escape"
+      },
+      "action": "press",
+      "degraded": true,
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "heading",
+        "name": "TrustFed — Byzantine-Robust Federated Learning"
+      },
+      "args": {},
+      "action": "click",
+      "expect": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "text",
+            "contains": "Related Files"
+          },
+          {
+            "kind": "text",
+            "contains": "Key Decisions"
+          },
+          {
+            "kind": "text",
+            "contains": "67-cell Colab notebook"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "value": "link",
+              "name": "View on GitHub"
+            }
+          }
+        ]
+      },
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "Escape"
+      },
+      "action": "press",
+      "degraded": true,
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "heading",
+        "name": "MedTrace FL — Privacy-Preserving Medical AI"
+      },
+      "args": {},
+      "action": "click",
+      "expect": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "text",
+            "contains": "Related Files"
+          },
+          {
+            "kind": "text",
+            "contains": "Key Decisions"
+          },
+          {
+            "kind": "text",
+            "contains": "src/fl_adaptive_dp.py"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "value": "link",
+              "name": "View on GitHub"
+            }
+          }
+        ]
+      },
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "Escape"
+      },
+      "action": "press",
+      "degraded": true,
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "heading",
+        "name": "CASSANDRA Core — Simulation-Supervised Risk Analysis"
+      },
+      "args": {},
+      "action": "click",
+      "expect": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "text",
+            "contains": "Related Files"
+          },
+          {
+            "kind": "text",
+            "contains": "Key Decisions"
+          },
+          {
+            "kind": "text",
+            "contains": "novelty/cassandra.py"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "value": "link",
+              "name": "View on GitHub"
+            }
+          }
+        ]
+      },
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "Escape"
+      },
+      "action": "press",
+      "degraded": true,
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "heading",
+        "name": "Misinformation Detector"
+      },
+      "args": {},
+      "action": "click",
+      "expect": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "text",
+            "contains": "Related Files"
+          },
+          {
+            "kind": "text",
+            "contains": "Key Decisions"
+          },
+          {
+            "kind": "text",
+            "contains": "models/claim_detector.py"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "value": "link",
+              "name": "View on GitHub"
+            }
+          }
+        ]
+      },
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "unresolved"
+      },
+      "args": {
+        "text": "Escape"
+      },
+      "action": "press",
+      "degraded": true,
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "tab",
+        "name": "Process"
+      },
+      "args": {},
+      "action": "click",
+      "expect": {
+        "kind": "text",
+        "contains": "How the work actually went."
+      },
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "TrustFed"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "MedTrace FL"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "CASSANDRA Core"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "Misinformation Detector"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "TrustFed"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "MedTrace FL"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "CASSANDRA Core"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "Misinformation Detector"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    }
+  ],
+  "startPath": "/",
+  "intent": "A visitor browsing the AI tab can see every published research project, including TrustFed, MedTrace FL, CASSANDRA Core and the Misinformation Detector.",
+  "requires": [
+    {
+      "kind": "route",
+      "pathname": "/"
+    }
+  ],
+  "ensures": [
+    {
+      "kind": "route",
+      "pathname": "/"
+    }
+  ],
+  "author": {
+    "agent": "opencode"
+  },
+  "intentId": "flow:drive-a-visitor-browsing-the-ai-tab-can-see-every-publ"
+}

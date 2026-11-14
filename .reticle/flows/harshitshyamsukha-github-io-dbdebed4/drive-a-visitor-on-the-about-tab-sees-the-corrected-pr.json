@@ -1,0 +1,115 @@
+{
+  "version": 2,
+  "name": "drive-a-visitor-on-the-about-tab-sees-the-corrected-pr",
+  "projectId": "harshitshyamsukha-github-io-dbdebed4",
+  "createdAt": 1794637184002,
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "tab",
+        "name": "About"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "tab",
+        "name": "Work"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "tab",
+        "name": "About"
+      },
+      "args": {},
+      "action": "click",
+      "expect": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "kind": "text",
+            "contains": "27 projects in total, across 29 public repositories"
+          },
+          {
+            "kind": "text",
+            "contains": "NL-to-SQL analytics engine on NVIDIA NIM"
+          },
+          {
+            "kind": "text",
+            "contains": "Mechanistic Hazard Ensembles for Geopolitical Forecasting"
+          },
+          {
+            "kind": "text",
+            "contains": "Byzantine-robust federated learning with client reputation"
+          },
+          {
+            "kind": "allOf",
+            "predicates": [
+              {
+                "kind": "text",
+                "contains": "27 projects in total, across 29 public repositories"
+              },
+              {
+                "kind": "text",
+                "contains": "NL-to-SQL analytics engine on NVIDIA NIM"
+              },
+              {
+                "kind": "text",
+                "contains": "Mechanistic Hazard Ensembles for Geopolitical Forecasting"
+              },
+              {
+                "kind": "text",
+                "contains": "Byzantine-robust federated learning with client reputation"
+              },
+              {
+                "kind": "not",
+                "predicate": {
+                  "kind": "text",
+                  "contains": "DSFS — IEEE-format paper on conflict forecasting with LTROC 0.73 benchmark"
+                }
+              },
+              {
+                "kind": "not",
+                "predicate": {
+                  "kind": "text",
+                  "contains": "InsightX Analytics NL-to-SQL analytics engine Crest"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "page": "/"
+    }
+  ],
+  "startPath": "/",
+  "intent": "A visitor on the About tab sees the corrected project and research cards - the new federated-learning projects, InsightX on NVIDIA NIM rather than Gemini, and the IEEE paper under its own title.",
+  "requires": [
+    {
+      "kind": "route",
+      "pathname": "/"
+    }
+  ],
+  "ensures": [
+    {
+      "kind": "route",
+      "pathname": "/"
+    }
+  ],
+  "author": {
+    "agent": "opencode"
+  },
+  "intentId": "flow:drive-a-visitor-on-the-about-tab-sees-the-corrected-pr"
+}

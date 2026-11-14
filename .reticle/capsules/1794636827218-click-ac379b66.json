@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "origin": "failed-assert",
+  "expected": "text \"Every repository below is public\"",
+  "observed": "no element matched {\"text\":\"Every repository below is public\"}",
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "testid",
+        "value": "",
+        "source": {
+          "file": "src/components/Nav.jsx",
+          "line": 116,
+          "column": 14
+        }
+      },
+      "action": "click"
+    }
+  ],
+  "id": "1794636827218-click-ac379b66",
+  "createdAt": 1794636827220,
+  "seen": 1,
+  "lastSeenAt": 1794636827220
+}

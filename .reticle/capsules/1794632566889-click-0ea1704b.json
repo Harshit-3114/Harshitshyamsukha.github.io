@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "origin": "failed-assert",
+  "expected": "text \"Related Files\" AND element \"claim_detector.py\" AND element \"View on GitHub\"",
+  "observed": "no element matched {\"by\":\"role\",\"value\":\"link\",\"name\":\"claim_detector.py\"}",
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "testid",
+        "value": "e111",
+        "source": {
+          "file": "src/components/ProjectCard.jsx",
+          "line": 39,
+          "column": 12
+        }
+      },
+      "action": "click"
+    }
+  ],
+  "id": "1794632566889-click-0ea1704b",
+  "createdAt": 1794632566889,
+  "seen": 1,
+  "lastSeenAt": 1794632566889
+}

@@ -1,5 +1,58 @@
 {
   "intents": {
+    "inline:a-visitor-browsing-the-ai-tab-can-see-every-publ-2100e664": {
+      "binding": {
+        "contains": "TrustFed",
+        "kind": "text"
+      },
+      "declaredAt": 1794632295676,
+      "id": "inline:a-visitor-browsing-the-ai-tab-can-see-every-publ-2100e664",
+      "provenBy": {
+        "at": 1794632296083,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794632296083"
+      },
+      "state": "proved",
+      "statement": "A visitor browsing the AI tab can see every published research project, including TrustFed, MedTrace FL, CASSANDRA Core and the Misinformation Detector.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/Nav.jsx"
+        ]
+      },
+      "updatedAt": 1794632296106
+    },
+    "inline:a-visitor-on-the-about-tab-sees-the-corrected-pr-e5927439": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "27 projects in total, across 29 public repositories",
+            "kind": "text"
+          },
+          {
+            "contains": "NL-to-SQL analytics engine on NVIDIA NIM",
+            "kind": "text"
+          },
+          {
+            "contains": "Mechanistic Hazard Ensembles for Geopolitical Forecasting",
+            "kind": "text"
+          },
+          {
+            "contains": "Byzantine-robust federated learning with client reputation",
+            "kind": "text"
+          }
+        ]
+      },
+      "declaredAt": 1794636406370,
+      "id": "inline:a-visitor-on-the-about-tab-sees-the-corrected-pr-e5927439",
+      "state": "bound",
+      "statement": "A visitor on the About tab sees the corrected project and research cards - the new federated-learning projects, InsightX on NVIDIA NIM rather than Gemini, and the IEEE paper under its own title.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794636406455
+    },
     "inline:choosing-the-dense-preset-turns-the-transform-on-97d4d0b6": {
       "binding": {
         "kind": "allOf",
@@ -42,6 +95,620 @@
         ]
       },
       "updatedAt": 1794460609927
+    },
+    "inline:choosing-trustfed-in-the-process-tab-swaps-the-p-b3cd1ff5": {
+      "binding": {
+        "contains": "Byzantine-robust federated learning and the standard aggregation defences",
+        "kind": "text"
+      },
+      "declaredAt": 1794633069571,
+      "id": "inline:choosing-trustfed-in-the-process-tab-swaps-the-p-b3cd1ff5",
+      "provenBy": {
+        "at": 1794633069863,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794633069862"
+      },
+      "state": "proved",
+      "statement": "Choosing TrustFed in the Process tab swaps the panel to TrustFed's own engineering notes.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/tabs/TabContent.jsx"
+        ]
+      },
+      "updatedAt": 1794633069915
+    },
+    "inline:each-project-in-the-process-tab-has-its-own-engi-4e59b3db": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "spaCy dependency parsing for syntactic claim extraction",
+            "kind": "text"
+          },
+          {
+            "contains": "Errors Encountered",
+            "kind": "text"
+          },
+          {
+            "contains": "Skills Learned",
+            "kind": "text"
+          }
+        ]
+      },
+      "declaredAt": 1794633132261,
+      "id": "inline:each-project-in-the-process-tab-has-its-own-engi-4e59b3db",
+      "provenBy": {
+        "at": 1794633198732,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794633198732"
+      },
+      "state": "proved",
+      "statement": "Each project in the Process tab has its own engineering notes - the thinking, the bugs and what was learned - for Misinformation Detector.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/tabs/TabContent.jsx"
+        ]
+      },
+      "updatedAt": 1794633198820
+    },
+    "inline:each-project-in-the-process-tab-has-its-own-engi-881d0f12": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Gaussian differential privacy, the noise multiplier formula and advanced composition across rounds",
+            "kind": "text"
+          },
+          {
+            "contains": "Errors Encountered",
+            "kind": "text"
+          },
+          {
+            "contains": "Skills Learned",
+            "kind": "text"
+          }
+        ]
+      },
+      "declaredAt": 1794633109855,
+      "id": "inline:each-project-in-the-process-tab-has-its-own-engi-881d0f12",
+      "provenBy": {
+        "at": 1794633197503,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794633197503"
+      },
+      "state": "proved",
+      "statement": "Each project in the Process tab has its own engineering notes - the thinking, the bugs and what was learned - for MedTrace FL.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/tabs/TabContent.jsx"
+        ]
+      },
+      "updatedAt": 1794633197583
+    },
+    "inline:each-project-in-the-process-tab-has-its-own-engi-d9513216": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "SPSA optimisation for non-smooth objectives",
+            "kind": "text"
+          },
+          {
+            "contains": "Errors Encountered",
+            "kind": "text"
+          },
+          {
+            "contains": "Skills Learned",
+            "kind": "text"
+          }
+        ]
+      },
+      "declaredAt": 1794633120953,
+      "id": "inline:each-project-in-the-process-tab-has-its-own-engi-d9513216",
+      "provenBy": {
+        "at": 1794633198166,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794633198166"
+      },
+      "state": "proved",
+      "statement": "Each project in the Process tab has its own engineering notes - the thinking, the bugs and what was learned - for CASSANDRA Core.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/tabs/TabContent.jsx"
+        ]
+      },
+      "updatedAt": 1794633198222
+    },
+    "inline:each-project-in-the-process-tab-has-its-own-engi-e40f3418": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Byzantine-robust federated learning and the standard aggregation defences",
+            "kind": "text"
+          },
+          {
+            "contains": "Errors Encountered",
+            "kind": "text"
+          },
+          {
+            "contains": "Skills Learned",
+            "kind": "text"
+          }
+        ]
+      },
+      "declaredAt": 1794633109498,
+      "id": "inline:each-project-in-the-process-tab-has-its-own-engi-e40f3418",
+      "provenBy": {
+        "at": 1794633196764,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794633196764"
+      },
+      "state": "proved",
+      "statement": "Each project in the Process tab has its own engineering notes - the thinking, the bugs and what was learned - for TrustFed.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/tabs/TabContent.jsx"
+        ]
+      },
+      "updatedAt": 1794633196864
+    },
+    "inline:each-project-in-the-process-tab-has-its-own-thin-ba5dd0d2": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Thinking Process",
+            "kind": "text"
+          },
+          {
+            "contains": "Errors Encountered",
+            "kind": "text"
+          },
+          {
+            "contains": "Skills Learned",
+            "kind": "text"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "View on GitHub",
+              "value": "link"
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794632716372,
+      "id": "inline:each-project-in-the-process-tab-has-its-own-thin-ba5dd0d2",
+      "state": "bound",
+      "statement": "Each project in the Process tab has its own thinking, errors and skills notes, plus a link to the repository.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794632716393
+    },
+    "inline:each-project-in-the-process-tab-shows-its-own-en-285ef264": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Byzantine-robust federated learning and the standard aggregation defences",
+            "kind": "text"
+          },
+          {
+            "contains": "The first cosine-alignment implementation used raw cosine similarity",
+            "kind": "text"
+          }
+        ]
+      },
+      "declaredAt": 1794632759865,
+      "id": "inline:each-project-in-the-process-tab-shows-its-own-en-285ef264",
+      "state": "bound",
+      "statement": "Each project in the Process tab shows its own engineering notes - the thinking, the bugs and what was learned - for TrustFed.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794632834385
+    },
+    "inline:each-project-in-the-process-tab-shows-its-own-en-65a01ffc": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "spaCy dependency parsing for syntactic claim extraction",
+            "kind": "text"
+          },
+          {
+            "contains": "The scoring function checked for the substring",
+            "kind": "text"
+          }
+        ]
+      },
+      "declaredAt": 1794632785280,
+      "id": "inline:each-project-in-the-process-tab-shows-its-own-en-65a01ffc",
+      "state": "bound",
+      "statement": "Each project in the Process tab shows its own engineering notes - the thinking, the bugs and what was learned - for Misinformation Detector.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794633020390
+    },
+    "inline:each-project-in-the-process-tab-shows-its-own-en-c62b972f": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Gaussian differential privacy, the noise multiplier formula and advanced composition across rounds",
+            "kind": "text"
+          },
+          {
+            "contains": "Allocating epsilon purely by inverse loss let one low-loss hospital absorb the whole round budget",
+            "kind": "text"
+          }
+        ]
+      },
+      "declaredAt": 1794632768381,
+      "id": "inline:each-project-in-the-process-tab-shows-its-own-en-c62b972f",
+      "state": "bound",
+      "statement": "Each project in the Process tab shows its own engineering notes - the thinking, the bugs and what was learned - for MedTrace FL.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794632997544
+    },
+    "inline:each-project-in-the-process-tab-shows-its-own-en-e97604cf": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "SPSA optimisation for non-smooth objectives",
+            "kind": "text"
+          },
+          {
+            "contains": "The evaluation initially ran against the same conditions the model was calibrated on",
+            "kind": "text"
+          }
+        ]
+      },
+      "declaredAt": 1794632776807,
+      "id": "inline:each-project-in-the-process-tab-shows-its-own-en-e97604cf",
+      "state": "bound",
+      "statement": "Each project in the Process tab shows its own engineering notes - the thinking, the bugs and what was learned - for CASSANDRA Core.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794633009082
+    },
+    "inline:opening-a-project-card-shows-its-full-detail-inc-7d2f6715": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Related Files",
+            "kind": "text"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "claim_detector.py",
+              "value": "link"
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "View on GitHub",
+              "value": "link"
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794632558625,
+      "id": "inline:opening-a-project-card-shows-its-full-detail-inc-7d2f6715",
+      "state": "bound",
+      "statement": "Opening a project card shows its full detail, including the related-files links and a View on GitHub button, for Misinformation Detector.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794632558660
+    },
+    "inline:opening-a-project-card-shows-its-full-detail-inc-ad1d4d30": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Related Files",
+            "kind": "text"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "fl_adaptive_dp.py",
+              "value": "link"
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "View on GitHub",
+              "value": "link"
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794632541534,
+      "id": "inline:opening-a-project-card-shows-its-full-detail-inc-ad1d4d30",
+      "state": "bound",
+      "statement": "Opening a project card shows its full detail, including the related-files links and a View on GitHub button, for MedTrace FL — Privacy-Preserving Medical AI.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794632541568
+    },
+    "inline:opening-a-project-card-shows-its-full-detail-inc-c41f6301": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Related Files",
+            "kind": "text"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "TrustFed_FL_v6.ipynb",
+              "value": "link"
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "View on GitHub",
+              "value": "link"
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794632532986,
+      "id": "inline:opening-a-project-card-shows-its-full-detail-inc-c41f6301",
+      "state": "bound",
+      "statement": "Opening a project card shows its full detail, including the related-files links and a View on GitHub button, for TrustFed — Byzantine-Robust Federated Learning.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794632533036
+    },
+    "inline:opening-a-project-card-shows-its-full-detail-inc-d1dc7357": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Related Files",
+            "kind": "text"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "cassandra.py",
+              "value": "link"
+            }
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "View on GitHub",
+              "value": "link"
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794632550156,
+      "id": "inline:opening-a-project-card-shows-its-full-detail-inc-d1dc7357",
+      "state": "bound",
+      "statement": "Opening a project card shows its full detail, including the related-files links and a View on GitHub button, for CASSANDRA Core — Simulation-Supervised Risk Analysis.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794632550185
+    },
+    "inline:opening-a-project-card-shows-its-full-detail-pro-86cacb78": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Related Files",
+            "kind": "text"
+          },
+          {
+            "contains": "Key Decisions",
+            "kind": "text"
+          },
+          {
+            "contains": "src/fl_adaptive_dp.py",
+            "kind": "text"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "View on GitHub",
+              "value": "link"
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794632657586,
+      "id": "inline:opening-a-project-card-shows-its-full-detail-pro-86cacb78",
+      "provenBy": {
+        "at": 1794632658030,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794632658030"
+      },
+      "state": "proved",
+      "statement": "Opening a project card shows its full detail - problem, architecture, key decisions, related files and a View on GitHub button, for MedTrace FL — Privacy-Preserving Medical AI.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/ProjectCard.jsx"
+        ]
+      },
+      "updatedAt": 1794632658051
+    },
+    "inline:opening-a-project-card-shows-its-full-detail-pro-879020a3": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Related Files",
+            "kind": "text"
+          },
+          {
+            "contains": "Key Decisions",
+            "kind": "text"
+          },
+          {
+            "contains": "67-cell Colab notebook",
+            "kind": "text"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "View on GitHub",
+              "value": "link"
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794632657038,
+      "id": "inline:opening-a-project-card-shows-its-full-detail-pro-879020a3",
+      "provenBy": {
+        "at": 1794632657413,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794632657413"
+      },
+      "state": "proved",
+      "statement": "Opening a project card shows its full detail - problem, architecture, key decisions, related files and a View on GitHub button, for TrustFed — Byzantine-Robust Federated Learning.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/ProjectCard.jsx"
+        ]
+      },
+      "updatedAt": 1794632657444
+    },
+    "inline:opening-a-project-card-shows-its-full-detail-pro-a241560c": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Related Files",
+            "kind": "text"
+          },
+          {
+            "contains": "Key Decisions",
+            "kind": "text"
+          },
+          {
+            "contains": "models/claim_detector.py",
+            "kind": "text"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "View on GitHub",
+              "value": "link"
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794632658905,
+      "id": "inline:opening-a-project-card-shows-its-full-detail-pro-a241560c",
+      "provenBy": {
+        "at": 1794632659376,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794632659376"
+      },
+      "state": "proved",
+      "statement": "Opening a project card shows its full detail - problem, architecture, key decisions, related files and a View on GitHub button, for Misinformation Detector.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/ProjectCard.jsx"
+        ]
+      },
+      "updatedAt": 1794632659405
+    },
+    "inline:opening-a-project-card-shows-its-full-detail-pro-c4ca2bed": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "Related Files",
+            "kind": "text"
+          },
+          {
+            "contains": "Key Decisions",
+            "kind": "text"
+          },
+          {
+            "contains": "novelty/cassandra.py",
+            "kind": "text"
+          },
+          {
+            "kind": "element",
+            "query": {
+              "by": "role",
+              "name": "View on GitHub",
+              "value": "link"
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794632658205,
+      "id": "inline:opening-a-project-card-shows-its-full-detail-pro-c4ca2bed",
+      "provenBy": {
+        "at": 1794632658654,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794632658654"
+      },
+      "state": "proved",
+      "statement": "Opening a project card shows its full detail - problem, architecture, key decisions, related files and a View on GitHub button, for CASSANDRA Core — Simulation-Supervised Risk Analysis.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/ProjectCard.jsx"
+        ]
+      },
+      "updatedAt": 1794632658708
+    },
+    "inline:opening-the-trustfed-card-shows-the-project-deta-749e1fcb": {
+      "binding": {
+        "contains": "Byzantine-robust federated learning that scores client reputation",
+        "kind": "text"
+      },
+      "declaredAt": 1794632316214,
+      "id": "inline:opening-the-trustfed-card-shows-the-project-deta-749e1fcb",
+      "state": "bound",
+      "statement": "Opening the TrustFed card shows the project detail modal with its description, architecture, decisions and metrics.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794632316240
     },
     "inline:pressing-shift-t-opens-the-transformer-panel-so-22901fc3": {
       "binding": {
@@ -100,6 +767,113 @@
       "status": "proved",
       "subject": "unsorted",
       "updatedAt": 1794462743194
+    },
+    "inline:returning-to-the-about-tab-shows-the-corrected-p-40b03d6a": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "27 projects in total, across 29 public repositories",
+            "kind": "text"
+          },
+          {
+            "contains": "NL-to-SQL analytics engine on NVIDIA NIM",
+            "kind": "text"
+          },
+          {
+            "contains": "Mechanistic Hazard Ensembles for Geopolitical Forecasting",
+            "kind": "text"
+          },
+          {
+            "contains": "Byzantine-robust federated learning with client reputation",
+            "kind": "text"
+          }
+        ]
+      },
+      "declaredAt": 1794636827380,
+      "id": "inline:returning-to-the-about-tab-shows-the-corrected-p-40b03d6a",
+      "provenBy": {
+        "at": 1794636828237,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794636828236"
+      },
+      "state": "proved",
+      "statement": "Returning to the About tab shows the corrected project and research cards - the new federated-learning projects, InsightX on NVIDIA NIM rather than Gemini, and the IEEE paper under its own title.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/Nav.jsx"
+        ]
+      },
+      "updatedAt": 1794636828289
+    },
+    "inline:switching-to-the-work-tab-proves-the-about-card-9804906b": {
+      "binding": {
+        "contains": "Every repository below is public",
+        "kind": "text"
+      },
+      "declaredAt": 1794636816923,
+      "id": "inline:switching-to-the-work-tab-proves-the-about-card-9804906b",
+      "state": "bound",
+      "statement": "Switching to the Work tab proves the About card content is not just present in the DOM from a previous render.",
+      "status": "proposed",
+      "subject": "unsorted",
+      "updatedAt": 1794636816971
+    },
+    "inline:the-about-tab-s-project-and-research-cards-show-4df66eee": {
+      "binding": {
+        "kind": "allOf",
+        "predicates": [
+          {
+            "contains": "27 projects in total, across 29 public repositories",
+            "kind": "text"
+          },
+          {
+            "contains": "NL-to-SQL analytics engine on NVIDIA NIM",
+            "kind": "text"
+          },
+          {
+            "contains": "Mechanistic Hazard Ensembles for Geopolitical Forecasting",
+            "kind": "text"
+          },
+          {
+            "contains": "Byzantine-robust federated learning with client reputation",
+            "kind": "text"
+          },
+          {
+            "kind": "not",
+            "predicate": {
+              "contains": "DSFS — IEEE-format paper on conflict forecasting with LTROC 0.73 benchmark",
+              "kind": "text"
+            }
+          },
+          {
+            "kind": "not",
+            "predicate": {
+              "contains": "InsightX Analytics NL-to-SQL analytics engine Crest",
+              "kind": "text"
+            }
+          }
+        ]
+      },
+      "declaredAt": 1794636869496,
+      "id": "inline:the-about-tab-s-project-and-research-cards-show-4df66eee",
+      "provenBy": {
+        "at": 1794636869764,
+        "grade": "presence",
+        "verdictId": "reticle_assert:1794636869764"
+      },
+      "state": "proved",
+      "statement": "The About tab's project and research cards show the corrected claims, and the superseded text is gone.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/Nav.jsx"
+        ]
+      },
+      "updatedAt": 1794636869805
     },
     "inline:the-dense-preset-turns-the-transform-on-and-writ-b23e259b": {
       "binding": {
@@ -181,6 +955,29 @@
         ]
       },
       "updatedAt": 1794461470206
+    },
+    "inline:the-process-tab-lists-every-project-s-engineerin-7fa29b0b": {
+      "binding": {
+        "contains": "How the work actually went.",
+        "kind": "text"
+      },
+      "declaredAt": 1794632715616,
+      "id": "inline:the-process-tab-lists-every-project-s-engineerin-7fa29b0b",
+      "provenBy": {
+        "at": 1794632986041,
+        "grade": "presence",
+        "verdictId": "reticle_act_and_wait:1794632986041"
+      },
+      "state": "proved",
+      "statement": "The Process tab lists every project's engineering notes, including the four newly published MIT projects.",
+      "status": "proved",
+      "subject": "unsorted",
+      "surface": {
+        "files": [
+          "src/components/Nav.jsx"
+        ]
+      },
+      "updatedAt": 1794632986073
     },
     "inline:the-shell-command-transform-dense-applies-the-sa-46b88679": {
       "binding": {

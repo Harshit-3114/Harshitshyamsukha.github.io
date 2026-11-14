@@ -1,0 +1,30 @@
+{
+  "intents": {
+    "flow:drive-each-project-in-the-process-tab-shows-its-own-en": {
+      "declaredAt": 1794632986783,
+      "id": "flow:drive-each-project-in-the-process-tab-shows-its-own-en",
+      "state": "declared",
+      "statement": "Each project in the Process tab shows its own engineering notes - the thinking, the bugs and what was learned - for TrustFed.",
+      "status": "proposed",
+      "subject": "drive-each-project-in-the-process-tab-sh",
+      "surface": {
+        "flow": "drive-each-project-in-the-process-tab-shows-its-own-en"
+      },
+      "updatedAt": 1794632986809
+    },
+    "flow:drive-each-project-in-the-process-tab-shows-its-own-en-e8ec77": {
+      "declaredAt": 1794633110346,
+      "id": "flow:drive-each-project-in-the-process-tab-shows-its-own-en-e8ec77",
+      "state": "declared",
+      "statement": "Each project in the Process tab shows its own engineering notes - the thinking, the bugs and what was learned - for Misinformation Detector.",
+      "status": "proposed",
+      "subject": "drive-each-project-in-the-process-tab-sh",
+      "surface": {
+        "flow": "drive-each-project-in-the-process-tab-shows-its-own-en-e8ec77"
+      },
+      "updatedAt": 1794633110371
+    }
+  },
+  "subject": "drive-each-project-in-the-process-tab-sh",
+  "version": 1
+}

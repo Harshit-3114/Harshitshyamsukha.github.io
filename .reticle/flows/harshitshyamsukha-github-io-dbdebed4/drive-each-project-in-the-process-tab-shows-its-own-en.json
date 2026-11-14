@@ -1,0 +1,52 @@
+{
+  "version": 2,
+  "name": "drive-each-project-in-the-process-tab-shows-its-own-en",
+  "projectId": "harshitshyamsukha-github-io-dbdebed4",
+  "createdAt": 1794632986638,
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "button",
+        "name": "TrustFed"
+      },
+      "args": {},
+      "action": "click",
+      "page": "/"
+    },
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "role",
+        "role": "tab",
+        "name": "Process"
+      },
+      "args": {},
+      "action": "click",
+      "expect": {
+        "kind": "text",
+        "contains": "How the work actually went."
+      },
+      "page": "/"
+    }
+  ],
+  "startPath": "/",
+  "intent": "Each project in the Process tab shows its own engineering notes - the thinking, the bugs and what was learned - for TrustFed.",
+  "requires": [
+    {
+      "kind": "route",
+      "pathname": "/"
+    }
+  ],
+  "ensures": [
+    {
+      "kind": "route",
+      "pathname": "/"
+    }
+  ],
+  "author": {
+    "agent": "opencode"
+  },
+  "intentId": "flow:drive-each-project-in-the-process-tab-shows-its-own-en"
+}

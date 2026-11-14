@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "origin": "failed-assert",
+  "expected": "text \"The Misinformation Detector is deliberately small, because the interesting part is the pipeline rather than the model.\" AND text \"Errors Encountered\" AND text \"Skills Learned\"",
+  "observed": "command 'match' timed out after 1500ms. The page is ALIVE — the SDK last reported to the bridge 1169ms ago — but it is not answering commands. A page that is still sending is executing JavaScript, so it is not hung, hidden or suspended: messages are getting OUT and not back IN. Look at the bridge→page direction (a socket replaced mid-session, a proxy buffering one way) rather than at your app.",
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "testid",
+        "value": "e306",
+        "source": {
+          "file": "src/tabs/TabContent.jsx",
+          "line": 132,
+          "column": 14
+        }
+      },
+      "action": "click"
+    }
+  ],
+  "id": "1794632795093-click-417f8144",
+  "createdAt": 1794632795093,
+  "seen": 1,
+  "lastSeenAt": 1794632795093
+}

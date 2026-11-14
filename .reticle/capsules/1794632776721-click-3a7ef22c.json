@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "origin": "failed-assert",
+  "expected": "text \"MedTrace FL fine-tunes a language model across hospital networks without moving patient data.\" AND text \"Errors Encountered\" AND text \"Skills Learned\"",
+  "observed": "no element matched {\"text\":\"MedTrace FL fine-tunes a language model across hospital networks without moving patient data.\"} — that text IS on the page, split across the children of generic — no single element's own text carries it, so no text query can match it; retry as {\"kind\":\"text\",\"contains\":\"MedTrace FL fine-tunes a language model across hospital networks without moving patient data.\",\"scope\":\"e423\",\"self\":true}",
+  "steps": [
+    {
+      "tool": "reticle_act",
+      "anchor": {
+        "kind": "testid",
+        "value": "e304",
+        "source": {
+          "file": "src/tabs/TabContent.jsx",
+          "line": 132,
+          "column": 14
+        }
+      },
+      "action": "click"
+    }
+  ],
+  "id": "1794632776721-click-3a7ef22c",
+  "createdAt": 1794632776721,
+  "seen": 1,
+  "lastSeenAt": 1794632776721
+}
