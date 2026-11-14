@@ -44,7 +44,7 @@ const GRID_TITLE = {
 };
 
 const GRID_NOTE = {
-  all: 'Nine public repositories, one internship, and a research pipeline in progress.',
+  all: 'Twenty-nine public repositories, one internship, and a research pipeline in progress.',
   ai: 'Forecasting, agents, RAG and fine-tuning — the models I have actually put in front of users.',
   fullstack: 'FastAPI, React and the unglamorous parts in between: auth, queues, migrations, deploys.',
   client: 'Paid work for real businesses, including a multi-tenant SaaS and an industrial manufacturer.',
